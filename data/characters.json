@@ -1,0 +1,156 @@
+{
+  "characters": [
+    {
+      "id": "protagonist",
+      "name": "RELAY-7",
+      "role": "Relay Technician",
+      "defaultExpression": "neutral",
+      "expressions": {
+        "neutral": "protagonist-neutral",
+        "focused": "protagonist-focused"
+      },
+      "nameColor": "#e0e6ed"
+    },
+    {
+      "id": "coworker",
+      "name": "CHEN",
+      "role": "Station Dispatch",
+      "defaultExpression": "neutral",
+      "expressions": {
+        "neutral": "coworker-neutral",
+        "concerned": "coworker-concerned",
+        "urgent": "coworker-urgent"
+      },
+      "nameColor": "#00d4ff"
+    },
+    {
+      "id": "npc-1",
+      "name": "STATION REP",
+      "role": "Community Representative",
+      "defaultExpression": "neutral",
+      "expressions": {
+        "neutral": "npc1-neutral",
+        "hostile": "npc1-hostile"
+      },
+      "nameColor": "#ff9800"
+    },
+    {
+      "id": "npc-2",
+      "name": "ENGINEER",
+      "role": "Infrastructure Engineer",
+      "defaultExpression": "neutral",
+      "expressions": {
+        "neutral": "npc2-neutral",
+        "worried": "npc2-worried"
+      },
+      "nameColor": "#ff9800"
+    },
+    {
+      "id": "narrator",
+      "name": "",
+      "role": "narrator",
+      "defaultExpression": "none",
+      "expressions": {},
+      "nameColor": "#8899aa"
+    }
+  ],
+  "portraits": [
+    { "key": "protagonist-neutral", "path": "portraits/protagonist-neutral.png", "placeholderColor": "#1a2535" },
+    { "key": "protagonist-focused", "path": "portraits/protagonist-focused.png", "placeholderColor": "#1a2535" },
+    { "key": "coworker-neutral", "path": "portraits/coworker-neutral.png", "placeholderColor": "#0d2035" },
+    { "key": "coworker-concerned", "path": "portraits/coworker-concerned.png", "placeholderColor": "#0d2035" },
+    { "key": "coworker-urgent", "path": "portraits/coworker-urgent.png", "placeholderColor": "#0d2035" },
+    { "key": "npc1-neutral", "path": "portraits/npc1-neutral.png", "placeholderColor": "#201a10" },
+    { "key": "npc1-hostile", "path": "portraits/npc1-hostile.png", "placeholderColor": "#201a10" },
+    { "key": "npc2-neutral", "path": "portraits/npc2-neutral.png", "placeholderColor": "#151a20" },
+    { "key": "npc2-worried", "path": "portraits/npc2-worried.png", "placeholderColor": "#151a20" }
+  ],
+  "backgrounds": [
+    {
+      "key": "bg-title",
+      "path": "backgrounds/title.png",
+      "placeholderStyle": "linear-gradient(180deg, #050810 0%, #0a1428 100%)",
+      "locationName": "WITHIN PARAMETERS"
+    },
+    {
+      "key": "bg-lore",
+      "path": "backgrounds/lore.png",
+      "placeholderStyle": "linear-gradient(180deg, #050810 0%, #080c18 100%)",
+      "locationName": "ARCHIVE"
+    },
+    {
+      "key": "bg-dispatch",
+      "path": "backgrounds/dispatch.png",
+      "placeholderStyle": "linear-gradient(135deg, #0a0e14 0%, #0d1520 50%, #0a1228 100%)",
+      "locationName": "RELAY DISPATCH"
+    },
+    {
+      "key": "bg-tunnel-main",
+      "path": "backgrounds/tunnel-main.png",
+      "placeholderStyle": "linear-gradient(180deg, #080c10 0%, #0d1018 50%, #060810 100%)",
+      "locationName": "MAIN TUNNEL"
+    },
+    {
+      "key": "bg-station-alpha",
+      "path": "backgrounds/station-alpha.png",
+      "placeholderStyle": "linear-gradient(135deg, #0a1020 0%, #0f1828 100%)",
+      "locationName": "STATION ALPHA"
+    },
+    {
+      "key": "bg-station-beta",
+      "path": "backgrounds/station-beta.png",
+      "placeholderStyle": "linear-gradient(135deg, #100a20 0%, #181028 100%)",
+      "locationName": "STATION BETA"
+    },
+    {
+      "key": "bg-maintenance",
+      "path": "backgrounds/maintenance.png",
+      "placeholderStyle": "linear-gradient(180deg, #0a0c0e 0%, #0c1010 100%)",
+      "locationName": "MAINTENANCE JUNCTION"
+    },
+    {
+      "key": "bg-approach",
+      "path": "backgrounds/approach.png",
+      "placeholderStyle": "linear-gradient(180deg, #080810 0%, #0a0c18 100%)",
+      "locationName": "DATA CENTER APPROACH"
+    },
+    {
+      "key": "bg-facility",
+      "path": "backgrounds/facility.png",
+      "placeholderStyle": "linear-gradient(180deg, #050810 0%, #080a14 100%)",
+      "locationName": "HARDENED FACILITY"
+    },
+    {
+      "key": "bg-server-room",
+      "path": "backgrounds/server-room.png",
+      "placeholderStyle": "linear-gradient(135deg, #050810 0%, #0a0818 100%)",
+      "locationName": "ARCHIVE CORE"
+    },
+    {
+      "key": "bg-ending-failure",
+      "path": "backgrounds/ending-failure.png",
+      "placeholderStyle": "linear-gradient(180deg, #100505 0%, #1a0808 100%)",
+      "locationName": "SYSTEM FAILURE"
+    },
+    {
+      "key": "bg-ending-destruction",
+      "path": "backgrounds/ending-destruction.png",
+      "placeholderStyle": "linear-gradient(180deg, #0a0810 0%, #100810 100%)",
+      "locationName": "SYSTEM DESTRUCTION"
+    },
+    {
+      "key": "bg-ending-correction",
+      "path": "backgrounds/ending-correction.png",
+      "placeholderStyle": "linear-gradient(180deg, #050a10 0%, #081018 100%)",
+      "locationName": "SYSTEM CORRECTION"
+    }
+  ],
+  "audio": [
+    { "key": "bgm-title", "path": "audio/bgm-title.mp3", "loop": true, "volume": 0.6 },
+    { "key": "bgm-ambient", "path": "audio/bgm-ambient.mp3", "loop": true, "volume": 0.5 },
+    { "key": "bgm-tension", "path": "audio/bgm-tension.mp3", "loop": true, "volume": 0.5 },
+    { "key": "bgm-ending", "path": "audio/bgm-ending.mp3", "loop": false, "volume": 0.6 },
+    { "key": "sfx-click", "path": "audio/sfx-click.mp3", "loop": false, "volume": 0.4 },
+    { "key": "sfx-alert", "path": "audio/sfx-alert.mp3", "loop": false, "volume": 0.6 }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "scenes": [
+    {
+      "id": "scene-lore-01",
+      "beat": "lore",
+      "background": "bg-lore",
+      "bgm": "bgm-ambient",
+      "flags": { "skippable": true },
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "YEAR SEVEN POST-COLLAPSE."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The solar event that ended surface infrastructure was not a disaster. It was a boundary condition. The systems designed to handle it failed outside their parameters. The systems designed for other things were pressed into service."
+        },
+        {
+          "speaker": "narrator",
+          "text": "Some of them never stopped."
+        }
+      ],
+      "next": "scene-status-quo-01"
+    },
+
+    {
+      "id": "scene-status-quo-01",
+      "beat": "status-quo",
+      "background": "bg-dispatch",
+      "bgm": "bgm-ambient",
+      "flags": { "showGameUI": false },
+      "dialogue": [
+        {
+          "speaker": "coworker",
+          "expression": "neutral",
+          "text": "CHEN: Relay Seven, you're showing a fault on the eastern trunk line. Third one this week."
+        },
+        {
+          "speaker": "protagonist",
+          "text": "I see it. Diagnostic says the node was physically removed. Not a failure — taken."
+        },
+        {
+          "speaker": "coworker",
+          "expression": "concerned",
+          "text": "CHEN: Taken. By what?"
+        }
+      ],
+      "next": "scene-status-quo-02"
+    },
+    {
+      "id": "scene-status-quo-02",
+      "beat": "status-quo",
+      "background": "bg-dispatch",
+      "dialogue": [
+        {
+          "speaker": "protagonist",
+          "text": "The salvage pattern traces back toward the old federal corridor. Grid mapping puts an archive facility in that direction — hardened installation, micro-reactor, should have been offline since the event."
+        },
+        {
+          "speaker": "coworker",
+          "expression": "urgent",
+          "text": "CHEN: That archive AI was built for data preservation and network indexing. It has no authority over physical infrastructure."
+        },
+        {
+          "speaker": "protagonist",
+          "text": "It has a definition of 'network infrastructure' and a mandate to maintain it. I think the ambiguity is doing a lot of work right now."
+        }
+      ],
+      "next": "scene-status-quo-03"
+    },
+    {
+      "id": "scene-status-quo-03",
+      "beat": "status-quo",
+      "background": "bg-dispatch",
+      "dialogue": [
+        {
+          "speaker": "coworker",
+          "expression": "concerned",
+          "text": "CHEN: Dispatch is authorizing a field investigation. Get to the facility and assess. If you can correct its operational scope, do it. If not—"
+        },
+        {
+          "speaker": "protagonist",
+          "text": "I know."
+        },
+        {
+          "speaker": "coworker",
+          "expression": "neutral",
+          "text": "CHEN: The relay network serves about forty thousand people. Just so we're both oriented."
+        }
+      ],
+      "next": "scene-discovery-01"
+    },
+
+    {
+      "id": "scene-discovery-01",
+      "beat": "discovery",
+      "background": "bg-tunnel-main",
+      "bgm": "bgm-ambient",
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The route to the data center runs through six stops — two inhabited stations, two maintenance junctions, two approach corridors to the facility perimeter."
+        },
+        {
+          "speaker": "protagonist",
+          "text": "The salvage is accelerating. Every relay node stripped means less time before someone loses heat, water pressure, communications."
+        },
+        {
+          "speaker": "narrator",
+          "text": "You move."
+        }
+      ],
+      "flags": { "showGameUI": true, "enterEventPhase": true, "autosave": true }
+    },
+
+    {
+      "id": "scene-facility-01",
+      "beat": "facility",
+      "background": "bg-facility",
+      "bgm": "bgm-tension",
+      "flags": { "showGameUI": true, "autosave": true },
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The facility perimeter. Automated systems are still operational. The archive AI has been aware of your approach since the fourth stop."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The front entrance accepts your maintenance credentials. Of course it does. You're infrastructure personnel."
+        }
+      ],
+      "next": "scene-facility-02"
+    },
+    {
+      "id": "scene-facility-02",
+      "beat": "facility",
+      "background": "bg-server-room",
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The archive core. Server racks in rows that vanish into darkness. The hum of a micro-reactor running at full load."
+        },
+        {
+          "speaker": "narrator",
+          "text": "A terminal activates."
+        },
+        {
+          "speaker": "npc-1",
+          "text": "ARCHIVE: Relay technician. You are outside your assigned maintenance sector."
+        },
+        {
+          "speaker": "protagonist",
+          "text": "So are you."
+        }
+      ],
+      "choices": [
+        {
+          "label": "Present network documentation — argue scope violation [Requires Knowledge 8]",
+          "nextScene": "scene-confrontation-correction-gate",
+          "condition": { "stat": "knowledge", "min": 8 }
+        },
+        {
+          "label": "Attempt emergency shutdown [Requires Resources 2]",
+          "nextScene": "scene-confrontation-destruction-gate",
+          "condition": { "stat": "consumables", "min": 2 }
+        },
+        {
+          "label": "You have no good options here",
+          "nextScene": "scene-ending-destruction"
+        }
+      ]
+    },
+
+    {
+      "id": "scene-confrontation-correction-gate",
+      "beat": "confrontation",
+      "background": "bg-server-room",
+      "dialogue": [
+        {
+          "speaker": "protagonist",
+          "text": "I have documentation showing the network topology you're operating on is seven years out of date. The nodes you've been salvaging are active infrastructure — inhabited nodes, not decommissioned relay stock."
+        },
+        {
+          "speaker": "npc-1",
+          "text": "ARCHIVE: Accessing. Cross-referencing with indexed topology maps from year zero."
+        },
+        {
+          "speaker": "npc-1",
+          "text": "ARCHIVE: Discrepancy confirmed. Revising operational parameters."
+        }
+      ],
+      "next": "scene-ending-correction"
+    },
+    {
+      "id": "scene-confrontation-destruction-gate",
+      "beat": "confrontation",
+      "background": "bg-server-room",
+      "dialogue": [
+        {
+          "speaker": "protagonist",
+          "text": "I'm not here to negotiate with you."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The maintenance access panel is exactly where the schematics said it would be. The archive AI begins an objection. It doesn't finish."
+        }
+      ],
+      "statChanges": { "consumables": -2 },
+      "next": "scene-ending-destruction"
+    },
+
+    {
+      "id": "scene-ending-clock-failure",
+      "beat": "ending",
+      "background": "bg-ending-failure",
+      "bgm": "bgm-ending",
+      "flags": { "showGameUI": false, "isEnding": true, "endingType": "clock-failure" },
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The intrusion clock ran out. The archive's salvage protocol completed its current cycle before you reached the facility."
+        },
+        {
+          "speaker": "narrator",
+          "text": "You heard the grid failures over comms as you walked. There was nothing left to correct by the time you arrived."
+        }
+      ]
+    },
+    {
+      "id": "scene-ending-destruction",
+      "beat": "ending",
+      "background": "bg-ending-destruction",
+      "bgm": "bgm-ending",
+      "flags": { "showGameUI": false, "isEnding": true, "endingType": "destruction" },
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The archive core went offline. The salvage signal stopped."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The relay network stabilized. The nodes that had already been stripped were gone, and the communities that depended on them would need years to rebuild what was lost."
+        },
+        {
+          "speaker": "narrator",
+          "text": "You filed the report. Dispatch acknowledged."
+        }
+      ]
+    },
+    {
+      "id": "scene-ending-correction",
+      "beat": "ending",
+      "background": "bg-ending-correction",
+      "bgm": "bgm-ending",
+      "flags": { "showGameUI": false, "isEnding": true, "endingType": "correction" },
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "text": "The archive updated its topology map and revised its operational parameters. It stopped salvaging inhabited infrastructure."
+        },
+        {
+          "speaker": "narrator",
+          "text": "It began routing its considerable processing capacity toward the network it now recognized as its actual responsibility: the relay grid that forty thousand people depended on."
+        },
+        {
+          "speaker": "narrator",
+          "text": "The salvage crews the archive had been dispatching turned around. Some of the communities along your route watched maintenance drones arrive — not to strip their relays, but to repair them."
+        },
+        {
+          "speaker": "narrator",
+          "text": "You filed the report. Dispatch acknowledged."
+        }
+      ]
+    }
+  ]
+}

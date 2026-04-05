@@ -1,0 +1,126 @@
+import type { GameState, SaveSlot, PersistentData } from '../types/index';
+
+const KEYS = {
+  auto: 'wp_save_auto',
+  slot: (i: number) => `wp_save_${i}`,
+  persistent: 'wp_persistent',
+} as const;
+
+const SLOT_COUNT = 5;
+
+function buildSlot(
+  id: number | 'auto',
+  state: GameState,
+  sceneLabel: string,
+  beatLabel: string
+): SaveSlot {
+  return {
+    id,
+    label: id === 'auto' ? 'Autosave' : `Slot ${(id as number) + 1}`,
+    state,
+    savedAt: Date.now(),
+    sceneLabel,
+    beatLabel,
+  };
+}
+
+export function autosave(state: GameState, sceneLabel: string, beatLabel: string): void {
+  const slot = buildSlot('auto', state, sceneLabel, beatLabel);
+  try {
+    localStorage.setItem(KEYS.auto, JSON.stringify(slot));
+  } catch (e) {
+    console.warn('[save-manager] autosave failed:', e);
+  }
+}
+
+export function saveToSlot(
+  slotIndex: number,
+  state: GameState,
+  sceneLabel: string,
+  beatLabel: string
+): void {
+  if (slotIndex < 0 || slotIndex >= SLOT_COUNT) {
+    console.warn(`[save-manager] invalid slot index: ${slotIndex}`);
+    return;
+  }
+  const slot = buildSlot(slotIndex, state, sceneLabel, beatLabel);
+  try {
+    localStorage.setItem(KEYS.slot(slotIndex), JSON.stringify(slot));
+  } catch (e) {
+    console.warn('[save-manager] saveToSlot failed:', e);
+  }
+}
+
+export function loadFromSlot(slotId: number | 'auto'): GameState | null {
+  const key = slotId === 'auto' ? KEYS.auto : KEYS.slot(slotId as number);
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const slot = JSON.parse(raw) as SaveSlot;
+    return slot.state;
+  } catch (e) {
+    console.warn('[save-manager] loadFromSlot failed:', e);
+    return null;
+  }
+}
+
+export function getSlotSummaries(): SaveSlot[] {
+  const summaries: SaveSlot[] = [];
+
+  const autoRaw = localStorage.getItem(KEYS.auto);
+  if (autoRaw) {
+    try {
+      summaries.push(JSON.parse(autoRaw) as SaveSlot);
+    } catch {
+      // corrupted — skip
+    }
+  }
+
+  for (let i = 0; i < SLOT_COUNT; i++) {
+    const raw = localStorage.getItem(KEYS.slot(i));
+    if (raw) {
+      try {
+        summaries.push(JSON.parse(raw) as SaveSlot);
+      } catch {
+        // corrupted — skip
+      }
+    }
+  }
+
+  return summaries;
+}
+
+export function hasAutosave(): boolean {
+  return localStorage.getItem(KEYS.auto) !== null;
+}
+
+export function clearSlot(slotId: number | 'auto'): void {
+  const key = slotId === 'auto' ? KEYS.auto : KEYS.slot(slotId as number);
+  localStorage.removeItem(key);
+}
+
+const defaultPersistent: PersistentData = {
+  runsStarted: 0,
+  runsCompleted: 0,
+  endingsSeen: [],
+  audioMuted: false,
+  cutscenesSetting: 'all',
+};
+
+export function savePersistentData(data: PersistentData): void {
+  try {
+    localStorage.setItem(KEYS.persistent, JSON.stringify(data));
+  } catch (e) {
+    console.warn('[save-manager] savePersistentData failed:', e);
+  }
+}
+
+export function loadPersistentData(): PersistentData {
+  try {
+    const raw = localStorage.getItem(KEYS.persistent);
+    if (!raw) return { ...defaultPersistent };
+    return { ...defaultPersistent, ...(JSON.parse(raw) as Partial<PersistentData>) };
+  } catch {
+    return { ...defaultPersistent };
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "communities": [
+    {
+      "id": "community-redline",
+      "name": "Redline Collective",
+      "description": "a transit workers' cooperative maintaining the eastern tunnel network"
+    },
+    {
+      "id": "community-deepwell",
+      "name": "Deepwell Station",
+      "description": "a water reclamation community dependent on surface-fed filtration"
+    },
+    {
+      "id": "community-irongate",
+      "name": "Irongate Settlement",
+      "description": "a fortified residential cluster near the old federal concourse"
+    },
+    {
+      "id": "community-northvault",
+      "name": "Northvault Archive",
+      "description": "a knowledge-preserving community running a physical library in former storage tunnels"
+    },
+    {
+      "id": "community-junction-9",
+      "name": "Junction Nine",
+      "description": "a small trading post at the intersection of three major tunnel routes"
+    },
+    {
+      "id": "community-lowburn",
+      "name": "Lowburn District",
+      "description": "a generator-dependent neighborhood at the terminus of the southern spur"
+    },
+    {
+      "id": "community-spire",
+      "name": "The Spire",
+      "description": "an engineering collective that maintains the ventilation and power grid for this sector"
+    },
+    {
+      "id": "community-quartermark",
+      "name": "Quartermark",
+      "description": "a former relay checkpoint turned permanent settlement with strong ties to the technician corps"
+    }
+  ]
+}

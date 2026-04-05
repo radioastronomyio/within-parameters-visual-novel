@@ -1,0 +1,22 @@
+{
+  "startingConsumables": 5,
+  "startingKnowledge": 0,
+  "clockMax": 10,
+  "clockBaseTick": 1,
+  "clockJitterMax": 1,
+  "clockReductionBase": 1,
+  "rapportClockScale": 0.5,
+  "knowledgeGoodEndingThreshold": 8,
+  "consumableFixCost": 2,
+  "typewriterSpeed": 30,
+  "bgmCrossfadeDuration": 2000,
+  "journeyStops": 6,
+  "zoneMap": {
+    "1": "community",
+    "2": "community",
+    "3": "transit",
+    "4": "transit",
+    "5": "approach",
+    "6": "approach"
+  }
+}
