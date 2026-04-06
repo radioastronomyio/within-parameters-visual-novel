@@ -1,3 +1,11 @@
+/**
+ * HUD (sidebar) — stat bars, intrusion clock, and journey timeline.
+ * All elements are built once in initHUD and updated in place thereafter.
+ * Clock urgency is CSS-class-driven: warn at 40%, danger at 70%.
+ *
+ * @module ui/hud
+ */
+
 import type { GameState, CommunityRunState } from '../types/index';
 
 // ─── DOM References ───────────────────────────────────────────────────────────
@@ -92,6 +100,7 @@ export function initHUD(sidebar: HTMLElement, journeyStops: number): void {
 
 // ─── Update Functions ─────────────────────────────────────────────────────────
 
+/** Updates all HUD values from current state. Rapport bar uses a center-origin design (green right of center = positive, red left = negative). */
 export function updateStats(state: GameState): void {
   const { stats, clock } = state;
 
@@ -150,6 +159,7 @@ export function updateStats(state: GameState): void {
   if (resourcesValue) resourcesValue.textContent = String(stats.consumables);
 }
 
+/** Rebuilds the route timeline on every stop advance. Community names appear once assigned; earlier stops show as 'visited', current as active, future as placeholder. */
 export function updateTimeline(
   currentStop: number,
   stops: number,

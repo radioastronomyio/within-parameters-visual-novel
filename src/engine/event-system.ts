@@ -1,3 +1,12 @@
+/**
+ * Event pool management and reward cycle.
+ * Events are pre-shuffled by zone at run start; drawEvent pulls the next eligible
+ * event for the current stop's zone. Rewards are resolved after each event with
+ * clock-reduction scaled by the current rapport.
+ *
+ * @module engine/event-system
+ */
+
 import type {
   EventDef,
   Community,
@@ -32,6 +41,7 @@ function shuffle<T>(arr: T[]): T[] {
   return out;
 }
 
+/** Partitions all events by zone category and shuffles each pool independently. Communities are also shuffled for random stop assignment. */
 export function initEventPool(
   events: EventDef[],
   _config: GameConfig,
@@ -50,6 +60,10 @@ export function initEventPool(
   };
 }
 
+/**
+ * AI NOTE: Falls back to any unused event across all zones if the target zone is exhausted.
+ * This prevents hard locks but can violate zone theming — only triggered if content pool is thin.
+ */
 export function drawEvent(
   pool: EventPoolState,
   stopIndex: number,
@@ -140,6 +154,7 @@ export function applyReward(
   return applyStatChanges(state, reward.baseEffect);
 }
 
+/** Triggers a Jay Chen comms interrupt after stop 3 if the clock exceeds 50% capacity. Hard-coded stop index (not configurable) — change with care. */
 export function shouldTriggerComms(stopIndex: number, clock: IntrusionClock): boolean {
   // Trigger a coworker comms beat after stop 3 if clock is above 50%
   if (stopIndex === 3 && clock.current / clock.max > 0.5) {

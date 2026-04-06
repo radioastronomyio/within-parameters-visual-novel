@@ -17,7 +17,7 @@ tags:
 
 Monte Carlo balance validation for Within Parameters. Runs 10,000 randomized iterations per trait combination (640,000 total runs) using a priority-weighted heuristic agent. Outputs heatmaps and CSV data identifying balance anomalies.
 
-**Status:** Implemented. First run complete. Validation criteria failed — awaiting orchestrator rebalance decisions.
+**Status:** Implemented. Balance validation complete. Winning config locked (6/6 criteria, v2 sweep).
 
 ---
 
@@ -27,7 +27,6 @@ Monte Carlo balance validation for Within Parameters. Runs 10,000 randomized ite
 simulation/
 ├── simulator.py        # Core: state, events, traits, agent, runner, output
 ├── game_data.py        # Event pool, trait definitions, config values (v2 fixes applied)
-├── sweep.py            # v1 parameter sweep runner (33 variants)
 ├── sweep_v2.py         # v2 sweep with structural fixes + agent exploration
 ├── output/             # Generated heatmaps and reports (gitignored)
 │   ├── sweep_v2_results.csv        # v2 sweep comparison output
@@ -43,7 +42,7 @@ simulation/
 
 ## 2. Specification
 
-Full spec at [`spec/wp-simulator-spec.md`](../spec/wp-simulator-spec.md). Covers architecture, data structures, heuristic agent rules, output format, and validation criteria.
+Full spec at [`spec/archive/wp-simulator-spec.md`](../spec/archive/wp-simulator-spec.md). Covers architecture, data structures, heuristic agent rules, output format, and validation criteria.
 
 Trait definitions at [`spec/m3-trait-system-v2.md`](../spec/m3-trait-system-v2.md).
 
@@ -106,7 +105,6 @@ The game is trivially winnable for any competent player regardless of trait comb
 |------|-----|---------|
 | `game_data.py` | ~150 | Config, traits, events, pools — all tunable values |
 | `simulator.py` | ~350 | Engine, heuristic agent, Monte Carlo runner, heatmaps, CSV, report |
-| `sweep.py` | ~200 | v1 parameter sweep across knowledge threshold, reward, and clock axes |
 | `sweep_v2.py` | ~250 | v2 sweep with structural fixes + agent-directed exploration |
 
 Separation lets the developer tweak `game_data.py` values and rerun without touching simulation logic.
@@ -117,7 +115,7 @@ Separation lets the developer tweak `game_data.py` values and rerun without touc
 
 Second sweep applying three structural fixes identified by v1, then searching for a config passing all six validation criteria.
 
-**Spec:** [`spec/wp-sweep-v2.md`](../spec/wp-sweep-v2.md)
+**Spec:** [`spec/archive/wp-sweep-v2-spec.md`](../spec/archive/wp-sweep-v2-spec.md)
 
 ### Structural Fixes
 
@@ -143,5 +141,5 @@ Output: `output/sweep_v2_results.csv`. Includes structured Phase 1 (33 variants)
 | Document | Relationship |
 |----------|--------------|
 | [Trait System v2](../spec/m3-trait-system-v2.md) | Authoritative trait definitions and scoring |
-| [Simulator Spec](../spec/wp-simulator-spec.md) | Agent execution target |
-| [Mechanical Context](../spec/wp-mechanical-design-context.md) | Consolidated stat model reference |
+| [Simulator Spec](../spec/archive/wp-simulator-spec.md) | Agent execution target |
+| [Mechanical Context](../spec/archive/wp-mechanical-design-context.md) | Consolidated stat model reference |

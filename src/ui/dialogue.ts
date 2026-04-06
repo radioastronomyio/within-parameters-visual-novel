@@ -1,3 +1,11 @@
+/**
+ * Dialogue system — typewriter rendering, portrait crossfades, and choice UI.
+ * All state is module-level (single dialogue area per page).
+ * Click anywhere on the bottom bar to skip typewriter or advance to the next line.
+ *
+ * @module ui/dialogue
+ */
+
 import type {
   DialogueLine,
   Choice,
@@ -70,6 +78,7 @@ export function initDialogue(bottomBar: HTMLElement, config: GameConfig): void {
 
 // ─── Line Rendering ───────────────────────────────────────────────────────────
 
+/** Renders a single dialogue line: updates speaker name, crossfades portrait, starts typewriter. Calls onComplete when the line is ready to advance. */
 export function renderLine(
   line: DialogueLine,
   character: Character | null,
@@ -203,6 +212,7 @@ export function isTypewriterActive(): boolean {
 
 // ─── Choices ──────────────────────────────────────────────────────────────────
 
+/** Renders choice buttons. Choices with unmet conditions are rendered as disabled/grayed rather than hidden — player sees the gate exists. */
 export function renderChoices(
   choices: Choice[],
   state: GameState,
@@ -245,6 +255,7 @@ export function clearChoices(): void {
   choicesAreaEl.innerHTML = '';
 }
 
+/** Resets all dialogue state — stops typewriter, clears text, clears choices. Call before starting a new game or loading a save. */
 export function clearDialogue(): void {
   stopTypewriter();
   speakerEl.textContent = '';

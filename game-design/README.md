@@ -27,6 +27,7 @@ Authoritative design documents for Within Parameters. This is the working space 
 | [art-direction-bible.md](art-direction-bible.md) | Visual identity, generation prompts, asset pipeline, consistency checklist | Style locked |
 | [character-generation.md](character-generation.md) | Name pools, backstory templates, dossier screen, portrait strategy | Complete |
 | [m3-content-design-draft.md](m3-content-design-draft.md) | Full event specs, NPC profiles, comms beats, found documents, endings | Complete |
+| [m3-trait-system-v2.md](m3-trait-system-v2.md) | Pointer to canonical trait system v2 in spec/ | Pointer |
 
 ---
 
@@ -35,4 +36,4 @@ Authoritative design documents for Within Parameters. This is the working space 
 | Document | Location | Purpose |
 |----------|----------|---------|
 | Trait System v2 | [spec/m3-trait-system-v2.md](../spec/m3-trait-system-v2.md) | Authoritative trait definitions, interaction matrix, scoring |
-| Simulator Spec | [spec/wp-simulator-spec.md](../spec/wp-simulator-spec.md) | Monte Carlo balance simulator agent execution target |
+| Simulator Spec | [spec/archive/wp-simulator-spec.md](../spec/archive/wp-simulator-spec.md) | Monte Carlo balance simulator agent execution target |

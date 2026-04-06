@@ -18,27 +18,17 @@ Cross-project utilities and scripts used consistently across repositories.
 
 ---
 
-## Contents
-
-### Files
-
-| File | Purpose |
-|------|---------|
-| `generate_tree.py` | Generate directory tree output for documentation |
-
----
-
-## Structure
+## 1. Contents
 
 ```
 shared/
-├── generate_tree.py
-└── README.md
+├── generate_tree.py    # Generate directory tree output for documentation
+└── README.md           # This file
 ```
 
 ---
 
-## Usage
+## 4. Usage
 
 These scripts are designed to be copied or referenced across projects. They're collected here as a canonical source.
 
@@ -49,16 +39,8 @@ python shared/generate_tree.py .
 
 ---
 
-## Related
+## 5. Related
 
 | Directory | Relationship |
 |-----------|--------------|
 | [Repository Root](../README.md) | Parent |
-
----
-
-| Field | Value |
-|-------|-------|
-| Maintainer | [@vintagedon](https://github.com/vintagedon) |
-| Created | 2025-01-01 |
-| Last Updated | 2026-03-29 |

@@ -1,3 +1,9 @@
+/**
+ * Game state type contracts — the full serializable run state for Within Parameters.
+ * GameState is immutable by convention: all mutations return new objects via game-state.ts.
+ * PersistentData is stored separately and survives across multiple runs.
+ */
+
 import type { CommunityRunState } from './event';
 
 /** Player stats tracked during a run */
