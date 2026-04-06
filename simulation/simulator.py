@@ -247,12 +247,16 @@ def calculate_score(state: GameState, config: Config, ending: str) -> int:
         score += config.per_module_remaining
     if mods_remaining >= 2:
         score += config.per_module_remaining_surplus
+    if mods_remaining >= 3:
+        score += (mods_remaining - 2) * config.per_module_remaining_surplus_2
 
     knowledge_over = max(0, state.knowledge - config.knowledge_threshold)
     if knowledge_over >= 1:
         score += config.per_knowledge_over_threshold
     if knowledge_over >= 2:
         score += config.per_knowledge_over_threshold_surplus
+    if knowledge_over >= 3:
+        score += (knowledge_over - 2) * config.per_knowledge_over_threshold_surplus_2
 
     clock_remaining = max(0, config.clock_max - state.clock)
     for seg in range(min(clock_remaining, 10)):

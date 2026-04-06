@@ -26,8 +26,12 @@ Monte Carlo balance validation for Within Parameters. Runs 10,000 randomized ite
 ```
 simulation/
 ├── simulator.py        # Core: state, events, traits, agent, runner, output
-├── game_data.py        # Event pool, trait definitions, config values
+├── game_data.py        # Event pool, trait definitions, config values (v2 fixes applied)
+├── sweep.py            # v1 parameter sweep runner (33 variants)
+├── sweep_v2.py         # v2 sweep with structural fixes + agent exploration
 ├── output/             # Generated heatmaps and reports (gitignored)
+│   ├── sweep_v2_results.csv        # v2 sweep comparison output
+│   ├── sweep_results.csv           # v1 sweep comparison output
 │   ├── correction_rate_heatmap.png
 │   ├── avg_score_heatmap.png
 │   ├── clock_failure_rate_heatmap.png
@@ -102,12 +106,39 @@ The game is trivially winnable for any competent player regardless of trait comb
 |------|-----|---------|
 | `game_data.py` | ~150 | Config, traits, events, pools — all tunable values |
 | `simulator.py` | ~350 | Engine, heuristic agent, Monte Carlo runner, heatmaps, CSV, report |
+| `sweep.py` | ~200 | v1 parameter sweep across knowledge threshold, reward, and clock axes |
+| `sweep_v2.py` | ~250 | v2 sweep with structural fixes + agent-directed exploration |
 
 Separation lets the developer tweak `game_data.py` values and rerun without touching simulation logic.
 
 ---
 
-## 7. Related
+## 8. Parameter Sweep v2
+
+Second sweep applying three structural fixes identified by v1, then searching for a config passing all six validation criteria.
+
+**Spec:** [`spec/wp-sweep-v2.md`](../spec/wp-sweep-v2.md)
+
+### Structural Fixes
+
+| Fix | Change | Purpose |
+|-----|--------|---------|
+| Scoring tiers | Added third-tier surplus values | Reduce score compression, enable S-tier |
+| P6 Clear-Headed | Threshold -2 → -1 | Prevent trivial combos |
+| N7 Exhausted | Fixed jitter=1.0 → +0.25 additive | Scale with base tick, avoid guaranteed clock-out at ct=2 |
+
+### Running
+
+```bash
+cd simulation
+python sweep_v2.py
+```
+
+Output: `output/sweep_v2_results.csv`. Includes structured Phase 1 (33 variants) and optional Phase 2 exploration (up to 10 targeted configs).
+
+---
+
+## 9. Related
 
 | Document | Relationship |
 |----------|--------------|

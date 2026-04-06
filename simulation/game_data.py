@@ -34,9 +34,11 @@ class Config:
     per_community_helped: int = 8
     per_rapport_point: int = 5
     per_module_remaining: int = 4
-    per_module_remaining_surplus: int = 2
+    per_module_remaining_surplus: int = 3
+    per_module_remaining_surplus_2: int = 1
     per_knowledge_over_threshold: int = 3
-    per_knowledge_over_threshold_surplus: int = 1
+    per_knowledge_over_threshold_surplus: int = 2
+    per_knowledge_over_threshold_surplus_2: int = 1
     per_clock_segment_remaining: int = 3
 
 
@@ -99,7 +101,7 @@ POSITIVE_TRAITS: list[TraitDef] = [
         "P6",
         "Clear-Headed",
         "competence gates",
-        lambda c: replace(c, knowledge_threshold=c.knowledge_threshold - 2),
+        lambda c: replace(c, knowledge_threshold=c.knowledge_threshold - 1),
     ),
     ("P7", "Light Foot", "transit safety", lambda c: replace(c, light_foot=True)),
     ("P8", "Practiced", "spending efficiency", lambda c: replace(c, practiced=True)),
@@ -131,7 +133,9 @@ NEGATIVE_TRAITS: list[TraitDef] = [
         "N7",
         "Exhausted",
         "clock variance",
-        lambda c: replace(c, clock_jitter_chance=1.0),
+        lambda c: replace(
+            c, clock_jitter_chance=min(1.0, c.clock_jitter_chance + 0.25)
+        ),
     ),
     ("N8", "Stubborn", "choice restriction", lambda c: replace(c, stubborn=True)),
 ]
