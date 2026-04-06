@@ -10,6 +10,25 @@ Entry point for AI coding agents working on this repository.
 
 **Stack:** Vite + TypeScript (strict mode), vanilla DOM manipulation, CSS custom properties, localStorage saves
 
+## Git Workflow
+
+All agent-executed specs produce work on feature branches. Never commit directly to `main`.
+
+### Branch Lifecycle
+
+1. **Before starting work:** `git checkout -b agent/{spec-name}` from `main` (e.g., `agent/wp-sweep` for `wp-sweep-spec.md`). If the spec specifies a branch name, use that instead.
+2. **During work:** Commit as needed with conventional commit messages. Commits are local only.
+3. **When finished:** Commit all deliverables. Do not push. Do not create a PR. Report completion.
+4. **Orchestrator reviews** the branch locally, then pushes and merges (or discards).
+
+### Rules
+
+- One branch per spec. Do not reuse branches across specs.
+- Do not push to `origin`. The orchestrator handles all pushes.
+- Do not modify files outside the scope defined in the spec.
+- Generated output (heatmaps, CSVs, build artifacts) follows the spec's instructions for whether to commit or gitignore. When the spec is silent, gitignore generated output.
+- If the branch already exists, stop and report the conflict. Do not force-create or overwrite.
+
 ## Current State
 
 **Phase:** Phase 2, Content Design & Balance
@@ -32,16 +51,18 @@ Entry point for AI coding agents working on this repository.
 - NPC cast: protagonist (random), Jay Chen (coworker), Torres (supervisor), Aguilar (authority), Dex (scrapper), Sato (believer)
 - Consumable identity: bypass module
 
+### Complete
+
+- Balance simulator (`simulation/`): Monte Carlo engine, heuristic agent, 640k-run validation. First run confirmed game is trivially winnable; rebalancing in progress via parameter sweep.
+
 ### Ready for Agent Execution
 
-- Balance simulator build (spec at `spec/wp-simulator-spec.md`)
+- Balance sweep (spec at `spec/wp-sweep-spec.md`): parameter search across knowledge threshold, reward value, and clock pressure
 - Content build: translating approved design docs into engine JSON
 - Placeholder art generation (scene-name PNGs)
-- AGENTS.md and GDD are current
 
 ### Not Started
 
-- Simulator implementation and balance validation
 - Production JSON content (scenes.json, events.json rewrite with full content)
 - Playwright smoke tests against live dev server
 - Production art (NB2 finals from NightCafe concepts)
@@ -61,6 +82,7 @@ Entry point for AI coding agents working on this repository.
 | Character Generation | `game-design/character-generation.md` | Name pools, backstory templates, dossier screen, portrait strategy |
 | Trait System v2 | `spec/m3-trait-system-v2.md` | Authoritative trait definitions, interaction matrix, scoring (post-GDR) |
 | Simulator Spec | `spec/wp-simulator-spec.md` | Monte Carlo balance simulator agent execution target |
+| Sweep Spec | `spec/wp-sweep-spec.md` | Parameter sweep agent execution target |
 | Mechanical Context | `spec/wp-mechanical-design-context.md` | Consolidated stat model reference for simulator |
 | NB2 UI Mockup | `assets/concept-artwork/ui/ui-mockup-nano-banana-pro-2.png` | Visual target for the three-pane layout |
 
@@ -190,7 +212,7 @@ Mobile responsiveness, accessibility beyond basic keyboard nav, analytics, multi
 
 ## Execution Environment
 
-**Primary execution:** ML01 (`/opt/repos/within-parameters-visual-novel/`)
+**Primary execution:** ML01 (`/repos/within-parameters-visual-novel/`)
 **Dev URL:** `https://wp-dev.donfather.dev` (Traefik on docker01, port 5173)
 **Agent runtime:** OpenCode, Claude Code
 **Strategic work:** Claude.ai Projects
@@ -213,7 +235,7 @@ within-parameters-visual-novel/
 ├── game-design/                    # Design documents (GDD, storyboard, art bible, content specs)
 ├── public/                         # Static assets for Vite
 ├── shared/                         # Cross-project utilities
-├── simulation/                     # Python balance simulator (spec ready, not yet built)
+├── simulation/                     # Python balance simulator and sweep tools
 ├── spec/                           # Technical specifications and agent prompts
 ├── src/                            # TypeScript source (22 files, engine complete)
 │   ├── types/                      # Data contracts
@@ -234,6 +256,7 @@ within-parameters-visual-novel/
 
 ## Conventions
 
+- **Git workflow:** Feature branches per spec. See "Git Workflow" section above.
 - **Documentation:** Use templates from `docs/documentation-standards/`
 - **Commits:** Conventional commits (`feat:`, `fix:`, `docs:`, `art:`)
 - **Frontmatter:** YAML frontmatter with tags from `docs/documentation-standards/tagging-strategy.md`
