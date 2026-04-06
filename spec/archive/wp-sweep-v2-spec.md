@@ -15,7 +15,7 @@ The v1 sweep (`sweep.py`) tested 33 configs across knowledge threshold, reward v
 
 | Failure | Root Cause | Every Config? |
 |---------|-----------|---------------|
-| V6: S-tier rate below 10% (best: 2.1%) | Scoring diminishing returns compress scores into the 78-82 band | Yes |
+| V6: S-tier rate below 10% (best: 2.1%) | Scoring diminishing returns compress scores into the 78–82 band | Yes |
 | V2: Some combos above 90% correction | P6 Clear-Headed reduces threshold by 2, trivializing ct=1 configs | ct=1 only |
 | V4: N7 clock failure above 60% | N7 jitter=1.0 + base tick 2 = guaranteed clock-out | ct=2 only |
 
@@ -29,7 +29,7 @@ Apply these three changes to `game_data.py` before running the sweep. These modi
 
 ### Fix 1: Soften Scoring Diminishing Returns
 
-The current scoring awards full value for the first surplus point in each category, half for the second, and zero for the third onward. This compresses correction-ending scores into a narrow band (~78-82) and makes S-tier (>=90) nearly unreachable.
+The current scoring awards full value for the first surplus point in each category, half for the second, and zero for the third onward. This compresses correction-ending scores into a narrow band (~78–82) and makes S-tier (≥90) nearly unreachable.
 
 **Change:** Add a third tier at reduced value instead of a hard cutoff at 2.
 
@@ -85,8 +85,8 @@ Change to a conditional that scales with base tick:
  lambda c: replace(c, clock_jitter_chance=min(1.0, c.clock_jitter_chance + 0.25))),
 ```
 
-At `clock_base_tick=1`: jitter chance goes from 0.50 to 0.75 (expected tick 1.75/stop, total 8.75 over 5 stops -- tight but survivable).
-At `clock_base_tick=2`: jitter chance goes from 0.50 to 0.75 (expected tick 2.75/stop, total 13.75 -- very hard but clock reduction can compensate at 2-3 segments per reward with rapport).
+At `clock_base_tick=1`: jitter chance goes from 0.50 to 0.75 (expected tick 1.75/stop, total 8.75 over 5 stops — tight but survivable).
+At `clock_base_tick=2`: jitter chance goes from 0.50 to 0.75 (expected tick 2.75/stop, total 13.75 — very hard but clock reduction can compensate at 2–3 segments per reward with rapport).
 
 This replaces the binary "always jitter" with a meaningful increase that scales naturally. The fixed +0.25 is a starting value; the agent may adjust this during exploration (see section 5).
 
@@ -137,7 +137,7 @@ Each exploratory config runs the same 640,000 iterations and reports the same me
 Stop. Report the failure modes and top configs. Do not attempt further exploration. The structural fixes were insufficient and the orchestrator needs to reassess.
 
 ### Exploration constraints:
-- Maximum 10 exploratory configs (6.4M additional runs, ~20-30 minutes).
+- Maximum 10 exploratory configs (6.4M additional runs, ~20–30 minutes).
 - The agent may modify scoring values, trait parameters, or the N7 jitter increment for exploratory configs. It must NOT modify event pool data, add/remove traits, or change the core simulation logic in `simulator.py`.
 - All exploratory modifications are applied via `dataclasses.replace()` on the winning base config, not by editing source files.
 - Document the rationale for each exploratory config in the console output.
@@ -148,10 +148,10 @@ Stop. Report the failure modes and top configs. Do not attempt further explorati
 
 ```
 simulation/
-├── simulator.py        # Existing -- modify only calculate_score for Fix 1
-├── game_data.py        # Existing -- apply Fixes 1, 2, 3
-├── sweep.py            # Existing v1 -- do not modify
-├── sweep_v2.py         # NEW -- v2 parameter sweep with exploration
+├── simulator.py        # Existing — modify only calculate_score for Fix 1
+├── game_data.py        # Existing — apply Fixes 1, 2, 3
+├── sweep.py            # Existing v1 — do not modify
+├── sweep_v2.py         # NEW — v2 parameter sweep with exploration
 ├── README.md           # Update with v2 sweep instructions
 └── output/
     ├── sweep_v2_results.csv        # NEW
@@ -173,9 +173,9 @@ python sweep_v2.py
 
 ### Expected Runtime
 
-Phase 1: 33 configs x ~2-3 min = 65-100 minutes.
-Phase 2: 0-10 configs x ~2-3 min = 0-30 minutes.
-Total: 65-130 minutes.
+Phase 1: 33 configs × ~2–3 min = 65–100 minutes.
+Phase 2: 0–10 configs × ~2–3 min = 0–30 minutes.
+Total: 65–130 minutes.
 
 ---
 
@@ -205,8 +205,8 @@ Deliverables:
 
 1. Modified `game_data.py` with structural fixes (section 2)
 2. Modified `simulator.py` `calculate_score` with third-tier surplus scoring
-3. `simulation/sweep_v2.py` -- v2 sweep runner with exploration logic
-4. Updated `simulation/README.md` -- add v2 sweep section
+3. `simulation/sweep_v2.py` — v2 sweep runner with exploration logic
+4. Updated `simulation/README.md` — add v2 sweep section
 5. Run `sweep_v2.py` to completion (phase 1 + phase 2 if applicable)
 6. If a 6/6 config is found: run `simulator.py` with that config and save heatmaps
 7. Report: top 10 structured configs, any exploration results, and recommendation
@@ -216,8 +216,8 @@ Deliverables:
 
 The agent has authority to:
 - Choose which exploratory configs to test (within the constraints of section 5)
-- Adjust the N7 jitter increment within the range 0.10-0.50
-- Adjust surplus scoring tier values within +/-2 of the specified defaults
+- Adjust the N7 jitter increment within the range 0.10–0.50
+- Adjust surplus scoring tier values within ±2 of the specified defaults
 - Skip exploration if structured results are clearly sufficient or clearly hopeless
 
 The agent does NOT have authority to:

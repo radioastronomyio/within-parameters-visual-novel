@@ -91,3 +91,4 @@ local/
 *.local
 
 .ruff_cache/
+__pycache__/
