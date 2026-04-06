@@ -1,3 +1,12 @@
+/**
+ * Application entry point — bootstraps the engine and wires the UI.
+ * Loads all data files in parallel, initializes all subsystems, then shows
+ * the title screen. Each new game or loaded save creates a fresh SceneRunner.
+ *
+ * The dialogue sequencer (runDialogueSequence) is the bridge between the
+ * SceneRunner callbacks and the dialogue/choice UI.
+ */
+
 import './styles.css';
 
 import type {

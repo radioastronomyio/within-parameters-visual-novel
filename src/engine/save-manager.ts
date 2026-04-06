@@ -1,3 +1,12 @@
+/**
+ * Save / load manager — localStorage serialization for game state.
+ * One autosave slot ('auto') plus 5 manual slots (0-4).
+ * PersistentData (runs started, endings seen, audio settings) is stored
+ * separately from save slots and is never overwritten by loading a save.
+ *
+ * @module engine/save-manager
+ */
+
 import type { GameState, SaveSlot, PersistentData } from '../types/index';
 
 const KEYS = {
@@ -64,6 +73,7 @@ export function loadFromSlot(slotId: number | 'auto'): GameState | null {
   }
 }
 
+/** Returns all non-empty slots (autosave first, then manual slots 0-4). Silently skips corrupted entries. */
 export function getSlotSummaries(): SaveSlot[] {
   const summaries: SaveSlot[] = [];
 
@@ -115,6 +125,10 @@ export function savePersistentData(data: PersistentData): void {
   }
 }
 
+/**
+ * AI NOTE: Merges loaded data with defaultPersistent — new fields added to PersistentData
+ * will auto-populate for existing users without migration.
+ */
 export function loadPersistentData(): PersistentData {
   try {
     const raw = localStorage.getItem(KEYS.persistent);

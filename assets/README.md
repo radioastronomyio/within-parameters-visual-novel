@@ -51,4 +51,4 @@ The engine uses CSS gradient placeholders during development — no real assets 
 | Document | Relationship |
 |----------|--------------|
 | [Art Direction Bible](../game-design/art-direction-bible.md) | Visual identity, generation prompts, asset pipeline, consistency checklist |
-| [Engine Spec](../spec/engine-spec.md) | Asset manifest schema — how the engine references assets |
+| [Engine Spec](../spec/archive/engine-spec.md) | Asset manifest schema — how the engine references assets |

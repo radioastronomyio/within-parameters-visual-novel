@@ -43,6 +43,6 @@ Game data JSON files consumed by the Within Parameters engine at runtime. All fi
 
 | Document | Relationship |
 |----------|--------------|
-| [Engine Spec](../spec/engine-spec.md) | Data schema definitions — types the engine expects |
+| [Engine Spec](../spec/archive/engine-spec.md) | Data schema definitions — types the engine expects |
 | [M3 Content Design Draft](../game-design/m3-content-design-draft.md) | Source for the events.json and scenes.json rewrite |
 | [Trait System v2](../spec/m3-trait-system-v2.md) | Defines which config.json values traits modify |

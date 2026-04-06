@@ -1,3 +1,12 @@
+/**
+ * Scene runner — orchestrates the narrative flow of a run.
+ * Bridges the engine (state, events, saves) and the UI (callbacks).
+ * Beat 4 journey phase: draws events, runs the event cycle, delivers rewards,
+ * ticks the clock, and advances stops until the journey is complete.
+ *
+ * @module engine/scene-runner
+ */
+
 import type {
   Scene,
   GameState,
@@ -52,6 +61,7 @@ export interface SceneRegistry {
   events: Map<string, EventDef>;
 }
 
+/** Indexes scenes and events by ID for O(1) lookups. Event scenes are injected into this registry at runtime (see runStop). */
 export function buildSceneRegistry(
   scenes: Scene[],
   events: EventDef[]
@@ -64,6 +74,7 @@ export function buildSceneRegistry(
 
 // ─── Scene Runner ─────────────────────────────────────────────────────────────
 
+/** Stateful game controller. One instance per run — create a new one for each new game or loaded save. */
 export class SceneRunner {
   private state: GameState;
   private config: GameConfig;
@@ -135,6 +146,7 @@ export class SceneRunner {
 
   // ─── Called by UI after a scene's dialogue completes ─────────────────────
 
+  /** Called by main.ts dialogue sequencer when a scene's dialogue has finished. Handles event-phase entry, ending triggers, and auto-advance. */
   sceneComplete(scene: Scene): void {
     // If this scene enters the event phase, initialize and run it
     if (scene.flags?.enterEventPhase) {
@@ -212,6 +224,10 @@ export class SceneRunner {
     this.runStop(stop);
   }
 
+  /**
+   * AI NOTE: Injects event scenes into the shared registry (registry.scenes.set).
+   * These overwrite any existing scenes with the same ID — event scene IDs must be globally unique.
+   */
   private runStop(stop: number): void {
     if (!this.eventPool) return;
 
@@ -246,7 +262,7 @@ export class SceneRunner {
   // Track which event is active for reward delivery
   private _pendingEventForStop: { event: EventDef; stop: number } | null = null;
 
-  /** Called by UI when dialogue completes on a scene that has no next/choices */
+  /** Called by main.ts when a terminal event scene completes. Triggers reward selection if the completed scene is the event's reward scene. */
   eventSceneComplete(sceneId: string): void {
     if (!this._pendingEventForStop) return;
 

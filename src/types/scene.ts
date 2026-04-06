@@ -1,3 +1,9 @@
+/**
+ * Scene type contracts — the atomic unit of narrative content in Within Parameters.
+ * Scenes are authored in scenes.json and consumed by SceneRunner via the scene registry.
+ * DialogueLine, Choice, and SceneFlags compose the Scene interface.
+ */
+
 /** Which narrative beat this scene belongs to */
 export type BeatType =
   | 'lore'          // Beat 1 — skippable lore card

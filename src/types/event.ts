@@ -1,3 +1,9 @@
+/**
+ * Event type contracts — defines the roguelike event system in Beat 4.
+ * Events are drawn from a zone-filtered pool (community → transit → approach).
+ * Each event contains its own scenes plus three reward options.
+ */
+
 import type { Scene, StatChanges } from './scene';
 
 /** Event category determines which zone it can appear in */

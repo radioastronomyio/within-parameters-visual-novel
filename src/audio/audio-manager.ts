@@ -1,3 +1,12 @@
+/**
+ * Audio manager — BGM crossfades and one-shot SFX.
+ * Two Audio elements (player A/B) enable smooth BGM transitions.
+ * Mute state persists via PersistentData; autoplay unlock is deferred to
+ * first user gesture (browser policy).
+ *
+ * @module audio/audio-manager
+ */
+
 import type { AudioAsset } from '../types/index';
 
 // ─── State ────────────────────────────────────────────────────────────────────
@@ -32,6 +41,7 @@ export function init(assets: AudioAsset[], isMuted: boolean, fadeDuration: numbe
 
 // ─── BGM ──────────────────────────────────────────────────────────────────────
 
+/** Crossfades to a new BGM track. No-ops if the requested key is already playing. Autoplay failures are caught and silently deferred — audio resumes on next user gesture. */
 export function playBGM(assetKey: string, crossfade: boolean = true): void {
   if (assetKey === currentBgmKey) return;
   if (!playerA || !playerB) return;
@@ -146,6 +156,10 @@ export function playSFX(assetKey: string): void {
 
 // ─── Mute ─────────────────────────────────────────────────────────────────────
 
+/**
+ * AI NOTE: Only adjusts the active player volume — the inactive player remains at 0
+ * and will stay muted through the next crossfade.
+ */
 export function setMuted(isMuted: boolean): void {
   muted = isMuted;
 
@@ -167,6 +181,7 @@ function getActiveVolume(): number {
 
 // ─── Resume after user gesture ────────────────────────────────────────────────
 
+/** Resumes the active player after the browser's autoplay policy blocks initial playback. Wire to the first click event on the page. */
 export function resumeAfterGesture(): void {
   const active = activePlayer === 'a' ? playerA : playerB;
   if (active && active.paused && currentBgmKey) {

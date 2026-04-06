@@ -1,3 +1,12 @@
+/**
+ * Layout manager — builds and controls the three-pane DOM structure.
+ * Viewport (65%) contains the background; sidebar (35%) holds the HUD;
+ * bottom bar (33vh) holds dialogue and choices.
+ * Background transitions use a two-layer crossfade (layer A/B swap).
+ *
+ * @module ui/layout
+ */
+
 import type { BackgroundAsset } from '../types/index';
 
 export interface LayoutElements {
@@ -40,6 +49,9 @@ export function initLayout(root: HTMLElement): LayoutElements {
   return elements;
 }
 
+/**
+ * AI NOTE: Must be called before any setBackground() call — backgrounds are looked up from this cached array.
+ */
 export function registerBackgrounds(assets: BackgroundAsset[]): void {
   backgroundAssets = assets;
 }
@@ -52,6 +64,7 @@ export function setGameUI(): void {
   elements?.gameContainer.classList.remove('fullscreen');
 }
 
+/** Crossfades to a new background using the A/B layer swap pattern. Falls back to the asset's placeholder style if the image fails to load, or to a generic dark gradient if the asset key is unknown. */
 export function setBackground(assetKey: string): void {
   if (!elements) return;
 

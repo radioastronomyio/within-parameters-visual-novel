@@ -1,9 +1,48 @@
+#!/usr/bin/env python3
+"""
+Script Name  : game_data.py
+Description  : Game configuration, event pool, and trait definitions for Within Parameters balance simulator
+Repository   : within-parameters-visual-novel
+Author       : VintageDon (https://github.com/vintagedon/)
+Created      : 2026-04-01
+Link         : https://github.com/radioastronomyio/within-parameters-visual-novel
+
+Description
+-----------
+Defines all tunable game parameters (Config dataclass), the event pools for community,
+transit, and approach zones, and the positive/negative trait tuples that modify the
+config at run start. This is the single source of truth for balance values — change
+numbers here and rerun simulator.py without touching simulation logic.
+
+Usage
+-----
+    from game_data import DEFAULT_CONFIG, POSITIVE_TRAITS, NEGATIVE_TRAITS, COMMUNITY_POOL
+
+Examples
+--------
+    python simulator.py
+        Imports game_data and runs 640,000 Monte Carlo iterations using DEFAULT_CONFIG
+"""
+
+# =============================================================================
+# Imports
+# =============================================================================
 from dataclasses import dataclass, replace
 from typing import Callable
 
 
+# =============================================================================
+# Configuration
+# =============================================================================
 @dataclass(frozen=True)
 class Config:
+    """
+    Frozen balance configuration for a single simulation run.
+    Traits modify this via dataclasses.replace() — never mutate a Config in place.
+
+    # AI NOTE: All trait modifier lambdas receive and return a Config. The frozen
+    # dataclass enforces immutability at runtime. Use replace() for all modifications.
+    """
     starting_modules: int = 5
     starting_knowledge: int = 0
     starting_rapport: int = 0
@@ -47,6 +86,10 @@ DEFAULT_CONFIG = Config()
 
 @dataclass(frozen=True)
 class EventChoice:
+    """
+    A single choice option within an event. module_change is negative for costs
+    (spending bypass modules), positive for gains. community_effect tracks social impact.
+    """
     label: str
     knowledge_change: int = 0
     module_change: int = 0
@@ -58,14 +101,25 @@ class EventChoice:
 
 @dataclass(frozen=True)
 class Event:
+    """
+    A modular event drawn from a zone pool. has_found_document triggers a passive
+    knowledge gain during the event (modified by the Distracted negative trait).
+    """
     id: str
     category: str
     choices: list[EventChoice]
     has_found_document: bool = False
 
 
+# TraitDef: (id, display_name, mechanic_summary, config_modifier_lambda)
+# The lambda receives the current Config and returns a modified copy.
+# AI NOTE: Trait application order matters — negative trait applies after positive.
+# See run_game() for the application sequence: neg_trait[3](pos_trait[3](config))
 TraitDef = tuple[str, str, str, Callable[[Config], Config]]
 
+# =============================================================================
+# Trait Definitions
+# =============================================================================
 POSITIVE_TRAITS: list[TraitDef] = [
     (
         "P1",
@@ -140,6 +194,9 @@ NEGATIVE_TRAITS: list[TraitDef] = [
     ("N8", "Stubborn", "choice restriction", lambda c: replace(c, stubborn=True)),
 ]
 
+# =============================================================================
+# Event Pools
+# =============================================================================
 COMMUNITY_POOL: list[Event] = [
     Event(
         "CE-01",

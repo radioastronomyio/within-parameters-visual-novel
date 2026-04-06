@@ -1,3 +1,11 @@
+/**
+ * Screen overlays — title, save/load modal, ending screen, settings, reward overlay, comms interrupt.
+ * All screens are built once in initScreens() and toggled via show/hide pairs.
+ * The ending screen generates the epilogue text dynamically from run community states.
+ *
+ * @module ui/screens
+ */
+
 import type { SaveSlot, PersistentData, GameState, CommunityRunState } from '../types/index';
 
 // ─── Screen container refs ─────────────────────────────────────────────────────
@@ -219,6 +227,7 @@ export function showEndingScreen(
   endingScreen.classList.remove('hidden');
 }
 
+/** Generates epilogue HTML from the run's community outcome data. Named communities appear as styled spans. Three branches: clock-failure, destruction, correction. */
 function buildEpilogue(
   endingType: string,
   communities: CommunityRunState[]
@@ -336,6 +345,7 @@ export function hideSettings(): void {
 
 import type { RewardOption } from '../types/index';
 
+/** Presents the three reward cards after each event. Hides automatically when a card is selected. */
 export function showRewardOverlay(
   rewards: RewardOption[],
   onSelect: (index: number) => void

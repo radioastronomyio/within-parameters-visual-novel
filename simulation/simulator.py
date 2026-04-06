@@ -1,3 +1,32 @@
+#!/usr/bin/env python3
+"""
+Script Name  : simulator.py
+Description  : Monte Carlo balance simulator for the 64-cell trait matrix in Within Parameters
+Repository   : within-parameters-visual-novel
+Author       : VintageDon (https://github.com/vintagedon/)
+Created      : 2026-04-01
+Link         : https://github.com/radioastronomyio/within-parameters-visual-novel
+
+Description
+-----------
+Runs 10,000 randomized iterations per trait combination (64 combos, 640,000 total runs)
+using a priority-weighted heuristic agent. Outputs PNG heatmaps and a CSV to
+simulation/output/. Also prints a balance report with top/bottom combos, anomalies,
+and validation criteria pass/fail to stdout.
+
+Usage
+-----
+    python simulator.py
+
+Examples
+--------
+    python simulator.py
+        Runs full 640,000 iteration suite and saves all output to simulation/output/
+"""
+
+# =============================================================================
+# Imports
+# =============================================================================
 import csv
 import math
 import os
@@ -28,8 +57,16 @@ from game_data import (
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
 
+# =============================================================================
+# Data Structures
+# =============================================================================
 @dataclass
 class GameState:
+    """
+    Mutable run state for one simulated playthrough. Unlike the TypeScript engine
+    (which uses immutable state), the simulator mutates state in place for performance.
+    rapport is derived via property — never stored directly.
+    """
     knowledge: int
     modules: int
     clock: int
@@ -49,6 +86,7 @@ class GameState:
 
 @dataclass
 class RunResult:
+    """Outcome of a single completed run, captured for statistical analysis."""
     ending: str
     raw_score: int
     modules_remaining: int
@@ -61,6 +99,7 @@ class RunResult:
 
 @dataclass
 class ComboAnalysis:
+    """Aggregated statistics for one trait combination across all iterations."""
     correction_rate: float
     destruction_rate: float
     clock_failure_rate: float
@@ -71,12 +110,20 @@ class ComboAnalysis:
     avg_final_knowledge: float
 
 
+# =============================================================================
+# Choice and Reward Logic
+# =============================================================================
 def calc_effective_module_cost(
     choice: EventChoice,
     config: Config,
     event_category: str,
     practiced_available: bool,
 ) -> int:
+    """
+    Computes the actual module cost of a choice after applying trait modifiers.
+    Rough Touch adds 1 to community event costs. Practiced reduces cost by 1
+    (once per stop). Returns 0 for choices that grant modules.
+    """
     if choice.module_change >= 0:
         return 0
     cost = abs(choice.module_change)
@@ -89,6 +136,11 @@ def calc_effective_module_cost(
 
 
 def calc_clock_reduction(state: GameState, config: Config) -> int:
+    """
+    Computes available clock reduction for the reward cycle.
+    Scales with rapport but is capped at config.clock_reduction_max (2 segments).
+    Narrow Focus reduces by 1, minimum 0.
+    """
     raw = config.clock_reduction_base + int(state.rapport * config.rapport_clock_scale)
     reduction = min(raw, config.clock_reduction_max)
     if config.narrow_focus:
@@ -96,12 +148,22 @@ def calc_clock_reduction(state: GameState, config: Config) -> int:
     return reduction
 
 
+# =============================================================================
+# Heuristic Agent
+# =============================================================================
 def agent_select_choice(
     state: GameState,
     event: Event,
     config: Config,
     practiced_available: bool,
 ) -> tuple[EventChoice, bool]:
+    """
+    Priority-weighted heuristic agent for choice selection. Priority order:
+    1. Gated choices (knowledge/rapport-gated — high information value)
+    2. Community help choices (when clock pressure is low, i.e. clock < 7)
+    3. Lowest effective module cost (resource conservation fallback)
+    Stubborn trait overrides: always picks the highest-cost community choice available.
+    """
     available: list[tuple[EventChoice, bool]] = []
     practiced_left = practiced_available
     for choice in event.choices:
@@ -149,6 +211,14 @@ def agent_select_choice(
 
 
 def agent_select_reward(state: GameState, config: Config) -> str:
+    """
+    Selects the reward type for the current stop. Priority:
+    1. Clock reduction if projected tick would bring clock near max
+    2. Consumables if below fix-cost threshold
+    3. Knowledge if late journey and below knowledge threshold
+    4. Clock reduction again if stop 4+ and clock is high
+    5. Knowledge (default — optimal for correction ending)
+    """
     expected_tick = (
         config.clock_base_tick + config.clock_jitter_chance * config.clock_jitter_amount
     )
@@ -163,6 +233,9 @@ def agent_select_reward(state: GameState, config: Config) -> str:
     return "knowledge"
 
 
+# =============================================================================
+# State Mutation
+# =============================================================================
 def apply_choice(
     state: GameState,
     choice: EventChoice,
@@ -170,6 +243,12 @@ def apply_choice(
     event_category: str,
     practiced_available: bool,
 ) -> bool:
+    """
+    Applies a choice's effects to mutable GameState. Returns True if the
+    Practiced trait discount was consumed this stop (caller tracks this).
+    # AI NOTE: Light Foot suppresses transit clock_change > 0. Tunnel Nerves
+    # adds +1 to all approach clock changes. Both apply to clock_change in-place.
+    """
     used_practiced = False
     if choice.module_change >= 0:
         state.modules += choice.module_change
@@ -292,12 +371,21 @@ def determine_ending(state: GameState, config: Config) -> RunResult:
     )
 
 
+# =============================================================================
+# Monte Carlo Runner
+# =============================================================================
 def run_game(
     config: Config,
     pos_trait: TraitDef,
     neg_trait: TraitDef,
     rng: Random,
 ) -> RunResult:
+    """
+    Simulates one complete run for a given trait combination. Applies trait modifiers
+    to produce an effective config, draws the event pool, and runs all 5 stops.
+    # AI NOTE: Trait application order is pos then neg: neg_trait[3](pos_trait[3](config)).
+    Each stop uses a fresh practiced_available flag — Practiced resets each stop.
+    """
     effective_config = neg_trait[3](pos_trait[3](config))
 
     state = GameState(
@@ -388,6 +476,9 @@ def run_monte_carlo(iterations_per_combo: int = 10000, seed: int = 42):
     return results
 
 
+# =============================================================================
+# Output
+# =============================================================================
 def build_heatmap_data(results: dict[tuple[str, str], ComboAnalysis], field_name: str):
     pos_ids = [t[0] for t in POSITIVE_TRAITS]
     neg_ids = [t[0] for t in NEGATIVE_TRAITS]

@@ -1,3 +1,9 @@
+/**
+ * Character and asset manifest type contracts.
+ * CharacterManifest is loaded once from characters.json and drives dialogue portraits,
+ * backgrounds, and audio throughout the engine.
+ */
+
 /** A character definition */
 export interface Character {
   /** Unique character ID — referenced by DialogueLine.speaker */

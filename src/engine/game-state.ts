@@ -1,3 +1,11 @@
+/**
+ * Game state mutations — pure functions returning new GameState objects.
+ * Never mutates state in place. All stat changes, clock ticks, and community
+ * state transitions flow through here. Rapport is derived, not stored.
+ *
+ * @module engine/game-state
+ */
+
 import type {
   GameState,
   GameConfig,
@@ -82,6 +90,10 @@ export function isClockFull(state: GameState): boolean {
   return state.clock.current >= state.clock.max;
 }
 
+/**
+ * AI NOTE: Recalculates rapport and writes it back to stats.rapport after every community state change.
+ * Call this rather than mutating communities directly.
+ */
 export function setCommunityState(
   state: GameState,
   stopIndex: number,
@@ -101,6 +113,7 @@ export function setCommunityState(
   };
 }
 
+/** Derives rapport from community states — helped +1, harmed -1. Called after every community interaction and before scoring. */
 export function deriveRapport(state: GameState): number {
   return state.communities.reduce((acc, c) => {
     if (c.state === 'helped') return acc + 1;
@@ -109,6 +122,7 @@ export function deriveRapport(state: GameState): number {
   }, 0);
 }
 
+/** Computes clock reduction for the reward cycle. Scaled by rapport but capped by config.clockReductionMax (max 2 segments). */
 export function calculateClockReduction(state: GameState, config: GameConfig): number {
   const rapport = deriveRapport(state);
   const bonus = Math.floor(rapport * config.rapportClockScale);
@@ -119,6 +133,7 @@ export function checkKnowledgeGate(state: GameState, threshold: number): boolean
   return state.stats.knowledge >= threshold;
 }
 
+/** Terminal function — called once at run end. Checks clock-failure first, then correction threshold (knowledge + consumables), else destruction. */
 export function determineEnding(
   state: GameState,
   config: GameConfig
