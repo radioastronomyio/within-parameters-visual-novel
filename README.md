@@ -80,8 +80,8 @@ The 64 trait combinations (8 positive × 8 negative, modifier-only, no new conte
 | Event pool | ✅ Complete | 12 events with dialogue, stat values, reward tables |
 | Supporting content | ✅ Complete | Comms beats, found documents, ending epilogues |
 | Art assets | 🔄 In Progress | Concept drafts complete (10 scenes, 1 UI mockup) |
-| Balance simulator | 🔄 In Progress | Spec complete, implementation pending |
-| Content build | ⬜ Planned | Production JSON pending simulator validation |
+| Balance simulator | ✅ Complete | 45M simulated runs, 6/6 validation criteria passed |
+| Content build | ⬜ Planned | Production JSON pending balance lock merge |
 | Soundtrack | ⬜ Planned | Gemini 3 Pro music generation |
 | Production art | ⬜ Planned | NB2 style-matched 4K finals from NightCafe concepts |
 | Integration & polish | ⬜ Planned | Playwright testing, deployment |
@@ -95,7 +95,7 @@ The 64 trait combinations (8 positive × 8 negative, modifier-only, no new conte
 | Engine | TypeScript + vanilla DOM | Scene progression, stat tracking, event system, save/load |
 | Data Layer | Structured JSON | Scenes, events, communities, characters, config |
 | UI | CSS custom properties, three-pane layout | Viewport (65%) + sidebar (35%) + bottom bar (33%) |
-| Balance | Python Monte Carlo simulator | 10,000 iterations per trait combination, heuristic agent |
+| Balance | Python Monte Carlo simulator | 45M total runs across parameter sweeps, heuristic agent |
 | Saves | localStorage | Autosave + 5 manual slots |
 | Audio | HTML5 Audio API | BGM crossfade, SFX, mute persistence |
 | Deployment | Azure Static Web Apps, itch.io | Browser-based, no backend |
@@ -139,6 +139,7 @@ within-parameters-visual-novel/
 | Engine Spec | [spec/engine-spec.md](spec/engine-spec.md) | Engine build reference |
 | Trait System v2 | [spec/m3-trait-system-v2.md](spec/m3-trait-system-v2.md) | Trait definitions, interaction matrix, scoring |
 | Simulator Spec | [spec/wp-simulator-spec.md](spec/wp-simulator-spec.md) | Balance simulator agent execution target |
+| SpecSmith Case Study | [spec/wp-specsmith-case-study.md](spec/wp-specsmith-case-study.md) | How spec-driven development shaped this project |
 | Agent Instructions | [AGENTS.md](AGENTS.md) | AI agent onboarding context |
 
 ---
@@ -215,4 +216,10 @@ Portfolio piece with intentional scope constraints and meaningful systems depth:
 
 ---
 
-Last Updated: 2026-04-05 | Phase 2: Content Design & Balance
+Last Updated: 2026-04-06 | Phase 2: Content Design & Balance
+
+---
+
+## Methodology
+
+This project uses the [SpecSmith](https://github.com/radioastronomyio/specsmith) specification methodology. Specs define outcomes and verification criteria; AI coding agents implement from specs. The `spec/` directory contains both the original implementation-prescriptive specs and SpecSmith canonical retrospectives showing what the outcome-driven versions would have looked like. See the [case study](spec/wp-specsmith-case-study.md) for details on how spec-driven development shaped this project.

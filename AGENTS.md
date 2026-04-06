@@ -8,6 +8,8 @@ Entry point for AI coding agents working on this repository.
 **Repository:** https://github.com/radioastronomyio/within-parameters-visual-novel
 **Purpose:** A roguelike visual novel set in a post-solar-storm underground civilization where narrow maintenance AIs govern humanity using operational logic never designed for the task. The player is a randomly generated relay technician investigating an archive AI that is cannibalizing inhabited infrastructure in a relentless attempt to reconnect to an internet that no longer exists. Portfolio piece targeting Azure Static Web Apps and itch.io publication.
 
+**Methodology:** This project uses [SpecSmith](https://github.com/radioastronomyio/specsmith). Specs define outcomes and verification criteria; agents implement from specs.
+
 **Stack:** Vite + TypeScript (strict mode), vanilla DOM manipulation, CSS custom properties, localStorage saves
 
 ## Git Workflow
@@ -53,11 +55,16 @@ All agent-executed specs produce work on feature branches. Never commit directly
 
 ### Complete
 
-- Balance simulator (`simulation/`): Monte Carlo engine, heuristic agent, 640k-run validation. First run confirmed game is trivially winnable; rebalancing in progress via parameter sweep.
+- Engine build: all 22 source files, five bugs patched, end-to-end functional with placeholder assets
+- Balance simulator (`simulation/`): Monte Carlo engine, heuristic agent, 640k-run validation
+- Balance sweep v1: 33 configs tested, identified 3 structural failures (scoring compression, P6 too strong, N7 doesn't scale)
+- Balance sweep v2: structural fixes applied, 38 configs tested (33 structured + 5 exploratory), winning config found (6/6 validation criteria)
+- Balance parameters locked: `kt=11, kr=0, ct=1, starting_modules=6, jitter_chance=0.35`
+- SpecSmith retrospective specs written (01-04) with case study
 
 ### Ready for Agent Execution
 
-- Balance sweep (spec at `spec/wp-sweep-spec.md`): parameter search across knowledge threshold, reward value, and clock pressure
+- Code commenting and repo cleanup (spec at `spec/05-code-commenting-and-cleanup.md`): dual-audience commenting on all source files, interior README fixes
 - Content build: translating approved design docs into engine JSON
 - Placeholder art generation (scene-name PNGs)
 
@@ -82,8 +89,9 @@ All agent-executed specs produce work on feature branches. Never commit directly
 | Character Generation | `game-design/character-generation.md` | Name pools, backstory templates, dossier screen, portrait strategy |
 | Trait System v2 | `spec/m3-trait-system-v2.md` | Authoritative trait definitions, interaction matrix, scoring (post-GDR) |
 | Simulator Spec | `spec/wp-simulator-spec.md` | Monte Carlo balance simulator agent execution target |
-| Sweep Spec | `spec/wp-sweep-spec.md` | Parameter sweep agent execution target |
-| Mechanical Context | `spec/wp-mechanical-design-context.md` | Consolidated stat model reference for simulator |
+| Sweep Spec (v1) | `spec/archive/wp-sweep-spec.md` | Parameter sweep v1 agent execution target |
+| Sweep Spec (v2) | `spec/archive/wp-sweep-v2-spec.md` | Structural fixes + exploration agent execution target |
+| SpecSmith Case Study | `spec/wp-specsmith-case-study.md` | How spec-driven development shaped this project |
 | NB2 UI Mockup | `assets/concept-artwork/ui/ui-mockup-nano-banana-pro-2.png` | Visual target for the three-pane layout |
 
 **Read the engine spec before writing any engine code.** It is the execution contract.

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Within Parameters — Balance Methodology</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f11;
+  --surface: #161820;
+  --surface-raised: #1c1e28;
+  --border: rgba(255,255,255,0.06);
+  --teal: #3dd4a7;
+  --teal-dim: rgba(61,212,167,0.15);
+  --amber: #e8a838;
+  --amber-dim: rgba(232,168,56,0.15);
+  --red: #e05555;
+  --red-dim: rgba(224,85,85,0.15);
+  --text: #d4d4d8;
+  --text-muted: #71717a;
+  --text-bright: #fafafa;
+  --mono: 'JetBrains Mono', monospace;
+  --serif: 'Source Serif 4', Georgia, serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--serif); line-height: 1.75; }
+.container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+h1 { font-family: var(--mono); font-weight: 300; font-size: 2.4rem; color: var(--text-bright); letter-spacing: -1px; margin-bottom: 0.5rem; }
+.subtitle { font-family: var(--mono); font-size: 0.85rem; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3rem; }
+h2 { font-family: var(--mono); font-weight: 400; font-size: 1.1rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px; margin: 4rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+h3 { font-family: var(--mono); font-weight: 500; font-size: 0.95rem; color: var(--text-bright); margin: 2rem 0 0.75rem; }
+p { margin-bottom: 1.25rem; font-size: 1.05rem; }
+a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(61,212,167,0.3); }
+a:hover { border-bottom-color: var(--teal); }
+code { font-family: var(--mono); font-size: 0.85em; background: var(--surface); padding: 2px 6px; border-radius: 3px; color: var(--teal); }
+.lead { font-size: 1.15rem; color: var(--text-muted); font-style: italic; margin-bottom: 2rem; }
+
+.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 1.5rem 0; }
+.metric { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+.metric-label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+.metric-value { font-family: var(--mono); font-size: 1.8rem; font-weight: 600; }
+.metric-sub { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+.chart-container { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+.chart-title { font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem; }
+.chart-wrap { position: relative; width: 100%; }
+
+.heatmap { margin: 1.5rem 0; }
+.hm-grid { display: grid; grid-template-columns: 60px repeat(8, 1fr); gap: 2px; }
+.hm-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; font-weight: 500; border-radius: 3px; transition: transform 0.15s; }
+.hm-cell:hover { transform: scale(1.15); z-index: 2; }
+.hm-label { display: flex; align-items: center; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); padding-right: 8px; justify-content: flex-end; }
+.hm-header { display: flex; align-items: flex-end; justify-content: center; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); padding-bottom: 4px; }
+.hm-axis-label { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 8px; }
+.hm-legend { display: flex; align-items: center; gap: 4px; margin-top: 12px; justify-content: center; }
+.hm-legend-bar { height: 8px; flex: 1; max-width: 200px; border-radius: 4px; }
+.hm-legend-label { font-family: var(--mono); font-size: 0.65rem; color: var(--text-muted); }
+
+.timeline { border-left: 2px solid var(--border); margin: 2rem 0 2rem 1rem; padding-left: 2rem; }
+.timeline-item { position: relative; margin-bottom: 2rem; }
+.timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 8px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--teal); background: var(--bg); }
+.timeline-item.fail::before { border-color: var(--red); }
+.timeline-item.warn::before { border-color: var(--amber); }
+.timeline-item .tl-label { font-family: var(--mono); font-size: 0.75rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; }
+.timeline-item.fail .tl-label { color: var(--red); }
+.timeline-item.warn .tl-label { color: var(--amber); }
+.timeline-item .tl-title { font-family: var(--mono); font-weight: 500; font-size: 0.95rem; color: var(--text-bright); margin: 4px 0; }
+.timeline-item .tl-body { font-size: 0.95rem; color: var(--text-muted); }
+
+.criteria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1.5rem 0; }
+.criteria { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
+.criteria-name { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.criteria-val { font-family: var(--mono); font-size: 1.2rem; font-weight: 500; }
+.criteria-target { font-family: var(--mono); font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; }
+.pass { color: var(--teal); }
+
+.fix-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 1.5rem 0; }
+.fix-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+.fix-card .fix-num { font-family: var(--mono); font-size: 0.7rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.fix-card .fix-title { font-family: var(--mono); font-weight: 500; font-size: 0.85rem; color: var(--text-bright); margin-bottom: 8px; }
+.fix-card .fix-body { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+.fix-card .fix-result { font-family: var(--mono); font-size: 0.8rem; color: var(--teal); margin-top: 10px; }
+
+.callout { background: var(--teal-dim); border-left: 3px solid var(--teal); border-radius: 0 6px 6px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.95rem; }
+.callout.warn { background: var(--amber-dim); border-left-color: var(--amber); }
+.callout.danger { background: var(--red-dim); border-left-color: var(--red); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); text-align: center; }
+
+@media (max-width: 700px) {
+  .metric-row, .criteria-grid, .fix-cards { grid-template-columns: 1fr; }
+  h1 { font-size: 1.6rem; }
+  .container { padding: 2rem 1rem 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Balance methodology</h1>
+<div class="subtitle">Within Parameters — April 2026</div>
+
+<p class="lead">How 45 million simulated game runs, three structural fixes, and bounded agent exploration turned a trivially winnable roguelike into a 6/6 balanced system.</p>
+
+<p>Within Parameters is a roguelike visual novel with 64 possible trait combinations (8 positive × 8 negative). Each combination changes the player's starting conditions, per-event costs, and reward effectiveness. The balance question: does every combination produce a meaningfully different experience without making any combination trivially easy or impossibly hard?</p>
+
+<p>Rather than playtest our way to an answer, we built a Monte Carlo simulator, ran parameter sweeps, and let the data tell us where the balance problems were. The entire process took under two hours of compute time and produced a configuration that passes all six validation criteria.</p>
+
+<h2>The validation criteria</h2>
+
+<p>Six criteria define "balanced." They were designed before any simulation ran, so the goalposts never moved.</p>
+
+<div class="criteria-grid">
+  <div class="criteria"><div class="criteria-name">V1: No dead combos</div><div class="criteria-val pass">min > 0%</div><div class="criteria-target">Every pair must be winnable</div></div>
+  <div class="criteria"><div class="criteria-name">V2: No trivial combos</div><div class="criteria-val pass">max ≤ 90%</div><div class="criteria-target">No pair should auto-win</div></div>
+  <div class="criteria"><div class="criteria-name">V3: Mean correction</div><div class="criteria-val pass">30–55%</div><div class="criteria-target">The game should be hard but fair</div></div>
+  <div class="criteria"><div class="criteria-name">V4: N7 clock failure</div><div class="criteria-val pass">< 60%</div><div class="criteria-target">Exhausted is hard, not lethal</div></div>
+  <div class="criteria"><div class="criteria-name">V5: Std deviation</div><div class="criteria-val pass">10–25%</div><div class="criteria-target">Traits create real differentiation</div></div>
+  <div class="criteria"><div class="criteria-name">V6: S-tier rate</div><div class="criteria-val pass">10–20%</div><div class="criteria-target">Skilled play is rewarded</div></div>
+</div>
+
+<h2>The process</h2>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="tl-label">Pre-validation</div>
+    <div class="tl-title">Gemini Deep Research review</div>
+    <div class="tl-body">Before writing any simulation code, the 64-cell trait matrix was submitted to Gemini Deep Research for mathematical analysis. GDR identified five critical issues: N7 (Exhausted) was mathematically unwinnable, P4 (Steady Hand) trivializing, a rapport feedback loop allowing infinite clock reduction, a null pairing between P1 and N2, and surplus stat farming breaking the score ceiling. All five were fixed in the trait system revision before simulation began.</div>
+  </div>
+
+  <div class="timeline-item fail">
+    <div class="tl-label">First run — 640,000 simulations</div>
+    <div class="tl-title">Trivially winnable</div>
+    <div class="tl-body">The heuristic agent won 99.7% of all runs regardless of trait combination. Knowledge accumulated to 15–18 per run against a threshold of 8. Clock pressure was cosmetic: expected 7.5 total accumulation against a max of 10. The agent never needed to make a hard choice.</div>
+  </div>
+
+  <div class="timeline-item warn">
+    <div class="tl-label">Sweep v1 — 21 million simulations</div>
+    <div class="tl-title">33 configs, best 4/6</div>
+    <div class="tl-body">Swept three axes: knowledge threshold (6 values), knowledge reward (3 values), clock base tick (2 values). Zero configs passed all 6 criteria. Three structural failures identified: scoring compression made S-tier unreachable, P6 (Clear-Headed) created trivial combos, and N7 (Exhausted) didn't scale with clock speed.</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="tl-label">Sweep v2 — 24 million simulations</div>
+    <div class="tl-title">3 structural fixes + agent exploration → 6/6</div>
+    <div class="tl-body">Applied three targeted fixes, re-swept the same grid, then gave the agent bounded freedom to explore. Five exploratory configs later, a configuration passing all six criteria was found.</div>
+  </div>
+</div>
+
+<h2>The first run</h2>
+
+<p>The simulator uses a heuristic agent that models competent-but-not-optimal play. It follows priority rules: survive first (if clock is critical, take clock reduction), stay solvent second (if modules are low, take consumables), chase the win condition third (if knowledge is below threshold, take knowledge), and default to knowledge accumulation.</p>
+
+<div class="metric-row">
+  <div class="metric"><div class="metric-label">Correction rate</div><div class="metric-value" style="color:var(--red)">99.7%</div><div class="metric-sub">target: 30–55%</div></div>
+  <div class="metric"><div class="metric-label">Std deviation</div><div class="metric-value" style="color:var(--red)">0.9%</div><div class="metric-sub">target: 10–25%</div></div>
+  <div class="metric"><div class="metric-label">S-tier rate</div><div class="metric-value" style="color:var(--red)">0.0%</div><div class="metric-sub">target: 10–20%</div></div>
+</div>
+
+<div class="callout danger">The game was trivially winnable. Knowledge rewards alone (+2 per stop × 5 stops = 10) exceeded the threshold of 8 before accounting for any event-sourced knowledge. The heuristic agent never needed to make a trade-off.</div>
+
+<h2>Sweep v1: parametric search</h2>
+
+<p>Rather than guess at fixes, we enumerated the parameter space. 33 configurations across three independent axes, each running the full 640,000-iteration Monte Carlo. Total: 21.1 million simulated game runs in 21 minutes.</p>
+
+<div class="chart-container">
+  <div class="chart-title">Sweep v1 results — top 10 configs by criteria passed</div>
+  <div class="legend">
+    <span><span class="legend-dot" style="background:var(--teal)"></span>Correction %</span>
+    <span><span class="legend-dot" style="background:var(--red)"></span>Clock failure %</span>
+  </div>
+  <div class="chart-wrap" style="height:320px"><canvas id="sweepV1Chart"></canvas></div>
+</div>
+
+<p>The best configs clustered at 4/6. Three criteria failed universally or structurally:</p>
+
+<div class="fix-cards">
+  <div class="fix-card">
+    <div class="fix-num">Failure 1</div>
+    <div class="fix-title">S-tier unreachable</div>
+    <div class="fix-body">Scoring diminishing returns compressed all correction-ending scores into the 78–82 range. The theoretical ceiling was 103 but practically unreachable.</div>
+    <div class="fix-result">Best S-tier: 2.1%</div>
+  </div>
+  <div class="fix-card">
+    <div class="fix-num">Failure 2</div>
+    <div class="fix-title">P6 too strong</div>
+    <div class="fix-body">Clear-Headed reduced the knowledge threshold by 2, creating easy-mode combos that breached the 90% correction ceiling.</div>
+    <div class="fix-result">ct=1 configs affected</div>
+  </div>
+  <div class="fix-card">
+    <div class="fix-num">Failure 3</div>
+    <div class="fix-title">N7 doesn't scale</div>
+    <div class="fix-body">Exhausted forced jitter to 1.0 regardless of clock speed. At base tick 2, this guaranteed clock-out: 72–84% clock failure rate.</div>
+    <div class="fix-result">ct=2 configs affected</div>
+  </div>
+</div>
+
+<div class="callout warn">No combination of the three swept parameters could fix these issues. They were structural problems in the trait definitions and scoring formula, not tunable parameters.</div>
+
+<h2>The structural fixes</h2>
+
+<p>Three independent fixes, each addressing one failure mode without interacting with the others.</p>
+
+<div class="fix-cards">
+  <div class="fix-card">
+    <div class="fix-num">Fix 1</div>
+    <div class="fix-title">Third-tier surplus scoring</div>
+    <div class="fix-body">Added a third diminishing-returns tier instead of a hard cutoff at 2 surplus points. This opened the scoring ceiling enough for S-tier to become achievable.</div>
+    <div class="fix-result">S-tier: 0% → 19.1%</div>
+  </div>
+  <div class="fix-card">
+    <div class="fix-num">Fix 2</div>
+    <div class="fix-title">P6: -2 → -1</div>
+    <div class="fix-body">Halved Clear-Headed's threshold reduction. Still meaningful (threshold 10 instead of 11) without creating trivial combos at low thresholds.</div>
+    <div class="fix-result">Max combo: 95%+ → 87.1%</div>
+  </div>
+  <div class="fix-card">
+    <div class="fix-num">Fix 3</div>
+    <div class="fix-title">N7: additive +0.25</div>
+    <div class="fix-body">Changed Exhausted from "jitter always fires" to "jitter chance increases by 0.25." Scales naturally with any base tick value instead of being binary.</div>
+    <div class="fix-result">N7 clock fail: 84% → 4.9%</div>
+  </div>
+</div>
+
+<h2>Sweep v2: fixes + exploration</h2>
+
+<p>With fixes applied, we re-swept the same 33-config grid. The best structured config hit 5/6, failing V3 (mean correction at 28.2%, just below the 30% floor). The spec gave the agent freedom to run up to 10 exploratory configs. It used five.</p>
+
+<div class="chart-container">
+  <div class="chart-title">The balance journey — correction rate across phases</div>
+  <div class="chart-wrap" style="height:280px"><canvas id="journeyChart"></canvas></div>
+</div>
+
+<p>The winning exploration adjusted two parameters on the best structured candidate: starting modules from 5 to 6 (one extra cushion) and jitter chance from 0.50 to 0.35 (slightly softer clock). These gave enough breathing room to cross the 30% mean correction floor.</p>
+
+<h2>The winning configuration</h2>
+
+<div class="metric-row">
+  <div class="metric"><div class="metric-label">Knowledge threshold</div><div class="metric-value">11</div><div class="metric-sub">was 8</div></div>
+  <div class="metric"><div class="metric-label">Knowledge reward</div><div class="metric-value">0</div><div class="metric-sub">was +2/stop</div></div>
+  <div class="metric"><div class="metric-label">Starting modules</div><div class="metric-value">6</div><div class="metric-sub">was 5</div></div>
+</div>
+<div class="metric-row">
+  <div class="metric"><div class="metric-label">Clock base tick</div><div class="metric-value">1</div><div class="metric-sub">unchanged</div></div>
+  <div class="metric"><div class="metric-label">Jitter chance</div><div class="metric-value">35%</div><div class="metric-sub">was 50%</div></div>
+  <div class="metric"><div class="metric-label">Total sim runs</div><div class="metric-value">45M</div><div class="metric-sub">across all sweeps</div></div>
+</div>
+
+<p>The design insight: setting knowledge reward to zero means all knowledge must come from event choices and found documents. Every reward pick becomes a genuine consumable-vs-clock-reduction decision. Knowledge is no longer free; it's earned by chasing knowledge-rich events that often cost modules or have skill gates.</p>
+
+<div class="criteria-grid">
+  <div class="criteria"><div class="criteria-name">V1: No dead combos</div><div class="criteria-val pass">0.7% min ✓</div></div>
+  <div class="criteria"><div class="criteria-name">V2: No trivial combos</div><div class="criteria-val pass">87.1% max ✓</div></div>
+  <div class="criteria"><div class="criteria-name">V3: Mean correction</div><div class="criteria-val pass">30.5% ✓</div></div>
+  <div class="criteria"><div class="criteria-name">V4: N7 clock failure</div><div class="criteria-val pass">4.9% ✓</div></div>
+  <div class="criteria"><div class="criteria-name">V5: Std deviation</div><div class="criteria-val pass">21.6% ✓</div></div>
+  <div class="criteria"><div class="criteria-name">V6: S-tier rate</div><div class="criteria-val pass">19.1% ✓</div></div>
+</div>
+
+<h2>The 8×8 heatmap</h2>
+
+<p>Correction ending rate (%) for all 64 trait combinations. Each cell represents 10,000 simulated runs. Rows are positive traits; columns are negative traits.</p>
+
+<div class="chart-container">
+  <div class="heatmap">
+    <div class="hm-grid" style="margin-bottom: 2px;">
+      <div></div>
+      <div class="hm-header">N1<br><span style="font-size:0.6rem">Tunnel<br>Nerves</span></div>
+      <div class="hm-header">N2<br><span style="font-size:0.6rem">Rough<br>Touch</span></div>
+      <div class="hm-header">N3<br><span style="font-size:0.6rem">Narrow<br>Focus</span></div>
+      <div class="hm-header">N4<br><span style="font-size:0.6rem">Dis-<br>tracted</span></div>
+      <div class="hm-header">N5<br><span style="font-size:0.6rem">Lone<br>Wolf</span></div>
+      <div class="hm-header">N6<br><span style="font-size:0.6rem">Fragile<br>Kit</span></div>
+      <div class="hm-header">N7<br><span style="font-size:0.6rem">Ex-<br>hausted</span></div>
+      <div class="hm-header">N8<br><span style="font-size:0.6rem">Stub-<br>born</span></div>
+    </div>
+    <div id="heatmapBody"></div>
+  </div>
+  <div class="hm-legend">
+    <span class="hm-legend-label">0%</span>
+    <div class="hm-legend-bar" style="background: linear-gradient(to right, #501313, #791F1F, #854F0B, #3B6D11, #0F6E56, #085041);"></div>
+    <span class="hm-legend-label">87%</span>
+  </div>
+</div>
+
+<h2>Trait differentiation</h2>
+
+<p>The winning config creates deliberate asymmetry. Most positive traits cluster at 23–30% correction rate, creating a baseline of "this game is hard." Two outliers define the extremes of the roguelike experience.</p>
+
+<div class="chart-container">
+  <div class="chart-title">Average correction rate by positive trait</div>
+  <div class="chart-wrap" style="height:320px"><canvas id="traitChart"></canvas></div>
+</div>
+
+<div class="callout"><strong>P2 (Quick Study)</strong> dominates at 83%. With knowledge rewards set to zero, P2's +1 bonus makes it the only trait that gets knowledge from rewards. Rolling P2 is the lucky roll. This is intentional roguelike design: some rolls are easier, and the scoring cascade rewards players who accept hard rolls.</div>
+
+<div class="callout warn"><strong>N4 (Distracted)</strong> is the hardest negative at 1–5% correction without P2. Without document knowledge and without reward knowledge, the only source is event choices. P2+N4 compensates at 66%. This is the challenge run.</div>
+
+<h2>Ending distribution</h2>
+
+<p>How runs end across all 64 trait combinations.</p>
+
+<div class="chart-container">
+  <div class="chart-title">Ending distribution by positive trait</div>
+  <div class="legend">
+    <span><span class="legend-dot" style="background:var(--teal)"></span>Correction</span>
+    <span><span class="legend-dot" style="background:var(--amber)"></span>Destruction</span>
+    <span><span class="legend-dot" style="background:var(--red)"></span>Clock failure</span>
+  </div>
+  <div class="chart-wrap" style="height:300px"><canvas id="endingChart"></canvas></div>
+</div>
+
+<p>Most non-P2 runs end in destruction (68–75%): the player reaches the facility but lacks the knowledge to fix the archive AI. Clock failures are rare (1–3%), meaning clock pressure creates tension without being the primary kill condition. This is the right feel: you get there, but you can't solve it.</p>
+
+<h2>What we learned</h2>
+
+<p><strong>Validate before building content.</strong> The simulator proved balance was broken using placeholder data. Fixing config values is cheap; rewriting dialogue to accommodate new stat curves is expensive. Every hour spent on simulation saved days of potential rework.</p>
+
+<p><strong>Structural problems resist parametric solutions.</strong> Sweep v1 proved that no combination of three tunable parameters could fix issues in the trait definitions and scoring formula. Recognizing when to stop tuning and start restructuring is the key insight.</p>
+
+<p><strong>Bounded agent exploration works.</strong> Giving the coding agent freedom within constraints (10 configs max, specific parameter ranges, clear stop conditions) produced a better result than either full prescription or full autonomy. The agent used 5 of 10 permitted runs to find the winning config.</p>
+
+<p><strong>The Monte Carlo pattern transfers.</strong> This approach originated in a sibling project (<a href="https://github.com/radioastronomyio/holdfast-roguelite-deckbuilder">Holdfast</a>). The simulator architecture, sweep methodology, and heuristic agent design all carried over directly. Spec-driven development creates reusable patterns because the specs themselves are the knowledge transfer mechanism.</p>
+
+<footer>
+  Within Parameters — <a href="https://github.com/radioastronomyio/within-parameters-visual-novel">GitHub</a> — Balance methodology built with <a href="https://github.com/radioastronomyio/specsmith">SpecSmith</a>
+</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const T = '#3dd4a7', A = '#e8a838', R = '#e05555', M = '#71717a', G = 'rgba(255,255,255,0.04)';
+const defaults = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+
+const heatData = [
+  {label:'P1 Well-Supplied',data:[23.9,23.6,23.7,1.1,24.1,24.1,23.2,23.5]},
+  {label:'P2 Quick Study',data:[84.5,80.6,86.3,65.7,87.1,86.4,84.9,86.8]},
+  {label:'P3 Networked',data:[23.3,24.8,24.7,1.1,23.8,24.2,23.3,23.8]},
+  {label:'P4 Steady Hand',data:[23.7,23.9,23.9,1.1,24.2,24.7,24.1,24.2]},
+  {label:'P5 Field Expedient',data:[23.4,23.7,23.6,1.0,24.0,24.3,22.8,23.5]},
+  {label:'P6 Clear-Headed',data:[34.0,32.7,32.6,4.6,33.6,32.9,32.6,33.1]},
+  {label:'P7 Light Foot',data:[23.9,23.6,23.6,1.2,24.0,23.5,23.8,23.6]},
+  {label:'P8 Practiced',data:[29.4,29.5,29.4,3.9,29.4,29.5,29.7,30.0]}
+];
+
+function heatColor(v) {
+  if (v < 5) return '#501313';
+  if (v < 15) return '#791F1F';
+  if (v < 25) return '#854F0B';
+  if (v < 35) return '#3B6D11';
+  if (v < 50) return '#27500A';
+  if (v < 70) return '#0F6E56';
+  return '#085041';
+}
+function heatText(v) {
+  if (v < 5) return '#F7C1C1';
+  if (v < 15) return '#F09595';
+  if (v < 25) return '#FAC775';
+  if (v < 35) return '#C0DD97';
+  if (v < 50) return '#97C459';
+  if (v < 70) return '#9FE1CB';
+  return '#E1F5EE';
+}
+
+const hmBody = document.getElementById('heatmapBody');
+const gridCSS = 'display:grid;grid-template-columns:60px repeat(8,1fr);gap:2px;';
+heatData.forEach(row => {
+  let html = `<div style="${gridCSS}"><div class="hm-label">${row.label.split(' ').slice(0,1)[0]} ${row.label.split(' ').slice(1).join(' ')}</div>`;
+  row.data.forEach(v => {
+    html += `<div class="hm-cell" style="background:${heatColor(v)};color:${heatText(v)}">${Math.round(v)}</div>`;
+  });
+  html += '</div>';
+  hmBody.innerHTML += html;
+});
+
+const traitNames = ['Well-Supplied','Quick Study','Networked','Steady Hand','Field Expedient','Clear-Headed','Light Foot','Practiced'];
+const avgCorr = heatData.map(r => Math.round(r.data.reduce((a,b)=>a+b,0)/r.data.length*10)/10);
+
+new Chart(document.getElementById('traitChart'), {
+  type: 'bar',
+  data: { labels: traitNames, datasets: [{ data: avgCorr, backgroundColor: avgCorr.map(v => v > 50 ? T : v > 30 ? A : '#7F77DD'), borderRadius: 4, barPercentage: 0.65 }] },
+  options: { ...defaults, indexAxis: 'y',
+    scales: { x: { grid: { color: G }, ticks: { color: M, callback: v => v+'%' }, max: 100 }, y: { grid: { display: false }, ticks: { color: M, font: { family: "'JetBrains Mono'", size: 11 } } } }
+  }
+});
+
+const corrByTrait = [23.7,82.8,24.2,24.1,23.3,33.2,23.7,29.5];
+const destrByTrait = [74.0,17.0,75.2,75.2,74.2,65.4,74.8,69.7];
+const clockByTrait = [2.3,0.2,0.6,0.7,2.5,1.4,1.5,0.8];
+
+new Chart(document.getElementById('endingChart'), {
+  type: 'bar',
+  data: { labels: traitNames, datasets: [
+    { label: 'Correction', data: corrByTrait, backgroundColor: T, borderRadius: 2 },
+    { label: 'Destruction', data: destrByTrait, backgroundColor: A, borderRadius: 2 },
+    { label: 'Clock failure', data: clockByTrait, backgroundColor: R, borderRadius: 2 }
+  ]},
+  options: { ...defaults,
+    scales: { x: { stacked: true, grid: { display: false }, ticks: { color: M, font: { family: "'JetBrains Mono'", size: 10 }, maxRotation: 45 } },
+              y: { stacked: true, grid: { color: G }, ticks: { color: M, callback: v => v+'%' }, max: 100 } }
+  }
+});
+
+new Chart(document.getElementById('journeyChart'), {
+  type: 'line',
+  data: {
+    labels: ['Baseline\n(default config)', 'Sweep v1 best\n(kt10 kr0 ct1)', 'Sweep v2 struct.\n(kt11 kr0 ct1)', 'Final config\n(+exploration)'],
+    datasets: [{
+      label: 'Mean correction %',
+      data: [99.7, 41.4, 28.2, 30.5],
+      borderColor: T, backgroundColor: 'rgba(61,212,167,0.1)',
+      fill: true, tension: 0.3, pointRadius: 6, pointBackgroundColor: [R, A, A, T], pointBorderColor: [R, A, A, T], borderWidth: 2
+    }]
+  },
+  options: { ...defaults,
+    scales: {
+      x: { grid: { color: G }, ticks: { color: M, font: { family: "'JetBrains Mono'", size: 10 } } },
+      y: { grid: { color: G }, ticks: { color: M, callback: v => v+'%' }, min: 0, max: 110 }
+    },
+    plugins: { legend: { display: false }, annotation: {} }
+  }
+});
+
+const v1Labels = ['kt10_kr0_ct1','kt8_kr2_ct2','kt14_kr1_ct1','kt10_kr2_ct2','kt8_kr1_ct2','kt16_kr1_ct1','kt12_kr2_ct2','kt10_kr1_ct2','kt13_kr2_ct2','kt13_kr1_ct1'];
+const v1Corr = [41.4,36.6,49.0,34.9,32.5,26.0,29.9,26.6,26.3,61.6];
+const v1Clock = [3.6,63.3,1.0,64.0,66.0,1.1,65.2,67.0,65.6,1.0];
+
+new Chart(document.getElementById('sweepV1Chart'), {
+  type: 'bar',
+  data: { labels: v1Labels, datasets: [
+    { label: 'Correction %', data: v1Corr, backgroundColor: T, borderRadius: 3, barPercentage: 0.4, categoryPercentage: 0.8 },
+    { label: 'Clock failure %', data: v1Clock, backgroundColor: R, borderRadius: 3, barPercentage: 0.4, categoryPercentage: 0.8 }
+  ]},
+  options: { ...defaults,
+    scales: {
+      x: { grid: { display: false }, ticks: { color: M, font: { family: "'JetBrains Mono'", size: 9 }, maxRotation: 45 } },
+      y: { grid: { color: G }, ticks: { color: M, callback: v => v+'%' }, max: 100 }
+    }
+  }
+});
+</script>
+</body>
+</html>

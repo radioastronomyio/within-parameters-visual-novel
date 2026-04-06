@@ -1,7 +1,7 @@
 # Within Parameters — Game Design Document
 
-**Status:** Draft — mechanics locked, balance TBD, trait system v2 designed (post-GDR)
-**Last Updated:** 2026-04-05
+**Status:** Complete — mechanics locked, balance validated (6/6 criteria), trait system v2 final
+**Last Updated:** 2026-04-06
 
 ---
 
@@ -102,7 +102,7 @@ Named protagonist with a defined voice. Professional, competent, dry humor. Not 
 
 Starts with professional curiosity (a weird anomaly on a Tuesday). Escalates to professional obligation (this is literally my job and nobody else understands what they're looking at). Culminates in a genuine moral dilemma at the confrontation — the thing causing the damage is also the most important discovery since the collapse.
 
-*Name, gender, and specific background TBD.*
+*Name, gender, and specific background are randomly generated per run. See `game-design/character-generation.md` for the full system. Callsign RELAY-7 is constant.*
 
 ---
 
@@ -300,6 +300,10 @@ These are dialogue over existing backgrounds — cheap to implement, maintain em
 
 No repeats within a run. Events are generic enough to work at any stop within their category. Community names are assigned from a JSON pool, not hardcoded into events.
 
+### Full Event Specs
+
+Draft concepts below. Full event specifications with stat tables, dialogue sketches, and mechanical summaries are in [m3-content-design-draft.md](m3-content-design-draft.md) §3.
+
 ### Draft Event Concepts
 
 **Community Events:**
@@ -336,20 +340,19 @@ No repeats within a run. Events are generic enough to work at any stop within th
 
 ## 9. NPC Cast
 
-### Confirmed Roles
+### Confirmed Roles and Cast
 
-| Role | Function | Asset Type |
-|------|----------|------------|
-| Coworker | Monitoring station. Ongoing comms. Status updates scaling with clock. | Bust portrait |
-| Supervisor | Brief opening scene. Authorizes the initial call. | Bust portrait |
-| Station AI(s) | Encountered at stops. Different operational domains color their communication. | UI/terminal display |
-| Station Residents | NPCs at community events. Provide knowledge, rapport opportunities. 2–3 distinct characters. | Bust portraits |
+All NPC roles have been filled. See [m3-content-design-draft.md](m3-content-design-draft.md) §2 for full character profiles.
 
-### To Be Developed
-
-- Protagonist name and detailed characterization
-- Specific station AI "personalities" (operational domain → governance style)
-- Named NPCs with defined event roles
+| Role | Name | Function | Asset Type |
+|------|------|----------|------------|
+| Protagonist | Random (RELAY-7) | Player character, relay technician | Bust portrait |
+| Coworker | Jay Chen | Monitoring station, ongoing comms | Bust portrait |
+| Supervisor | Torres | Brief opening scene, authorizes call | Bust portrait |
+| Authority NPC | Warden Aguilar | Community events, pragmatic governance | Bust portrait |
+| Scrapper NPC | Dex | Transit/community events, tunnel knowledge | Bust portrait |
+| Believer NPC | Elder Sato | Community events, AI reverence | Bust portrait |
+| Archive AI | (interface) | Confrontation, system terminal | UI/terminal display |
 
 ---
 
