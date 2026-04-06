@@ -8,7 +8,28 @@ Entry point for AI coding agents working on this repository.
 **Repository:** https://github.com/radioastronomyio/within-parameters-visual-novel
 **Purpose:** A roguelike visual novel set in a post-solar-storm underground civilization where narrow maintenance AIs govern humanity using operational logic never designed for the task. The player is a randomly generated relay technician investigating an archive AI that is cannibalizing inhabited infrastructure in a relentless attempt to reconnect to an internet that no longer exists. Portfolio piece targeting Azure Static Web Apps and itch.io publication.
 
+**Methodology:** This project uses [SpecSmith](https://github.com/radioastronomyio/specsmith). Specs define outcomes and verification criteria; agents implement from specs.
+
 **Stack:** Vite + TypeScript (strict mode), vanilla DOM manipulation, CSS custom properties, localStorage saves
+
+## Git Workflow
+
+All agent-executed specs produce work on feature branches. Never commit directly to `main`.
+
+### Branch Lifecycle
+
+1. **Before starting work:** `git checkout -b agent/{spec-name}` from `main` (e.g., `agent/wp-sweep` for `wp-sweep-spec.md`). If the spec specifies a branch name, use that instead.
+2. **During work:** Commit as needed with conventional commit messages. Commits are local only.
+3. **When finished:** Commit all deliverables. Do not push. Do not create a PR. Report completion.
+4. **Orchestrator reviews** the branch locally, then pushes and merges (or discards).
+
+### Rules
+
+- One branch per spec. Do not reuse branches across specs.
+- Do not push to `origin`. The orchestrator handles all pushes.
+- Do not modify files outside the scope defined in the spec.
+- Generated output (heatmaps, CSVs, build artifacts) follows the spec's instructions for whether to commit or gitignore. When the spec is silent, gitignore generated output.
+- If the branch already exists, stop and report the conflict. Do not force-create or overwrite.
 
 ## Current State
 
@@ -32,16 +53,23 @@ Entry point for AI coding agents working on this repository.
 - NPC cast: protagonist (random), Jay Chen (coworker), Torres (supervisor), Aguilar (authority), Dex (scrapper), Sato (believer)
 - Consumable identity: bypass module
 
+### Complete
+
+- Engine build: all 22 source files, five bugs patched, end-to-end functional with placeholder assets
+- Balance simulator (`simulation/`): Monte Carlo engine, heuristic agent, 640k-run validation
+- Balance sweep v1: 33 configs tested, identified 3 structural failures (scoring compression, P6 too strong, N7 doesn't scale)
+- Balance sweep v2: structural fixes applied, 38 configs tested (33 structured + 5 exploratory), winning config found (6/6 validation criteria)
+- Balance parameters locked: `kt=11, kr=0, ct=1, starting_modules=6, jitter_chance=0.35`
+- SpecSmith retrospective specs written (01-04) with case study
+
 ### Ready for Agent Execution
 
-- Balance simulator build (spec at `spec/wp-simulator-spec.md`)
+- Code commenting and repo cleanup (spec at `spec/05-code-commenting-and-cleanup.md`): dual-audience commenting on all source files, interior README fixes
 - Content build: translating approved design docs into engine JSON
 - Placeholder art generation (scene-name PNGs)
-- AGENTS.md and GDD are current
 
 ### Not Started
 
-- Simulator implementation and balance validation
 - Production JSON content (scenes.json, events.json rewrite with full content)
 - Playwright smoke tests against live dev server
 - Production art (NB2 finals from NightCafe concepts)
@@ -61,7 +89,9 @@ Entry point for AI coding agents working on this repository.
 | Character Generation | `game-design/character-generation.md` | Name pools, backstory templates, dossier screen, portrait strategy |
 | Trait System v2 | `spec/m3-trait-system-v2.md` | Authoritative trait definitions, interaction matrix, scoring (post-GDR) |
 | Simulator Spec | `spec/wp-simulator-spec.md` | Monte Carlo balance simulator agent execution target |
-| Mechanical Context | `spec/wp-mechanical-design-context.md` | Consolidated stat model reference for simulator |
+| Sweep Spec (v1) | `spec/archive/wp-sweep-spec.md` | Parameter sweep v1 agent execution target |
+| Sweep Spec (v2) | `spec/archive/wp-sweep-v2-spec.md` | Structural fixes + exploration agent execution target |
+| SpecSmith Case Study | `spec/wp-specsmith-case-study.md` | How spec-driven development shaped this project |
 | NB2 UI Mockup | `assets/concept-artwork/ui/ui-mockup-nano-banana-pro-2.png` | Visual target for the three-pane layout |
 
 **Read the engine spec before writing any engine code.** It is the execution contract.
@@ -190,7 +220,7 @@ Mobile responsiveness, accessibility beyond basic keyboard nav, analytics, multi
 
 ## Execution Environment
 
-**Primary execution:** ML01 (`/opt/repos/within-parameters-visual-novel/`)
+**Primary execution:** ML01 (`/repos/within-parameters-visual-novel/`)
 **Dev URL:** `https://wp-dev.donfather.dev` (Traefik on docker01, port 5173)
 **Agent runtime:** OpenCode, Claude Code
 **Strategic work:** Claude.ai Projects
@@ -213,7 +243,7 @@ within-parameters-visual-novel/
 ├── game-design/                    # Design documents (GDD, storyboard, art bible, content specs)
 ├── public/                         # Static assets for Vite
 ├── shared/                         # Cross-project utilities
-├── simulation/                     # Python balance simulator (spec ready, not yet built)
+├── simulation/                     # Python balance simulator and sweep tools
 ├── spec/                           # Technical specifications and agent prompts
 ├── src/                            # TypeScript source (22 files, engine complete)
 │   ├── types/                      # Data contracts
@@ -234,6 +264,7 @@ within-parameters-visual-novel/
 
 ## Conventions
 
+- **Git workflow:** Feature branches per spec. See "Git Workflow" section above.
 - **Documentation:** Use templates from `docs/documentation-standards/`
 - **Commits:** Conventional commits (`feat:`, `fix:`, `docs:`, `art:`)
 - **Frontmatter:** YAML frontmatter with tags from `docs/documentation-standards/tagging-strategy.md`

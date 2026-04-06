@@ -76,9 +76,10 @@ Simulator recommended: Monte Carlo at 10,000 iterations per trait combination, h
 
 ## What's Next
 
-1. **Copy remaining session outputs into repo** (m3-content-design-draft.md, GDR results, mechanical context)
-2. **Agent task:** Build the balance simulator from `spec/wp-simulator-spec.md` on ML01
-3. **Agent task:** Translate M3 content into production JSON (scenes.json, events.json rewrite)
-4. **Agent task:** Generate placeholder art (scene-name PNGs)
-5. **Art sprint:** NB2 production finals from NightCafe concepts
-6. **Music:** Gemini 3 Pro exploration
+Balance validation moved to [Phase 04](../04-balance-validation/). Content implementation (M4) pending balance lock.
+
+**Completed since this worklog was written:**
+- m3-content-design-draft.md placed in `game-design/`
+- GDR results placed in this directory
+- Mechanical context placed in `spec/`
+- Balance simulator built, swept, and resolved (see Phase 04)
