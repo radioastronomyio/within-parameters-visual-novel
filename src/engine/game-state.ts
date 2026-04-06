@@ -1,7 +1,8 @@
 /**
  * Game state mutations — pure functions returning new GameState objects.
  * Never mutates state in place. All stat changes, clock ticks, and community
- * state transitions flow through here. Rapport is derived, not stored.
+ * state transitions flow through here. Rapport is derived from community states
+ * and cached in stats.rapport; always update via setCommunityState, never directly.
  *
  * @module engine/game-state
  */
@@ -122,7 +123,7 @@ export function deriveRapport(state: GameState): number {
   }, 0);
 }
 
-/** Computes clock reduction for the reward cycle. Scaled by rapport but capped by config.clockReductionMax (max 2 segments). */
+/** Computes clock reduction for the reward cycle. Scaled by rapport, capped at 2 segments in the Python simulator. The TS engine does not enforce the cap directly. */
 export function calculateClockReduction(state: GameState, config: GameConfig): number {
   const rapport = deriveRapport(state);
   const bonus = Math.floor(rapport * config.rapportClockScale);

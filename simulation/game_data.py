@@ -38,10 +38,8 @@ from typing import Callable
 class Config:
     """
     Frozen balance configuration for a single simulation run.
-    Traits modify this via dataclasses.replace() — never mutate a Config in place.
-
-    # AI NOTE: All trait modifier lambdas receive and return a Config. The frozen
-    # dataclass enforces immutability at runtime. Use replace() for all modifications.
+    Traits modify this via dataclasses.replace(); never mutate a Config in place.
+    All trait modifier lambdas receive and return a Config.
     """
     starting_modules: int = 5
     starting_knowledge: int = 0

@@ -159,7 +159,7 @@ def agent_select_choice(
 ) -> tuple[EventChoice, bool]:
     """
     Priority-weighted heuristic agent for choice selection. Priority order:
-    1. Gated choices (knowledge/rapport-gated — high information value)
+    1. Knowledge-gated choices (high information value)
     2. Community help choices (when clock pressure is low, i.e. clock < 7)
     3. Lowest effective module cost (resource conservation fallback)
     Stubborn trait overrides: always picks the highest-cost community choice available.
@@ -246,9 +246,9 @@ def apply_choice(
     """
     Applies a choice's effects to mutable GameState. Returns True if the
     Practiced trait discount was consumed this stop (caller tracks this).
+    """
     # AI NOTE: Light Foot suppresses transit clock_change > 0. Tunnel Nerves
     # adds +1 to all approach clock changes. Both apply to clock_change in-place.
-    """
     used_practiced = False
     if choice.module_change >= 0:
         state.modules += choice.module_change
@@ -383,9 +383,9 @@ def run_game(
     """
     Simulates one complete run for a given trait combination. Applies trait modifiers
     to produce an effective config, draws the event pool, and runs all 5 stops.
-    # AI NOTE: Trait application order is pos then neg: neg_trait[3](pos_trait[3](config)).
     Each stop uses a fresh practiced_available flag — Practiced resets each stop.
     """
+    # AI NOTE: Trait application order is pos then neg: neg_trait[3](pos_trait[3](config)).
     effective_config = neg_trait[3](pos_trait[3](config))
 
     state = GameState(

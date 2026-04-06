@@ -63,9 +63,24 @@ Output appears in `simulation/output/` and stdout. Runtime: ~2-3 minutes for 640
 
 ---
 
-## 4. First Run Results (April 2026)
+## 4. Balance Results
 
-### Validation Criteria Status
+### Winning Configuration (v2 Sweep, April 2026)
+
+| # | Criterion | Target | Actual | Status |
+|---|-----------|--------|--------|--------|
+| 1 | No 0% correction combos | Min > 0% | 0.7% | PASS |
+| 2 | No combo above 90% correction | Max ≤ 90% | 87.1% | PASS |
+| 3 | Mean correction 30-55% | 30-55% | 30.5% | PASS |
+| 4 | N7 clock failure below 60% | < 60% | 4.9% | PASS |
+| 5 | Std dev 10-25% | 10-25% | 21.6% | PASS |
+| 6 | S-tier in 10-20% of correction runs | 10-20% | 19.1% | PASS |
+
+Winning config: `kt=11, kr=0, ct=1, starting_modules=6, jitter_chance=0.35`. Found via 5 exploratory runs after 33 structured configs. See [balance methodology](../docs/balance-methodology.html) for the full walkthrough.
+
+### Historical: First Run Results (Pre-Rebalance)
+
+The initial simulator run confirmed the game was trivially winnable with default parameters.
 
 | # | Criterion | Target | Actual | Status |
 |---|-----------|--------|--------|--------|
