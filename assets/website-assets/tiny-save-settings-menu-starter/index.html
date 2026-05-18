@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tiny Save / Settings Menu Starter</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" data-theme="teal">
+      <section class="side-panel" aria-label="Starter overview">
+        <div class="brand">
+          <img src="assets/menu-mark.svg" alt="" />
+          <div>
+            <h1>Tiny Save / Settings Menu Starter</h1>
+            <p>Drop-in save slots, settings, keybinds, and data tools for small web games.</p>
+          </div>
+        </div>
+
+        <nav class="menu-tabs" aria-label="Menu sections">
+          <button class="tab-button active" data-tab="saves" type="button">Save Slots</button>
+          <button class="tab-button" data-tab="settings" type="button">Settings</button>
+          <button class="tab-button" data-tab="controls" type="button">Controls</button>
+          <button class="tab-button" data-tab="data" type="button">Data</button>
+        </nav>
+
+        <div class="snapshot">
+          <strong id="active-title">No Save Loaded</strong>
+          <span id="active-meta">Pick a slot to load sample progress.</span>
+        </div>
+      </section>
+
+      <section class="screen-panel" aria-live="polite">
+        <header class="screen-header">
+          <div>
+            <span id="screen-kicker">Save Slots</span>
+            <h2 id="screen-title">Manage Progress</h2>
+          </div>
+          <button class="ghost-button" id="reset-demo" type="button">Reset Demo</button>
+        </header>
+
+        <section class="tab-panel active" id="panel-saves" aria-label="Save slots">
+          <div class="save-grid" id="save-grid"></div>
+          <div class="action-row">
+            <button class="primary-button" id="quick-save" type="button">Quick Save Active Slot</button>
+            <button class="secondary-button" id="new-run" type="button">Create New Run</button>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-settings" aria-label="Settings">
+          <div class="settings-grid">
+            <article class="settings-card">
+              <h3>Audio</h3>
+              <label class="range-row">Master <input data-setting="master" type="range" min="0" max="100" /></label>
+              <label class="range-row">Music <input data-setting="music" type="range" min="0" max="100" /></label>
+              <label class="range-row">SFX <input data-setting="sfx" type="range" min="0" max="100" /></label>
+            </article>
+
+            <article class="settings-card">
+              <h3>Display</h3>
+              <label class="field-row">Resolution
+                <select data-setting="resolution">
+                  <option>1280 x 720</option>
+                  <option>1600 x 900</option>
+                  <option>1920 x 1080</option>
+                </select>
+              </label>
+              <label class="toggle-row">Fullscreen <input data-setting="fullscreen" type="checkbox" /></label>
+              <label class="toggle-row">VSync <input data-setting="vsync" type="checkbox" /></label>
+              <label class="toggle-row">Pixel Perfect <input data-setting="pixelPerfect" type="checkbox" /></label>
+            </article>
+
+            <article class="settings-card">
+              <h3>Gameplay</h3>
+              <label class="toggle-row">Camera Shake <input data-setting="screenShake" type="checkbox" /></label>
+              <label class="toggle-row">Tutorials <input data-setting="tutorials" type="checkbox" /></label>
+              <label class="field-row">Difficulty
+                <select data-setting="difficulty">
+                  <option>Easy</option>
+                  <option>Normal</option>
+                  <option>Hard</option>
+                </select>
+              </label>
+            </article>
+
+            <article class="settings-card">
+              <h3>Access</h3>
+              <label class="toggle-row">Reduced Motion <input data-setting="reducedMotion" type="checkbox" /></label>
+              <label class="range-row">Text Speed <input data-setting="textSpeed" type="range" min="1" max="10" /></label>
+              <label class="field-row">Theme
+                <select data-setting="theme">
+                  <option value="teal">Teal</option>
+                  <option value="ember">Ember</option>
+                  <option value="violet">Violet</option>
+                </select>
+              </label>
+            </article>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-controls" aria-label="Controls">
+          <div class="controls-grid" id="controls-grid"></div>
+        </section>
+
+        <section class="tab-panel" id="panel-data" aria-label="Data tools">
+          <div class="data-grid">
+            <article class="settings-card">
+              <h3>Export</h3>
+              <textarea id="export-box" spellcheck="false" aria-label="Exported save data"></textarea>
+              <button class="primary-button" id="export-data" type="button">Export Data</button>
+            </article>
+            <article class="settings-card">
+              <h3>Import</h3>
+              <textarea id="import-box" spellcheck="false" aria-label="Paste save data"></textarea>
+              <button class="secondary-button" id="import-data" type="button">Import Data</button>
+            </article>
+            <article class="settings-card danger-card">
+              <h3>Reset</h3>
+              <p>Clear local starter data and restore the sample saves.</p>
+              <button class="danger-button" id="wipe-data" type="button">Wipe Local Data</button>
+            </article>
+          </div>
+        </section>
+
+        <div class="toast" id="toast" role="status"></div>
+      </section>
+    </main>
+    <script src="src/save-settings-starter.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

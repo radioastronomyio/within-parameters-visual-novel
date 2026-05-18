@@ -1,0 +1,29 @@
+type,key,filename,dimensions,label,status,hash
+portrait,protagonist-neutral,portraits/protagonist-neutral.png,480x640,RELAY-7 / neutral,placeholder,e44a9b10b279fbe8
+portrait,protagonist-focused,portraits/protagonist-focused.png,480x640,RELAY-7 / focused,placeholder,ef8fa98fb39635a2
+portrait,coworker-neutral,portraits/coworker-neutral.png,480x640,CHEN / neutral,placeholder,8b073ed4d43f2691
+portrait,coworker-concerned,portraits/coworker-concerned.png,480x640,CHEN / concerned,placeholder,a6d2d4ad182e918b
+portrait,coworker-urgent,portraits/coworker-urgent.png,480x640,CHEN / urgent,placeholder,9ba674024cf5cfb6
+portrait,npc1-neutral,portraits/npc1-neutral.png,480x640,STATION REP / neutral,placeholder,5bb8454c930a91b5
+portrait,npc1-hostile,portraits/npc1-hostile.png,480x640,STATION REP / hostile,placeholder,2fb36405bbd1dcb7
+portrait,npc2-neutral,portraits/npc2-neutral.png,480x640,ENGINEER / neutral,placeholder,8c62fef732a72a18
+portrait,npc2-worried,portraits/npc2-worried.png,480x640,ENGINEER / worried,placeholder,48dd744d9e05b6cd
+background,bg-title,backgrounds/title.png,1280x720,WITHIN PARAMETERS,placeholder,beed53f947c87e37
+background,bg-lore,backgrounds/lore.png,1280x720,ARCHIVE,placeholder,cb891f0a51064fc4
+background,bg-dispatch,backgrounds/dispatch.png,1280x720,RELAY DISPATCH,placeholder,b41671c8da6335ac
+background,bg-tunnel-main,backgrounds/tunnel-main.png,1280x720,MAIN TUNNEL,placeholder,c864bbf26a820582
+background,bg-station-alpha,backgrounds/station-alpha.png,1280x720,STATION ALPHA,placeholder,96ec096f8af9f029
+background,bg-station-beta,backgrounds/station-beta.png,1280x720,STATION BETA,placeholder,66808eebeae1f09a
+background,bg-maintenance,backgrounds/maintenance.png,1280x720,MAINTENANCE JUNCTION,placeholder,d6c3adba0b217f47
+background,bg-approach,backgrounds/approach.png,1280x720,DATA CENTER APPROACH,placeholder,129aa2b03efe1aad
+background,bg-facility,backgrounds/facility.png,1280x720,HARDENED FACILITY,placeholder,89ff8456d8671d19
+background,bg-server-room,backgrounds/server-room.png,1280x720,ARCHIVE CORE,placeholder,cb440e35b5ae681e
+background,bg-ending-failure,backgrounds/ending-failure.png,1280x720,SYSTEM FAILURE,placeholder,63a50187a12d3ffe
+background,bg-ending-destruction,backgrounds/ending-destruction.png,1280x720,SYSTEM DESTRUCTION,placeholder,a54bffddefbd1a40
+background,bg-ending-correction,backgrounds/ending-correction.png,1280x720,SYSTEM CORRECTION,placeholder,f252927c3ef6c306
+audio,bgm-title,audio/bgm-title.ogg,,bgm-title,replaced,ee4f4650d9d613f9
+audio,bgm-ambient,audio/bgm-ambient.ogg,,bgm-ambient,replaced,91283b56f1e707f8
+audio,bgm-tension,audio/bgm-tension.ogg,,bgm-tension,replaced,f2e311e997ecd21a
+audio,bgm-ending,audio/bgm-ending.ogg,,bgm-ending,replaced,758709893981d0f6
+audio,sfx-click,audio/sfx-click.mp3,,sfx-click,missing,
+audio,sfx-alert,audio/sfx-alert.mp3,,sfx-alert,missing,

@@ -1,0 +1,9 @@
+<link rel="stylesheet" href="styles.css" />
+<script src="src/save-settings-starter.js"></script>
+<script>
+  const starter = window.TinySaveSettingsStarter;
+  const state = starter.load();
+
+  state.settings.master = 75;
+  starter.save(state);
+</script>

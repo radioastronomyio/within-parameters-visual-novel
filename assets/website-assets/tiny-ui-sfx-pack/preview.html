@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tiny UI SFX Pack Preview</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero__copy">
+          <p class="label">Tiny UI SFX Pack</p>
+          <h1>Short synthetic sounds for game menus.</h1>
+          <p class="lede">A compact set of click, hover, confirm, cancel, alert, toggle, transition, and error sounds for game jams, prototypes, and small releases.</p>
+          <div class="stats">
+            <span><strong id="stat-wav">0</strong> WAV</span>
+            <span><strong id="stat-cat">0</strong> categories</span>
+            <span><strong>44.1</strong> kHz</span>
+          </div>
+        </div>
+        <div class="player">
+          <div class="transport">
+            <button id="play-featured" type="button" aria-label="Play selected sound">
+              <span></span>
+            </button>
+            <div>
+              <strong id="featured-title">Click 1</strong>
+              <p id="featured-meta">Ready</p>
+            </div>
+          </div>
+          <img id="featured-waveform" src="" alt="">
+        </div>
+      </section>
+
+      <section class="controls" aria-label="SFX filters">
+        <label>
+          Search
+          <input id="search" type="search" placeholder="Try confirm, error, hover">
+        </label>
+        <label>
+          Category
+          <select id="category-filter"></select>
+        </label>
+      </section>
+
+      <section class="category-row" id="category-row" aria-label="Categories"></section>
+
+      <section class="grid-heading">
+        <h2>Audition sounds</h2>
+        <p><span id="visible-count">0</span> visible</p>
+      </section>
+      <section class="sound-grid" id="sound-grid" aria-label="Sound list"></section>
+
+      <section class="contact">
+        <h2>Contact sheet</h2>
+        <img src="marketing/contact-sheet.png" alt="Tiny UI SFX Pack waveform contact sheet">
+      </section>
+    </main>
+
+    <script src="data/sfx-index.js"></script>
+    <script src="preview.js"></script>
+  </body>
+</html>

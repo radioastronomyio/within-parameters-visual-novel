@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="630" height="500" viewBox="0 0 630 500">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071017"/>
+      <stop offset="0.58" stop-color="#0d1d28"/>
+      <stop offset="1" stop-color="#102f29"/>
+    </linearGradient>
+  </defs>
+  <rect width="630" height="500" fill="url(#bg)"/>
+  <circle cx="550" cy="66" r="130" fill="#48e6b2" opacity=".12"/>
+  <text x="38" y="74" font-family="Impact, Arial Black, Arial, sans-serif" font-size="54" fill="#f4f9fb">Tiny Save</text>
+  <text x="38" y="126" font-family="Impact, Arial Black, Arial, sans-serif" font-size="54" fill="#48e6b2">/ Settings</text>
+  <text x="38" y="177" font-family="Impact, Arial Black, Arial, sans-serif" font-size="50" fill="#f4f9fb">Menu Starter</text>
+  <text x="40" y="214" font-family="Arial, sans-serif" font-size="17" font-weight="900" fill="#c6d3dc">HTML + JS / local saves</text>
+  <rect x="324" y="70" width="262" height="220" rx="18" fill="#0d1622" stroke="#2a4054"/>
+  <rect x="454" y="306" width="112" height="180" rx="16" fill="#0d1622" stroke="#2a4054"/>
+  <g>
+    <rect x="38" y="258" width="180" height="54" rx="12" fill="#101c28" stroke="#2a4054"/>
+    <text x="59" y="292" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#48e6b2">3 save slots</text>
+    <rect x="38" y="326" width="180" height="54" rx="12" fill="#101c28" stroke="#2a4054"/>
+    <text x="59" y="360" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#ffd45d">settings tabs</text>
+    <rect x="38" y="394" width="180" height="54" rx="12" fill="#101c28" stroke="#2a4054"/>
+    <text x="59" y="428" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#f4f9fb">keybinds + data</text>
+  </g>
+</svg>

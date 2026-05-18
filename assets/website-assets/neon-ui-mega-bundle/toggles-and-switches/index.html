@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon UI Toggles & Switches Pack – HTML5 / CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #0f172a;
+      --neon-blue: #38bdf8;
+      --neon-green: #22c55e;
+      --neon-yellow: #facc15;
+      --neon-red: #ef4444;
+      --neon-pink: #f472b6;
+      --neon-purple: #a855f7;
+      --neon-cyan: #22d3ee;
+    }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617, #000000 60%);
+      color: #e5e7eb;
+    }
+    .shell {
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      padding: 18px;
+      width: min(980px, 96vw);
+      border: 1px solid rgba(56,189,248,0.4);
+      box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+    }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #90e5ff;
+    }
+    .tag {
+      text-align:center;
+      font-size:0.8rem;
+      color:#a5f3fc;
+      margin-top:4px;
+      margin-bottom:12px;
+      background:rgba(15,118,110,0.5);
+      padding:2px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
+
+    .section-title {
+      margin: 16px 0 8px;
+      font-size:0.9rem;
+      color:#e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:14px;
+    }
+
+    .card {
+      background:rgba(15,23,42,0.96);
+      border-radius:16px;
+      padding:10px 12px;
+      border:1px solid rgba(15,23,42,1);
+      box-shadow:0 0 18px rgba(15,23,42,0.9);
+      font-size:0.8rem;
+    }
+    .card-title {
+      font-size:0.82rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:#e5e7eb;
+      margin-bottom:6px;
+    }
+    .card-sub {
+      font-size:0.75rem;
+      color:#9ca3af;
+      margin-bottom:8px;
+    }
+    .stack {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    /* Base row layout */
+    .row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      font-size:0.8rem;
+    }
+    .row-label {
+      color:#e5e7eb;
+    }
+    .row-meta {
+      font-size:0.72rem;
+      color:#9ca3af;
+    }
+
+    /* Toggle base */
+    .toggle {
+      position:relative;
+      width:64px;
+      height:26px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.98);
+      border:2px solid rgba(30,64,175,0.9);
+      box-shadow:0 0 14px rgba(15,23,42,1);
+      cursor:pointer;
+    }
+    .toggle-track {
+      position:absolute;
+      inset:3px;
+      border-radius:999px;
+      background:radial-gradient(circle at 0% 50%, rgba(15,23,42,0.9), #020617);
+      overflow:hidden;
+    }
+    .toggle-glow {
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background:linear-gradient(to right,#38bdf8,#22c55e);
+      opacity:0;
+      transition:opacity 0.15s ease-out;
+      box-shadow:0 0 18px rgba(56,189,248,0.9);
+    }
+    .toggle-thumb {
+      position:absolute;
+      top:50%;
+      left:4px;
+      transform:translateY(-50%);
+      width:20px;
+      height:20px;
+      border-radius:999px;
+      background:#020617;
+      border:2px solid #38bdf8;
+      box-shadow:0 0 14px rgba(56,189,248,0.9);
+      transition:transform 0.16s ease-out, border-color 0.16s ease-out, box-shadow 0.16s ease-out;
+    }
+    .toggle--on .toggle-glow {
+      opacity:1;
+    }
+    .toggle--on .toggle-thumb {
+      transform:translate(32px,-50%);
+      border-color:#22c55e;
+      box-shadow:0 0 16px rgba(34,197,94,0.95);
+    }
+
+    /* Compact toggle */
+    .toggle-compact {
+      width:46px;
+      height:20px;
+    }
+    .toggle-compact .toggle-thumb {
+      width:16px;
+      height:16px;
+      left:3px;
+    }
+    .toggle-compact.toggle--on .toggle-thumb {
+      transform:translate(22px,-50%);
+    }
+
+    /* Checkbox style */
+    .checkbox {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+    }
+    .checkbox-box {
+      width:18px;
+      height:18px;
+      border-radius:6px;
+      border:2px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.9);
+      box-shadow:0 0 10px rgba(15,23,42,0.95);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:0.9rem;
+      color:#22c55e;
+      opacity:0.0;
+      transition:opacity 0.12s ease-out, border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+    }
+    .checkbox-label {
+      font-size:0.8rem;
+      color:#e5e7eb;
+    }
+    .checkbox--on .checkbox-box {
+      opacity:1;
+      border-color:#22c55e;
+      box-shadow:0 0 12px rgba(34,197,94,0.9);
+    }
+
+    /* Radio buttons */
+    .radio-row {
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .radio-option {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      font-size:0.8rem;
+    }
+    .radio-dot {
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      border:2px solid rgba(148,163,184,0.75);
+      box-shadow:0 0 8px rgba(15,23,42,0.9);
+      position:relative;
+    }
+    .radio-dot::after {
+      content:"";
+      position:absolute;
+      inset:3px;
+      border-radius:999px;
+      background:#38bdf8;
+      box-shadow:0 0 10px rgba(56,189,248,0.9);
+      opacity:0;
+      transition:opacity 0.12s ease-out;
+    }
+    .radio--active .radio-dot {
+      border-color:#38bdf8;
+    }
+    .radio--active .radio-dot::after {
+      opacity:1;
+    }
+
+    /* Segmented control */
+    .segment {
+      display:inline-flex;
+      padding:3px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(56,189,248,0.7);
+      box-shadow:0 0 14px rgba(56,189,248,0.65);
+      font-size:0.78rem;
+    }
+    .segment-btn {
+      padding:4px 10px;
+      border-radius:999px;
+      border:none;
+      background:transparent;
+      color:#9ca3af;
+      cursor:pointer;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.72rem;
+      transition:background 0.12s ease, color 0.12s ease;
+    }
+    .segment-btn--active {
+      background:linear-gradient(to right,#38bdf8,#22c55e);
+      color:#020617;
+      box-shadow:0 0 12px rgba(56,189,248,0.9);
+    }
+
+    /* Status chip */
+    .status-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:3px 9px;
+      font-size:0.72rem;
+      background:rgba(15,23,42,0.95);
+      border:1px solid rgba(34,197,94,0.8);
+      color:#bbf7d0;
+      box-shadow:0 0 12px rgba(34,197,94,0.7);
+    }
+    .status-chip--off {
+      border-color:rgba(148,163,184,0.9);
+      color:#e5e7eb;
+      box-shadow:none;
+    }
+    .status-dot {
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 8px rgba(34,197,94,0.9);
+    }
+    .status-chip--off .status-dot {
+      background:#64748b;
+      box-shadow:none;
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Neon UI Toggles &amp; Switches Pack</h1>
+  <div style="text-align:center;">
+    <span class="tag">HTML5 / CSS – Rebrand &amp; Resell</span>
+  </div>
+
+  <!-- Main Toggles -->
+  <div class="section-title">Primary Toggles</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Gameplay Toggles</div>
+      <div class="card-sub">Large on/off switches for key options.</div>
+      <div class="stack">
+        <div class="row">
+          <div>
+            <div class="row-label">Assist Aim</div>
+            <div class="row-meta">Recommended for controllers</div>
+          </div>
+          <div class="toggle toggle--on">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div class="row-label">Damage Numbers</div>
+            <div class="row-meta">Show floating combat text</div>
+          </div>
+          <div class="toggle">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div class="row-label">Subtitles</div>
+            <div class="row-meta">Dialogue captions</div>
+          </div>
+          <div class="toggle toggle--on">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compact toggles -->
+    <div class="card">
+      <div class="card-title">Compact Toggles</div>
+      <div class="card-sub">Slim toggles for HUD and advanced settings.</div>
+      <div class="stack">
+        <div class="row">
+          <div class="row-label">HUD Hints</div>
+          <div class="toggle toggle-compact toggle--on">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Minimap</div>
+          <div class="toggle toggle-compact">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Damage Flash</div>
+          <div class="toggle toggle-compact toggle--on">
+            <div class="toggle-track">
+              <div class="toggle-glow"></div>
+            </div>
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkbox & Radio -->
+  <div class="section-title">Checkboxes &amp; Radios</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Feature Checkboxes</div>
+      <div class="card-sub">Enable or disable extra systems.</div>
+      <div class="stack">
+        <div class="checkbox checkbox--on">
+          <div class="checkbox-box">✔</div>
+          <div class="checkbox-label">Daily Challenges</div>
+        </div>
+        <div class="checkbox checkbox--on">
+          <div class="checkbox-box">✔</div>
+          <div class="checkbox-label">Experimental Lighting</div>
+        </div>
+        <div class="checkbox">
+          <div class="checkbox-box">✔</div>
+          <div class="checkbox-label">Streamer Safe Mode</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Difficulty Radios</div>
+      <div class="card-sub">Single-choice options with neon focus.</div>
+      <div class="radio-row">
+        <div class="radio-option radio--active">
+          <div class="radio-dot"></div>
+          <span>Normal (Recommended)</span>
+        </div>
+        <div class="radio-option">
+          <div class="radio-dot"></div>
+          <span>Hard</span>
+        </div>
+        <div class="radio-option">
+          <div class="radio-dot"></div>
+          <span>Voidborn (No HUD, no saves)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segments & Status -->
+  <div class="section-title">Segments &amp; Status Chips</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Display Mode Switch</div>
+      <div class="card-sub">Segmented control for binary options.</div>
+      <div class="stack">
+        <div class="segment">
+          <button class="segment-btn segment-btn--active">Windowed</button>
+          <button class="segment-btn">Fullscreen</button>
+        </div>
+        <div class="segment" style="margin-top:6px;">
+          <button class="segment-btn">Keyboard</button>
+          <button class="segment-btn segment-btn--active">Controller</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Status Chips</div>
+      <div class="card-sub">Quick labels for feature states.</div>
+      <div class="stack">
+        <div class="status-chip">
+          <span class="status-dot"></span>
+          <span>Cross-play Enabled</span>
+        </div>
+        <div class="status-chip status-chip--off">
+          <span class="status-dot"></span>
+          <span>Offline Mode</span>
+        </div>
+        <div class="status-chip">
+          <span class="status-dot"></span>
+          <span>Cloud Saves Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

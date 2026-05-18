@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon UI Icons Pack – HTML5 / CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #0f172a;
+      --neon-blue: #38bdf8;
+      --neon-green: #22c55e;
+      --neon-yellow: #facc15;
+      --neon-red: #ef4444;
+      --neon-pink: #f472b6;
+      --neon-purple: #a855f7;
+      --neon-cyan: #22d3ee;
+    }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617, #000000 60%);
+      color: #e5e7eb;
+    }
+    .shell {
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      padding: 18px;
+      width: min(980px, 96vw);
+      border: 1px solid rgba(56,189,248,0.4);
+      box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+    }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #90e5ff;
+    }
+    .tag {
+      text-align:center;
+      font-size:0.8rem;
+      color:#a5f3fc;
+      margin-top:4px;
+      margin-bottom:10px;
+      background:rgba(15,118,110,0.5);
+      padding:2px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
+    .section-title {
+      margin: 14px 0 8px;
+      font-size:0.9rem;
+      color:#e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .icon-wrap {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .icon-label {
+      font-size:0.75rem;
+      color:#9ca3af;
+      text-align:center;
+    }
+
+    /* Base icon button */
+    .icon-btn {
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      border:2px solid rgba(148,163,184,0.4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.5rem;
+      cursor:pointer;
+      background:radial-gradient(circle at 30% 0%, #020617, #020617 55%, #000 100%);
+      color:#e5e7eb;
+      box-shadow:0 0 8px rgba(15,23,42,0.8);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.08s ease, background 0.08s ease;
+    }
+    .icon-btn:hover {
+      transform:translateY(-1px);
+      box-shadow:0 0 16px rgba(56,189,248,0.7);
+    }
+    .icon-btn:active {
+      transform:translateY(1px) scale(0.96);
+      box-shadow:0 0 8px rgba(15,23,42,0.9);
+    }
+
+    /* Colour themes */
+    .icon-blue {
+      border-color:var(--neon-blue);
+      box-shadow:0 0 14px rgba(56,189,248,0.75);
+      color:var(--neon-blue);
+    }
+    .icon-green {
+      border-color:var(--neon-green);
+      box-shadow:0 0 14px rgba(34,197,94,0.75);
+      color:var(--neon-green);
+    }
+    .icon-yellow {
+      border-color:var(--neon-yellow);
+      box-shadow:0 0 14px rgba(250,204,21,0.8);
+      color:var(--neon-yellow);
+    }
+    .icon-red {
+      border-color:var(--neon-red);
+      box-shadow:0 0 14px rgba(239,68,68,0.85);
+      color:var(--neon-red);
+    }
+    .icon-pink {
+      border-color:var(--neon-pink);
+      box-shadow:0 0 14px rgba(244,114,182,0.8);
+      color:var(--neon-pink);
+    }
+    .icon-purple {
+      border-color:var(--neon-purple);
+      box-shadow:0 0 14px rgba(168,85,247,0.8);
+      color:var(--neon-purple);
+    }
+    .icon-cyan {
+      border-color:var(--neon-cyan);
+      box-shadow:0 0 14px rgba(34,211,238,0.8);
+      color:var(--neon-cyan);
+    }
+
+    /* Shape variants */
+    .icon-round {
+      border-radius:999px;
+    }
+    .icon-soft {
+      border-radius:20px;
+    }
+
+    /* Utility: small text icon */
+    .icon-small {
+      font-size:1.1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Neon UI Icons Pack</h1>
+  <div style="text-align:center;margin-bottom:12px;">
+    <span class="tag">HTML5 / CSS – Rebrand & Resell</span>
+  </div>
+
+  <div class="section-title">Media Controls</div>
+  <div class="grid">
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⏵</div>
+      <div class="icon-label">Play<br>.icon-blue.icon-round</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⏸</div>
+      <div class="icon-label">Pause</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⏹</div>
+      <div class="icon-label">Stop</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⏮</div>
+      <div class="icon-label">Prev</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⏭</div>
+      <div class="icon-label">Next</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-blue icon-round">⟲</div>
+      <div class="icon-label">Restart</div>
+    </div>
+  </div>
+
+  <div class="section-title">Audio & Settings</div>
+  <div class="grid">
+    <div class="icon-wrap">
+      <div class="icon-btn icon-yellow icon-round">🔊</div>
+      <div class="icon-label">Volume</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-yellow icon-round">🔈</div>
+      <div class="icon-label">Low Vol</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-yellow icon-round">🔇</div>
+      <div class="icon-label">Mute</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-purple icon-round">🎵</div>
+      <div class="icon-label">Music</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-purple icon-round">🎚</div>
+      <div class="icon-label">Mixer</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-cyan icon-round">⚙</div>
+      <div class="icon-label">Settings</div>
+    </div>
+  </div>
+
+  <div class="section-title">System & Navigation</div>
+  <div class="grid">
+    <div class="icon-wrap">
+      <div class="icon-btn icon-green icon-soft">🏠</div>
+      <div class="icon-label">Home</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-green icon-soft">↩</div>
+      <div class="icon-label">Back</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-green icon-soft">⮞</div>
+      <div class="icon-label">Next / Continue</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-red icon-soft">✖</div>
+      <div class="icon-label">Close</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-red icon-soft">⏻</div>
+      <div class="icon-label">Power / Exit</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-cyan icon-soft">❔</div>
+      <div class="icon-label">Help</div>
+    </div>
+  </div>
+
+  <div class="section-title">RPG / HUD Icons</div>
+  <div class="grid">
+    <div class="icon-wrap">
+      <div class="icon-btn icon-red icon-round">❤</div>
+      <div class="icon-label">Health</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-yellow icon-round">★</div>
+      <div class="icon-label">Star / Rank</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-green icon-round">⬆</div>
+      <div class="icon-label">Level Up</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-pink icon-round">💰</div>
+      <div class="icon-label">Coins / Gold</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-pink icon-round">🎒</div>
+      <div class="icon-label">Inventory</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-cyan icon-round">🗺</div>
+      <div class="icon-label">Map</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-purple icon-round">📜</div>
+      <div class="icon-label">Quest Log</div>
+    </div>
+    <div class="icon-wrap">
+      <div class="icon-btn icon-purple icon-round icon-small">🏪</div>
+      <div class="icon-label">Shop</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1100" viewBox="0 0 1400 1100">
+  <rect width="1400" height="1100" fill="#071017"/>
+  <rect x="28" y="28" width="1344" height="1044" rx="28" fill="#0d1622" stroke="#2a4054"/>
+  <text x="60" y="92" font-family="Impact, Arial Black, Arial, sans-serif" font-size="58" fill="#f4f9fb">Tiny Save / Settings Menu Starter</text>
+  <text x="63" y="130" font-family="Arial, sans-serif" font-size="24" font-weight="900" fill="#48e6b2">Working menu demo / save slots / settings / keybinds / import-export / no framework</text>
+  <rect x="60" y="166" width="820" height="560" rx="18" fill="#071017" stroke="#2a4054"/>
+  <rect x="930" y="166" width="250" height="590" rx="18" fill="#071017" stroke="#2a4054"/>
+  <text x="60" y="812" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffd45d">Included files</text>
+  <text x="60" y="854" font-family="Arial, sans-serif" font-size="24" fill="#dbe5ec">index.html, styles.css, app.js, reusable starter source, docs, templates, license, marketing art</text>
+  <text x="60" y="918" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffd45d">Best for</text>
+  <text x="60" y="960" font-family="Arial, sans-serif" font-size="24" fill="#dbe5ec">Game jams, browser games, idle games, RPG prototypes, roguelikes, and tiny tools</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "button_hover": ["hover_01.wav", "hover_02.wav", "hover_03.wav"],
+  "button_press": ["click_01.wav", "click_02.wav", "click_03.wav"],
+  "confirm": ["confirm_01.wav", "confirm_02.wav", "confirm_03.wav"],
+  "cancel": ["cancel_01.wav", "cancel_02.wav"],
+  "error": ["error_01.wav", "error_02.wav"],
+  "warning": ["alert_01.wav", "alert_02.wav"],
+  "toggle_on": ["toggle_02.wav", "toggle_04.wav"],
+  "toggle_off": ["toggle_01.wav", "toggle_03.wav"],
+  "panel_open": ["transition_02.wav", "transition_04.wav"],
+  "panel_close": ["transition_01.wav", "transition_03.wav"]
+}

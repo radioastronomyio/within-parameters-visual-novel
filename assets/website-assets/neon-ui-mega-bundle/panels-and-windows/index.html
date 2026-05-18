@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon UI Panels & Windows Pack – HTML5 / CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #0f172a;
+      --neon-blue: #38bdf8;
+      --neon-green: #22c55e;
+      --neon-yellow: #facc15;
+      --neon-red: #ef4444;
+      --neon-pink: #f472b6;
+      --neon-purple: #a855f7;
+      --neon-cyan: #22d3ee;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617, #000000 60%);
+      color: #e5e7eb;
+    }
+
+    .shell {
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      padding: 18px;
+      width: min(1080px, 98vw);
+      border: 1px solid rgba(56,189,248,0.4);
+      box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #90e5ff;
+    }
+
+    .tag {
+      text-align:center;
+      font-size:0.8rem;
+      color:#a5f3fc;
+      margin-top:4px;
+      margin-bottom:12px;
+      background:rgba(15,118,110,0.5);
+      padding:2px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
+
+    .section-title {
+      margin: 16px 0 8px;
+      font-size:0.9rem;
+      color:#e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:14px;
+    }
+
+    /* Base panel */
+    .panel {
+      position:relative;
+      background: radial-gradient(circle at top, #020617, #020617 50%, #000 100%);
+      border-radius:18px;
+      padding:12px 14px 12px;
+      border:1px solid rgba(15,23,42,1);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 22px rgba(15,23,42,0.95);
+      overflow:hidden;
+    }
+
+    .panel-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:8px;
+    }
+
+    .panel-title {
+      font-size:0.82rem;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:#e5e7eb;
+    }
+
+    .panel-subtitle {
+      font-size:0.75rem;
+      color:#9ca3af;
+    }
+
+    .panel-body {
+      font-size:0.8rem;
+      color:#cbd5f5;
+    }
+
+    .panel-footer {
+      margin-top:10px;
+      font-size:0.75rem;
+      color:#9ca3af;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    .chip {
+      border-radius:999px;
+      padding:3px 9px;
+      font-size:0.7rem;
+      border:1px solid rgba(148,163,184,0.6);
+      color:#e5e7eb;
+      background:rgba(15,23,42,0.7);
+    }
+
+    /* Neon frame accents */
+    .panel-main {
+      border:1px solid rgba(56,189,248,0.8);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 26px rgba(56,189,248,0.7);
+    }
+    .panel-main::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:18px;
+      border:1px solid rgba(56,189,248,0.35);
+      pointer-events:none;
+      mix-blend-mode:screen;
+    }
+
+    .panel-settings {
+      border:1px solid rgba(168,85,247,0.85);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 22px rgba(168,85,247,0.8);
+    }
+
+    .panel-shop {
+      border:1px solid rgba(34,197,94,0.85);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 22px rgba(34,197,94,0.8);
+    }
+
+    .panel-dialogue {
+      border:1px solid rgba(244,114,182,0.85);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 22px rgba(244,114,182,0.8);
+    }
+
+    .panel-warning {
+      border:1px solid rgba(250,204,21,0.9);
+      box-shadow:
+        0 0 0 1px rgba(15,23,42,0.9),
+        0 0 22px rgba(250,204,21,0.9);
+    }
+
+    /* Tiny close button */
+    .dot-row {
+      display:flex;
+      gap:6px;
+    }
+    .dot {
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:#1e293b;
+      box-shadow:0 0 4px rgba(15,23,42,0.9);
+    }
+    .dot.red { background:#ef4444; box-shadow:0 0 8px rgba(239,68,68,0.9); }
+    .dot.yellow { background:#facc15; box-shadow:0 0 8px rgba(250,204,21,0.9); }
+    .dot.green { background:#22c55e; box-shadow:0 0 8px rgba(34,197,94,0.9); }
+
+    /* Main menu layout elements */
+    .menu-list {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:4px;
+    }
+    .menu-item {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:6px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(30,64,175,0.6);
+      font-size:0.8rem;
+      cursor:pointer;
+      transition:background 0.12s ease, box-shadow 0.12s ease, transform 0.06s ease;
+    }
+    .menu-item span {
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.75rem;
+    }
+    .menu-item:hover {
+      background:rgba(15,23,42,0.95);
+      box-shadow:0 0 12px rgba(56,189,248,0.7);
+      transform:translateY(-1px);
+    }
+
+    /* Settings panel sections */
+    .settings-grid {
+      display:grid;
+      grid-template-columns:1.2fr 1.4fr;
+      gap:10px;
+      margin-top:6px;
+    }
+    .settings-list {
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+    .settings-option {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:4px 7px;
+      border-radius:8px;
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(148,163,184,0.5);
+      font-size:0.78rem;
+    }
+    .settings-label {
+      color:#e5e7eb;
+    }
+    .settings-value {
+      color:#38bdf8;
+      font-variant-numeric:tabular-nums;
+    }
+
+    /* Shop panel */
+    .shop-grid {
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:8px;
+      margin-top:6px;
+      font-size:0.79rem;
+    }
+    .shop-item {
+      border-radius:10px;
+      padding:6px 7px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(34,197,94,0.7);
+      box-shadow:0 0 10px rgba(34,197,94,0.45);
+    }
+    .shop-item-name {
+      font-size:0.8rem;
+      margin-bottom:2px;
+    }
+    .shop-item-meta {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:0.72rem;
+      color:#a7f3d0;
+    }
+
+    /* Dialogue panel */
+    .dialogue-name {
+      font-size:0.78rem;
+      color:#f472b6;
+      margin-bottom:4px;
+    }
+    .dialogue-text {
+      font-size:0.8rem;
+      line-height:1.4;
+      color:#f9a8d4;
+    }
+    .dialogue-choices {
+      margin-top:8px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .choice {
+      padding:4px 7px;
+      border-radius:8px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(244,114,182,0.7);
+      font-size:0.78rem;
+      cursor:pointer;
+      transition:background 0.1s ease, box-shadow 0.1s ease, transform 0.06s ease;
+    }
+    .choice:hover {
+      background:rgba(24,24,37,0.98);
+      box-shadow:0 0 10px rgba(244,114,182,0.6);
+      transform:translateY(-1px);
+    }
+
+    /* Toast / notification */
+    .toast {
+      border-radius:12px;
+      padding:8px 10px;
+      background:rgba(15,23,42,0.96);
+      border:1px solid rgba(250,204,21,0.85);
+      box-shadow:0 0 16px rgba(250,204,21,0.9);
+      font-size:0.78rem;
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+    }
+    .toast-icon {
+      font-size:0.9rem;
+    }
+    .toast-body {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .toast-title {
+      text-transform:uppercase;
+      font-size:0.75rem;
+      letter-spacing:0.08em;
+      color:#fef9c3;
+    }
+    .toast-text {
+      color:#fef3c7;
+    }
+
+    /* Overlay modal demo */
+    .overlay-demo {
+      position:relative;
+      margin-top:10px;
+      border-radius:12px;
+      padding:10px;
+      background:linear-gradient(to bottom right, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
+      border:1px dashed rgba(148,163,184,0.4);
+      font-size:0.76rem;
+      color:#9ca3af;
+    }
+    .overlay-window {
+      position:absolute;
+      right:8px;
+      top:8px;
+      width:62%;
+      padding:10px 11px;
+      border-radius:14px;
+      background:rgba(15,23,42,0.98);
+      border:1px solid rgba(56,189,248,0.9);
+      box-shadow:0 0 22px rgba(56,189,248,0.8);
+      font-size:0.78rem;
+    }
+    .overlay-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:4px;
+    }
+    .overlay-title {
+      text-transform:uppercase;
+      font-size:0.76rem;
+      letter-spacing:0.1em;
+      color:#e0f2fe;
+    }
+    .close-x {
+      font-size:0.9rem;
+      color:#94a3b8;
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Neon UI Panels &amp; Windows Pack</h1>
+  <div style="text-align:center;">
+    <span class="tag">HTML5 / CSS – Rebrand &amp; Resell</span>
+  </div>
+
+  <!-- Main Menu Panel -->
+  <div class="section-title">Main Menu Panel</div>
+  <div class="grid">
+    <div class="panel panel-main">
+      <div class="panel-header">
+        <div class="panel-title">VOID RUNNER</div>
+        <div class="dot-row">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+      </div>
+      <div class="panel-subtitle">Single-player · Neon Sci-Fi</div>
+      <div class="panel-body">
+        <div class="menu-list">
+          <div class="menu-item">
+            <span>New Game</span>
+            <small>⏵</small>
+          </div>
+          <div class="menu-item">
+            <span>Continue</span>
+            <small>LV 12</small>
+          </div>
+          <div class="menu-item">
+            <span>Settings</span>
+            <small>⚙</small>
+          </div>
+          <div class="menu-item">
+            <span>Quit</span>
+            <small>⏻</small>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-subtitle">Press ⏵ to start</span>
+      </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="panel panel-settings">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Settings</div>
+          <div class="panel-subtitle">Audio · Graphics · Gameplay</div>
+        </div>
+        <span class="chip">Profile: Neon</span>
+      </div>
+      <div class="panel-body">
+        <div class="settings-grid">
+          <div class="settings-list">
+            <div class="settings-option">
+              <span class="settings-label">Master Volume</span>
+              <span class="settings-value">72%</span>
+            </div>
+            <div class="settings-option">
+              <span class="settings-label">Music</span>
+              <span class="settings-value">40%</span>
+            </div>
+            <div class="settings-option">
+              <span class="settings-label">SFX</span>
+              <span class="settings-value">89%</span>
+            </div>
+          </div>
+          <div class="settings-list">
+            <div class="settings-option">
+              <span class="settings-label">Graphics</span>
+              <span class="settings-value">High</span>
+            </div>
+            <div class="settings-option">
+              <span class="settings-label">VSync</span>
+              <span class="settings-value">On</span>
+            </div>
+            <div class="settings-option">
+              <span class="settings-label">HUD Opacity</span>
+              <span class="settings-value">84%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="chip">Apply</span>
+        <span class="chip">Back</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shop & Dialogue -->
+  <div class="section-title">Shop &amp; Dialogue Windows</div>
+  <div class="grid">
+    <!-- Shop -->
+    <div class="panel panel-shop">
+      <div class="panel-header">
+        <div class="panel-title">Black Market</div>
+        <div class="panel-subtitle">Credits: 12,450</div>
+      </div>
+      <div class="panel-body">
+        <div class="shop-grid">
+          <div class="shop-item">
+            <div class="shop-item-name">Plasma Blade</div>
+            <div class="shop-item-meta">
+              <span>DMG +18</span>
+              <span>3,200 ¤</span>
+            </div>
+          </div>
+          <div class="shop-item">
+            <div class="shop-item-name">Phase Shield</div>
+            <div class="shop-item-meta">
+              <span>+120 SH</span>
+              <span>2,750 ¤</span>
+            </div>
+          </div>
+          <div class="shop-item">
+            <div class="shop-item-name">Adrenaline Shot</div>
+            <div class="shop-item-meta">
+              <span>CD -25%</span>
+              <span>900 ¤</span>
+            </div>
+          </div>
+          <div class="shop-item">
+            <div class="shop-item-name">Void Core</div>
+            <div class="shop-item-meta">
+              <span>Tier III</span>
+              <span>6,000 ¤</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-subtitle">Press ▢ to compare</span>
+      </div>
+    </div>
+
+    <!-- Dialogue -->
+    <div class="panel panel-dialogue">
+      <div class="panel-header">
+        <div class="panel-title">Dialogue</div>
+        <span class="chip">Quest: The First Jump</span>
+      </div>
+      <div class="panel-body">
+        <div class="dialogue-name">Jess, Void Navigator</div>
+        <div class="dialogue-text">
+          “Once we punch through the first jump, there’s no turning back.  
+          Your crew trusts you, Alpha. Where you lead, they follow.”
+        </div>
+        <div class="dialogue-choices">
+          <div class="choice">➤ “Lock in the coordinates. We jump.”</div>
+          <div class="choice">➤ “Run diagnostics again. No mistakes.”</div>
+          <div class="choice">➤ “Stand down. I need more time.”</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications & Overlay -->
+  <div class="section-title">Notification & Overlay Window</div>
+  <div class="grid">
+    <div class="panel panel-warning">
+      <div class="panel-header">
+        <div class="panel-title">System Alert</div>
+        <div class="dot-row">
+          <div class="dot yellow"></div>
+          <div class="dot yellow"></div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="toast">
+          <div class="toast-icon">⚠</div>
+          <div class="toast-body">
+            <div class="toast-title">Warning · Reactor Heat</div>
+            <div class="toast-text">
+              Core temperature is rising. Reduce thrust or reroute power within
+              <strong>30 seconds</strong> to avoid emergency shutdown.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="chip">Acknowledge</span>
+        <span class="chip">View Reactor</span>
+      </div>
+    </div>
+
+    <div class="panel panel-main">
+      <div class="panel-header">
+        <div class="panel-title">Overlay Demo</div>
+        <div class="panel-subtitle">In-game pause / modal window</div>
+      </div>
+      <div class="panel-body">
+        <div class="overlay-demo">
+          Game world renders here while a modal window appears on top.
+          <div class="overlay-window">
+            <div class="overlay-header">
+              <div class="overlay-title">Paused</div>
+              <div class="close-x">✕</div>
+            </div>
+            <div>
+              <p style="margin:0 0 4px;font-size:0.78rem;">
+                Progress is saved at the last checkpoint.
+              </p>
+              <ul style="margin:0;padding-left:18px;font-size:0.76rem;color:#cbd5f5;">
+                <li>Resume from current area</li>
+                <li>Return to main menu</li>
+                <li>Open settings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="panel-subtitle">Use as pause / confirm / info window</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

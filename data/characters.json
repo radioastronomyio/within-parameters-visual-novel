@@ -146,10 +146,10 @@
     }
   ],
   "audio": [
-    { "key": "bgm-title", "path": "audio/bgm-title.mp3", "loop": true, "volume": 0.6 },
-    { "key": "bgm-ambient", "path": "audio/bgm-ambient.mp3", "loop": true, "volume": 0.5 },
-    { "key": "bgm-tension", "path": "audio/bgm-tension.mp3", "loop": true, "volume": 0.5 },
-    { "key": "bgm-ending", "path": "audio/bgm-ending.mp3", "loop": false, "volume": 0.6 },
+    { "key": "bgm-title", "path": "audio/bgm-title.ogg", "loop": true, "volume": 0.6 },
+    { "key": "bgm-ambient", "path": "audio/bgm-ambient.ogg", "loop": true, "volume": 0.5 },
+    { "key": "bgm-tension", "path": "audio/bgm-tension.ogg", "loop": true, "volume": 0.5 },
+    { "key": "bgm-ending", "path": "audio/bgm-ending.ogg", "loop": false, "volume": 0.6 },
     { "key": "sfx-click", "path": "audio/sfx-click.mp3", "loop": false, "volume": 0.4 },
     { "key": "sfx-alert", "path": "audio/sfx-alert.mp3", "loop": false, "volume": 0.6 }
   ]

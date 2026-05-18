@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon UI Button Pack – HTML5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #0f172a;
+      --neon-blue: #38bdf8;
+      --neon-green: #22c55e;
+      --neon-yellow: #facc15;
+      --neon-red: #ef4444;
+      --neon-pink: #f472b6;
+      --neon-purple: #a855f7;
+    }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617, #000000 60%);
+      color: #e5e7eb;
+    }
+    .shell {
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      padding: 18px;
+      width: min(900px, 95vw);
+      border: 1px solid rgba(56,189,248,0.4);
+      box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+    }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #90e5ff;
+    }
+    .tag {
+      text-align:center;
+      font-size:0.8rem;
+      color:#a5f3fc;
+      margin-top:4px;
+      margin-bottom:10px;
+      background:rgba(15,118,110,0.5);
+      padding:2px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .btn-wrap {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    }
+    .btn-label {
+      font-size:0.75rem;
+      color:#9ca3af;
+    }
+
+    button {
+      font-size:0.85rem;
+      border:none;
+      cursor:pointer;
+      padding:8px 14px;
+      border-radius:999px;
+      background:transparent;
+      color:#e5e7eb;
+      transition:transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease, color 0.08s ease;
+    }
+    button:active {
+      transform:translateY(1px) scale(0.97);
+    }
+
+    /* Base neon style */
+    .btn-neon {
+      border-radius:999px;
+      border:2px solid var(--neon-blue);
+      box-shadow:0 0 10px rgba(56,189,248,0.8);
+      color:var(--neon-blue);
+      padding-inline:18px;
+    }
+    .btn-neon:hover {
+      background:var(--neon-blue);
+      color:#020617;
+      box-shadow:0 0 16px rgba(56,189,248,0.9);
+    }
+
+    /* Solid neon */
+    .btn-solid-green {
+      background:var(--neon-green);
+      color:#020617;
+      box-shadow:0 0 14px rgba(34,197,94,0.8);
+    }
+    .btn-solid-green:hover {
+      box-shadow:0 0 20px rgba(34,197,94,0.9);
+      filter:brightness(1.08);
+    }
+
+    .btn-solid-yellow {
+      background:var(--neon-yellow);
+      color:#020617;
+      box-shadow:0 0 14px rgba(250,204,21,0.8);
+    }
+
+    .btn-solid-red {
+      background:var(--neon-red);
+      color:#020617;
+      box-shadow:0 0 14px rgba(239,68,68,0.85);
+    }
+
+    /* Outline variants */
+    .btn-outline {
+      border-radius:10px;
+      border:2px solid var(--neon-purple);
+      color:var(--neon-purple);
+      box-shadow:0 0 10px rgba(168,85,247,0.8);
+      background:transparent;
+    }
+    .btn-outline:hover {
+      background:rgba(15,23,42,0.8);
+    }
+
+    .btn-ghost {
+      border-radius:8px;
+      border:1px solid rgba(148,163,184,0.4);
+      color:#cbd5f5;
+      background:rgba(15,23,42,0.7);
+    }
+    .btn-ghost:hover {
+      background:rgba(31,41,55,0.9);
+      box-shadow:0 0 8px rgba(148,163,184,0.6);
+    }
+
+    /* Pill styles */
+    .btn-pill-blue {
+      border-radius:999px;
+      background:linear-gradient(to right,#38bdf8,#22c55e);
+      color:#020617;
+      font-weight:600;
+      box-shadow:0 0 20px rgba(56,189,248,0.7);
+    }
+    .btn-pill-blue:hover {
+      filter:brightness(1.06);
+    }
+
+    .btn-pill-pink {
+      border-radius:999px;
+      background:linear-gradient(to right,#f472b6,#a855f7);
+      color:#020617;
+      font-weight:600;
+      box-shadow:0 0 20px rgba(244,114,182,0.7);
+    }
+
+    /* Icon-style */
+    .btn-icon {
+      border-radius:999px;
+      border:2px solid var(--neon-yellow);
+      color:var(--neon-yellow);
+      padding-inline:10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 0 12px rgba(250,204,21,0.9);
+    }
+    .btn-icon span {
+      font-size:0.8rem;
+    }
+
+    /* Danger / warning / success */
+    .btn-danger {
+      border-radius:8px;
+      background:#020617;
+      border:2px solid var(--neon-red);
+      color:var(--neon-red);
+      box-shadow:0 0 14px rgba(239,68,68,0.9);
+    }
+    .btn-danger:hover {
+      background:rgba(127,29,29,0.9);
+      color:#fee2e2;
+    }
+
+    .btn-warning {
+      border-radius:8px;
+      background:#020617;
+      border:2px solid var(--neon-yellow);
+      color:var(--neon-yellow);
+      box-shadow:0 0 14px rgba(250,204,21,0.9);
+    }
+
+    .btn-success {
+      border-radius:8px;
+      background:#020617;
+      border:2px solid var(--neon-green);
+      color:var(--neon-green);
+      box-shadow:0 0 14px rgba(34,197,94,0.9);
+    }
+
+    /* Square / menu buttons */
+    .btn-square {
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      border:2px solid var(--neon-blue);
+      color:var(--neon-blue);
+      box-shadow:0 0 10px rgba(56,189,248,0.8);
+      padding:0;
+      font-size:1.2rem;
+    }
+
+    .btn-tab {
+      border-radius:14px;
+      padding:6px 12px;
+      border:2px solid transparent;
+      background:rgba(15,23,42,0.7);
+      color:#9ca3af;
+    }
+    .btn-tab.active {
+      border-color:var(--neon-blue);
+      color:var(--neon-blue);
+      box-shadow:0 0 10px rgba(56,189,248,0.9);
+      background:rgba(15,23,42,0.9);
+    }
+
+    .section-title {
+      margin: 12px 0 8px;
+      font-size:0.9rem;
+      color:#e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Neon UI Button Pack</h1>
+  <div style="text-align:center;margin-bottom:12px;">
+    <span class="tag">HTML5 / CSS – Rebrand & Resell</span>
+  </div>
+
+  <div class="section-title">Core Neon Buttons</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-neon">Play Game</button>
+      <div class="btn-label">.btn-neon</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-solid-green">Start</button>
+      <div class="btn-label">.btn-solid-green</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-solid-yellow">Continue</button>
+      <div class="btn-label">.btn-solid-yellow</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-solid-red">Exit</button>
+      <div class="btn-label">.btn-solid-red</div>
+    </div>
+  </div>
+
+  <div class="section-title">Outline & Ghost</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-outline">Settings</button>
+      <div class="btn-label">.btn-outline</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-ghost">Back</button>
+      <div class="btn-label">.btn-ghost</div>
+    </div>
+  </div>
+
+  <div class="section-title">Pill Buttons</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-pill-blue">New Game</button>
+      <div class="btn-label">.btn-pill-blue</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-pill-pink">Purchase</button>
+      <div class="btn-label">.btn-pill-pink</div>
+    </div>
+  </div>
+
+  <div class="section-title">Status Buttons</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-success">Ready</button>
+      <div class="btn-label">.btn-success</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-warning">Warning</button>
+      <div class="btn-label">.btn-warning</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-danger">Delete Save</button>
+      <div class="btn-label">.btn-danger</div>
+    </div>
+  </div>
+
+  <div class="section-title">Tabs & Menu Buttons</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-tab active">Home</button>
+      <div class="btn-label">.btn-tab.active</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-tab">Options</button>
+      <div class="btn-label">.btn-tab</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-tab">Credits</button>
+      <div class="btn-label">.btn-tab</div>
+    </div>
+  </div>
+
+  <div class="section-title">Icon Buttons</div>
+  <div class="grid">
+    <div class="btn-wrap">
+      <button class="btn-square">⏵</button>
+      <div class="btn-label">.btn-square (play)</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-square">⏸</button>
+      <div class="btn-label">.btn-square (pause)</div>
+    </div>
+    <div class="btn-wrap">
+      <button class="btn-icon">
+        🔈<span>Mute</span>
+      </button>
+      <div class="btn-label">.btn-icon</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

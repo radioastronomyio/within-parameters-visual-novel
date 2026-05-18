@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neon UI Sliders & Bars Pack – HTML5 / CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --border: #0f172a;
+      --neon-blue: #38bdf8;
+      --neon-green: #22c55e;
+      --neon-yellow: #facc15;
+      --neon-red: #ef4444;
+      --neon-pink: #f472b6;
+      --neon-purple: #a855f7;
+      --neon-cyan: #22d3ee;
+    }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617, #000000 60%);
+      color: #e5e7eb;
+    }
+    .shell {
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      padding: 18px;
+      width: min(980px, 96vw);
+      border: 1px solid rgba(56,189,248,0.4);
+      box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+    }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #90e5ff;
+    }
+    .tag {
+      text-align:center;
+      font-size:0.8rem;
+      color:#a5f3fc;
+      margin-top:4px;
+      margin-bottom:12px;
+      background:rgba(15,118,110,0.5);
+      padding:2px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
+
+    .section-title {
+      margin: 14px 0 8px;
+      font-size:0.9rem;
+      color:#e5e7eb;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .bar-wrap {
+      background: rgba(15,23,42,0.88);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(15,23,42,0.9);
+      box-shadow: 0 0 12px rgba(15,23,42,0.9);
+    }
+    .bar-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:6px;
+      font-size:0.8rem;
+      color:#9ca3af;
+    }
+    .bar-label {
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+    .bar-value {
+      font-variant-numeric:tabular-nums;
+      font-size:0.75rem;
+    }
+
+    /* Base bar container */
+    .bar {
+      position: relative;
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #020617, #020617 40%, #000 100%);
+      border: 2px solid rgba(15,23,42,1);
+      box-shadow: inset 0 0 10px rgba(15,23,42,0.95);
+    }
+    .bar-fill {
+      position:absolute;
+      inset:1px;
+      border-radius:999px;
+      background: linear-gradient(to right, #38bdf8, #22c55e);
+      box-shadow: 0 0 14px rgba(56,189,248,0.85);
+      transform-origin:left center;
+      transform:scaleX(var(--amount, 1));
+      transition:transform 0.2s ease-out;
+    }
+
+    /* HP bar */
+    .bar-hp .bar-fill {
+      background: linear-gradient(to right, #ef4444, #f97373);
+      box-shadow: 0 0 14px rgba(239,68,68,0.9);
+    }
+
+    /* Shield bar */
+    .bar-shield .bar-fill {
+      background: linear-gradient(to right, #22c55e, #4ade80);
+      box-shadow: 0 0 14px rgba(34,197,94,0.9);
+    }
+
+    /* XP bar */
+    .bar-xp .bar-fill {
+      background: linear-gradient(to right, #38bdf8, #a855f7);
+      box-shadow: 0 0 16px rgba(56,189,248,0.9);
+    }
+
+    /* Loading bar */
+    .bar-loading .bar-fill {
+      background: linear-gradient(to right, #facc15, #22c55e);
+      box-shadow: 0 0 14px rgba(250,204,21,0.9);
+    }
+
+    /* Energy bar */
+    .bar-energy .bar-fill {
+      background: linear-gradient(to right, #22d3ee, #f97316);
+      box-shadow: 0 0 16px rgba(34,211,238,0.9);
+    }
+
+    /* Dual stacked bar (HP + Shield) */
+    .dual-bars {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    /* Slider-style bars */
+    .slider-track {
+      position:relative;
+      width:100%;
+      height:6px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(30,64,175,0.9);
+      box-shadow:0 0 12px rgba(15,23,42,0.95);
+      margin-top:6px;
+    }
+    .slider-fill {
+      position:absolute;
+      inset:1px;
+      border-radius:999px;
+      background:linear-gradient(to right, #38bdf8, #22c55e);
+      transform-origin:left center;
+      transform:scaleX(var(--amount, 0.7));
+      box-shadow:0 0 12px rgba(56,189,248,0.85);
+    }
+    .slider-thumb {
+      position:absolute;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      background:#020617;
+      border:2px solid #38bdf8;
+      box-shadow:0 0 16px rgba(56,189,248,0.9);
+    }
+    .slider-label-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:0.75rem;
+      color:#9ca3af;
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Neon UI Sliders &amp; Bars Pack</h1>
+  <div style="text-align:center;">
+    <span class="tag">HTML5 / CSS – Rebrand &amp; Resell</span>
+  </div>
+
+  <!-- HP / Shield -->
+  <div class="section-title">Combat Bars</div>
+  <div class="grid">
+    <div class="bar-wrap bar-hp" style="--amount:0.78;">
+      <div class="bar-header">
+        <span class="bar-label">Health</span>
+        <span class="bar-value">78 / 100</span>
+      </div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    </div>
+
+    <div class="bar-wrap">
+      <div class="dual-bars">
+        <div class="bar-header">
+          <span class="bar-label">HP + Shield</span>
+          <span class="bar-value">HP 54 / 100 · SH 32 / 50</span>
+        </div>
+        <div class="bar bar-hp" style="--amount:0.54;">
+          <div class="bar-fill"></div>
+        </div>
+        <div class="bar bar-shield" style="--amount:0.64;">
+          <div class="bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-wrap bar-energy" style="--amount:0.42;">
+      <div class="bar-header">
+        <span class="bar-label">Energy</span>
+        <span class="bar-value">42%</span>
+      </div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- XP / Level / Loading -->
+  <div class="section-title">Progress &amp; XP</div>
+  <div class="grid">
+    <div class="bar-wrap bar-xp" style="--amount:0.63;">
+      <div class="bar-header">
+        <span class="bar-label">XP</span>
+        <span class="bar-value">Level 12 · 63%</span>
+      </div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    </div>
+
+    <div class="bar-wrap bar-loading" style="--amount:0.34;">
+      <div class="bar-header">
+        <span class="bar-label">Loading</span>
+        <span class="bar-value">34%</span>
+      </div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    </div>
+
+    <div class="bar-wrap bar-loading" style="--amount:1;">
+      <div class="bar-header">
+        <span class="bar-label">Full Progress</span>
+        <span class="bar-value">100%</span>
+      </div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volume / Music / SFX sliders -->
+  <div class="section-title">Volume Sliders</div>
+  <div class="grid">
+    <div class="bar-wrap">
+      <div class="slider-label-row">
+        <span class="bar-label">Master Volume</span>
+        <span class="bar-value">72%</span>
+      </div>
+      <div class="slider-track" style="--amount:0.72;">
+        <div class="slider-fill"></div>
+        <div class="slider-thumb" style="left:72%;"></div>
+      </div>
+    </div>
+
+    <div class="bar-wrap">
+      <div class="slider-label-row">
+        <span class="bar-label">Music</span>
+        <span class="bar-value">40%</span>
+      </div>
+      <div class="slider-track" style="--amount:0.4;">
+        <div class="slider-fill"></div>
+        <div class="slider-thumb" style="left:40%;"></div>
+      </div>
+    </div>
+
+    <div class="bar-wrap">
+      <div class="slider-label-row">
+        <span class="bar-label">SFX</span>
+        <span class="bar-value">89%</span>
+      </div>
+      <div class="slider-track" style="--amount:0.89;">
+        <div class="slider-fill"></div>
+        <div class="slider-thumb" style="left:89%;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

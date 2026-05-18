@@ -1,0 +1,12 @@
+Tiny Save / Settings Menu Starter License
+
+You may:
+- Use this starter in free and commercial games, apps, prototypes, and game jam projects.
+- Modify the source code, styles, UI, and copy for your own project.
+- Include modified or unmodified code inside a compiled, packaged, or hosted game.
+
+You may not:
+- Resell, redistribute, upload, or share the starter source as a standalone competing template.
+- Claim the original starter pack as your own marketplace product.
+
+Credit is appreciated but not required.

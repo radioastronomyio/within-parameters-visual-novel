@@ -1,0 +1,17 @@
+Tiny UI SFX Pack License
+
+Copyright (c) 2026
+
+You may:
+- Use these sounds in personal and commercial games, apps, prototypes, videos, streams, and store pages.
+- Modify, layer, trim, pitch-shift, process, or combine the sounds for your own projects.
+- Include modified or unmodified sounds inside a released game or application.
+
+You may not:
+- Resell, redistribute, sublicense, or give away the source sound pack as a standalone product.
+- Upload the source files to asset marketplaces, template sites, stock sites, sample libraries, or public asset dumps.
+- Claim the original source sound pack as your own standalone work.
+
+Attribution is appreciated but not required.
+
+All sounds in this pack are synthetic and procedurally generated. No third-party samples were used.
