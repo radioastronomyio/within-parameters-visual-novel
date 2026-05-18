@@ -12,9 +12,9 @@ tags:
   - tech: [typescript, vite, html, css]
 related_documents:
   - "[Game Design Document](game-design/game-design-document.md)"
-  - "[Engine Spec](spec/engine-spec.md)"
+  - "[Engine Spec](spec/archive/engine-spec.md)"
   - "[Art Direction Bible](game-design/art-direction-bible.md)"
-  - "[Trait System v2](spec/m3-trait-system-v2.md)"
+  - "[Trait System v2](game-design/m3-trait-system-v2.md)"
   - "[AGENTS.md](AGENTS.md)"
 ---
 -->
@@ -82,7 +82,7 @@ The 64 trait combinations (8 positive × 8 negative, modifier-only, no new conte
 | Art assets | 🔄 In Progress | Concept drafts complete (10 scenes, 1 UI mockup) |
 | Balance simulator | ✅ Complete | 45M simulated runs, 6/6 validation criteria passed |
 | Content build | ⬜ Planned | Production JSON pending balance lock merge |
-| Soundtrack | ⬜ Planned | Gemini 3 Pro music generation |
+| Soundtrack | 🔄 In Progress | BGM sourced (YAL Adaptive Pack v2), SFX partially sourced |
 | Production art | ⬜ Planned | NB2 style-matched 4K finals from NightCafe concepts |
 | Integration & polish | ⬜ Planned | Playwright testing, deployment |
 
@@ -136,10 +136,10 @@ within-parameters-visual-novel/
 | Art Direction Bible | [game-design/art-direction-bible.md](game-design/art-direction-bible.md) | Visual identity, generation prompts, asset pipeline |
 | M3 Content Design | [game-design/m3-content-design-draft.md](game-design/m3-content-design-draft.md) | Events, NPCs, comms beats, found docs, endings |
 | Character Generation | [game-design/character-generation.md](game-design/character-generation.md) | Name pools, backstories, dossier screen |
-| Engine Spec | [spec/engine-spec.md](spec/engine-spec.md) | Engine build reference |
-| Trait System v2 | [spec/m3-trait-system-v2.md](spec/m3-trait-system-v2.md) | Trait definitions, interaction matrix, scoring |
-| Simulator Spec | [spec/wp-simulator-spec.md](spec/wp-simulator-spec.md) | Balance simulator agent execution target |
-| SpecSmith Case Study | [spec/wp-specsmith-case-study.md](spec/wp-specsmith-case-study.md) | How spec-driven development shaped this project |
+| Engine Spec | [spec/archive/engine-spec.md](spec/archive/engine-spec.md) | Engine build reference |
+| Trait System v2 | [game-design/m3-trait-system-v2.md](game-design/m3-trait-system-v2.md) | Trait definitions, interaction matrix, scoring |
+| Simulator Spec | [spec/archive/wp-simulator-spec.md](spec/archive/wp-simulator-spec.md) | Balance simulator agent execution target |
+| SpecSmith Case Study | [docs/wp-specsmith-case-study.md](docs/wp-specsmith-case-study.md) | How spec-driven development shaped this project |
 | Agent Instructions | [AGENTS.md](AGENTS.md) | AI agent onboarding context |
 
 ---
@@ -222,4 +222,4 @@ Last Updated: 2026-04-06 | Phase 2: Content Design & Balance
 
 ## Methodology
 
-This project uses the [SpecSmith](https://github.com/radioastronomyio/specsmith) specification methodology. Specs define outcomes and verification criteria; AI coding agents implement from specs. The `spec/` directory contains both the original implementation-prescriptive specs and SpecSmith canonical retrospectives showing what the outcome-driven versions would have looked like. See the [case study](spec/wp-specsmith-case-study.md) for details on how spec-driven development shaped this project.
+This project uses the [SpecSmith](https://github.com/radioastronomyio/specsmith) specification methodology. Specs define outcomes and verification criteria; AI coding agents implement from specs. The `spec/` directory contains both the original implementation-prescriptive specs and SpecSmith canonical retrospectives showing what the outcome-driven versions would have looked like. See the [case study](docs/wp-specsmith-case-study.md) for details on how spec-driven development shaped this project.

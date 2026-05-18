@@ -46,7 +46,7 @@ All agent-executed specs produce work on feature branches. Never commit directly
 - Clock reduction cap: max 2 segments per reward regardless of rapport
 - Art direction style, concept drafts complete (10 scenes, 1 UI mockup)
 - Tech stack: Vite + TypeScript, vanilla DOM (no framework)
-- Engine spec: `spec/engine-spec.md` (the authoritative build reference)
+- Engine spec: `spec/archive/engine-spec.md` (the authoritative build reference)
 - Engine build: all 22 source files built, five bugs patched, end-to-end functional with placeholder assets
 - Journey structure: 5 modular stops (2 community, 2 transit, 1 approach) + fixed facility entry
 - Event pool: 12 events (5 community, 4 transit, 3 approach), draw 5 per run, no repeats
@@ -64,9 +64,10 @@ All agent-executed specs produce work on feature branches. Never commit directly
 
 ### Ready for Agent Execution
 
-- Code commenting and repo cleanup (spec at `spec/05-code-commenting-and-cleanup.md`): dual-audience commenting on all source files, interior README fixes
+- Code commenting and repo cleanup (spec at `spec/2026-05-18-spec-05-code-commenting-and-cleanup.md`): dual-audience commenting on all source files, interior README fixes
 - Content build: translating approved design docs into engine JSON
-- Placeholder art generation (scene-name PNGs)
+- Placeholder art generation complete (9 portraits, 13 backgrounds via `simulation/generate_placeholders.py`)
+- Asset manifest pipeline operational (`assets/asset-manifest.csv`)
 
 ### Not Started
 
@@ -74,24 +75,23 @@ All agent-executed specs produce work on feature branches. Never commit directly
 - Playwright smoke tests against live dev server
 - Production art (NB2 finals from NightCafe concepts)
 - Cutscenes (Seedance 1.5 Pro)
-- Soundtrack (Gemini 3 Pro music generation)
 - Integration, polish, and deployment
 
 ## Key Documents
 
 | Document | Path | Purpose |
 |----------|------|---------|
-| Engine Spec | `spec/engine-spec.md` | **Build reference**: types, components, UI, data schemas, build order, success criteria |
+| Engine Spec | `spec/archive/engine-spec.md` | **Build reference**: types, components, UI, data schemas, build order, success criteria |
 | Game Design Document | `game-design/game-design-document.md` | Authoritative design reference: all mechanics |
 | Storyboard | `game-design/storyboard.md` | Scene-by-scene narrative breakdown with asset specs |
 | Art Direction Bible | `game-design/art-direction-bible.md` | Visual identity, generation prompts, asset pipeline |
 | M3 Content Design | `game-design/m3-content-design-draft.md` | Full event specs, NPC profiles, comms beats, found documents, endings |
 | Character Generation | `game-design/character-generation.md` | Name pools, backstory templates, dossier screen, portrait strategy |
-| Trait System v2 | `spec/m3-trait-system-v2.md` | Authoritative trait definitions, interaction matrix, scoring (post-GDR) |
-| Simulator Spec | `spec/wp-simulator-spec.md` | Monte Carlo balance simulator agent execution target |
+| Trait System v2 | `game-design/m3-trait-system-v2.md` | Authoritative trait definitions, interaction matrix, scoring (post-GDR) |
+| Simulator Spec | `spec/archive/wp-simulator-spec.md` | Monte Carlo balance simulator agent execution target |
 | Sweep Spec (v1) | `spec/archive/wp-sweep-spec.md` | Parameter sweep v1 agent execution target |
 | Sweep Spec (v2) | `spec/archive/wp-sweep-v2-spec.md` | Structural fixes + exploration agent execution target |
-| SpecSmith Case Study | `spec/wp-specsmith-case-study.md` | How spec-driven development shaped this project |
+| SpecSmith Case Study | `docs/wp-specsmith-case-study.md` | How spec-driven development shaped this project |
 | NB2 UI Mockup | `assets/concept-artwork/ui/ui-mockup-nano-banana-pro-2.png` | Visual target for the three-pane layout |
 
 **Read the engine spec before writing any engine code.** It is the execution contract.
@@ -125,7 +125,7 @@ Random protagonist rolled at run start: gender (50/50), name from gendered pools
 
 ### Trait System
 
-All traits are modifier tuples on the stat model. No new content paths. Traits modify starting values, per-event costs, reward effectiveness, clock behavior, choice restrictions, or confrontation thresholds. Authoritative definitions in `spec/m3-trait-system-v2.md`.
+All traits are modifier tuples on the stat model. No new content paths. Traits modify starting values, per-event costs, reward effectiveness, clock behavior, choice restrictions, or confrontation thresholds. Authoritative definitions in `game-design/m3-trait-system-v2.md`.
 
 ### Scoring
 
@@ -215,7 +215,7 @@ Mobile responsiveness, accessibility beyond basic keyboard nav, analytics, multi
 - 1 UI mockup (Nano Banana 2)
 - Production assets awaiting NB2 sprint (style-matched finals from NightCafe concepts)
 - Cutscenes: ~8s clips via Seedance 1.5 Pro (image-to-video), skippable
-- Soundtrack via Gemini 3 Pro music generation
+- Soundtrack: BGM sourced (YAL Adaptive Pack v2, 4 tracks mapped to engine audio keys), SFX partially sourced (tiny-ui-sfx-pack)
 - Engine uses placeholder assets during development
 
 ## Execution Environment
@@ -231,7 +231,12 @@ Mobile responsiveness, accessibility beyond basic keyboard nav, analytics, multi
 ```
 within-parameters-visual-novel/
 ├── assets/                         # Art, audio, and UI assets
-│   └── concept-artwork/            # Concept drafts and UI mockups (scenes 01-08, ui/)
+│   ├── audio/                      # BGM tracks (OGG, YAL Adaptive Pack v2)
+│   ├── backgrounds/                # Scene backgrounds (placeholder PNGs, replaced by production art)
+│   ├── concept-artwork/            # NightCafe concept drafts (scenes 01-08, ui/)
+│   ├── portraits/                  # Character portraits (placeholder PNGs, replaced by production art)
+│   ├── website-assets/             # Shared UI kit: neon bundle, fonts, save/settings starter, SFX pack
+│   └── asset-manifest.csv          # Asset pipeline tracking (placeholder/replaced/missing)
 ├── data/                           # Game data JSON files
 │   ├── config.json                 # Baseline game config (trait-modifiable)
 │   ├── scenes.json                 # Scene/dialogue data (test content, awaiting rewrite)
