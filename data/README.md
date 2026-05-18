@@ -3,8 +3,8 @@
 title: "Data"
 description: "Game data JSON files consumed by the Within Parameters engine"
 author: "VintageDon (https://github.com/vintagedon/)"
-date: "2026-04-05"
-version: "1.0"
+date: "2026-05-18"
+version: "1.1"
 status: "Active"
 tags:
   - type: directory-readme
@@ -23,11 +23,11 @@ Game data JSON files consumed by the Within Parameters engine at runtime. All fi
 
 | File | Description | Status |
 |------|-------------|--------|
-| [config.json](config.json) | Baseline game config — trait-modifiable values (starting modules, clock base, reward amounts, score thresholds) | Active |
-| [characters.json](characters.json) | Character, portrait, background, and audio manifests — references all asset paths | Active |
+| [config.json](config.json) | Baseline game config for trait-modifiable values: starting modules, clock base, reward amounts, and score thresholds | Active |
+| [characters.json](characters.json) | Character, portrait, background, and audio manifests that reference asset paths | Active |
 | [communities.json](communities.json) | Community name pool for random assignment at run start | Active |
-| [scenes.json](scenes.json) | Scene and dialogue data — test/placeholder content pending content build | Placeholder |
-| [events.json](events.json) | Event pool data — test/placeholder content pending content build | Placeholder |
+| [scenes.json](scenes.json) | Scene and dialogue data with test placeholder content pending the content build | Placeholder |
+| [events.json](events.json) | Event pool data with test placeholder content pending the content build | Placeholder |
 
 ---
 
@@ -43,6 +43,6 @@ Game data JSON files consumed by the Within Parameters engine at runtime. All fi
 
 | Document | Relationship |
 |----------|--------------|
-| [Engine Spec](../spec/archive/engine-spec.md) | Data schema definitions — types the engine expects |
+| [Engine Spec](../spec/archive/engine-spec.md) | Data schema definitions and engine expectations |
 | [M3 Content Design Draft](../game-design/m3-content-design-draft.md) | Source for the events.json and scenes.json rewrite |
-| [Trait System v2](../spec/m3-trait-system-v2.md) | Defines which config.json values traits modify |
+| [Trait System v2](../game-design/m3-trait-system-v2.md) | Defines which config.json values traits modify |

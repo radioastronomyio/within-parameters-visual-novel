@@ -1,10 +1,10 @@
 <!--
 ---
 title: "Documentation"
-description: "Documentation standards, templates, and reference materials for Within Parameters"
+description: "Documentation standards, methodology notes, and reference materials for Within Parameters"
 author: "VintageDon (https://github.com/vintagedon/)"
-date: "2026-04-05"
-version: "1.2"
+date: "2026-05-18"
+version: "2.0"
 status: "Active"
 tags:
   - type: directory-readme
@@ -14,7 +14,7 @@ tags:
 
 # Documentation
 
-Documentation standards and templates for Within Parameters. Design documents live in `game-design/`; technical specifications live in `spec/`.
+This directory contains documentation standards and project-level methodology references. Design documents live in `game-design/`; executable and retrospective specs live in `spec/`.
 
 ---
 
@@ -22,32 +22,47 @@ Documentation standards and templates for Within Parameters. Design documents li
 
 ```
 docs/
-├── documentation-standards/    # Template library and tagging guidelines
-│   ├── primary-readme-template.md
-│   ├── interior-readme-template.md
+├── documentation-standards/       # Templates, tagging rules, and writing guidance
+│   ├── code-commenting-dual-audience.md
 │   ├── general-kb-template.md
-│   ├── worklog-readme-template.md
-│   ├── script-header-*.md
+│   ├── interior-readme-template.md
+│   ├── primary-readme-template.md
+│   ├── script-header-powershell.md
+│   ├── script-header-python.md
+│   ├── script-header-shell.md
 │   ├── tagging-strategy.md
+│   ├── worklog-readme-template.md
+│   ├── writing-style-guide.md
 │   └── README.md
-└── README.md                   # This file
+├── balance-methodology.html       # Balance methodology reference page
+├── wp-specsmith-case-study.md     # SpecSmith project case study
+└── README.md                      # This file
 ```
 
 ---
 
-## 2. Subdirectories
+## 2. Files
 
-| Directory | Description |
-|-----------|-------------|
-| [documentation-standards/](documentation-standards/README.md) | Template library for READMEs, KB articles, script headers, and tagging guidelines |
+| File | Description | Status |
+|------|-------------|--------|
+| [balance-methodology.html](balance-methodology.html) | HTML reference for the balance methodology used during simulator and sweep work | Active |
+| [wp-specsmith-case-study.md](wp-specsmith-case-study.md) | Case study on how SpecSmith shaped the project workflow | Active |
 
 ---
 
-## 3. Related
+## 3. Subdirectories
+
+| Directory | Description |
+|-----------|-------------|
+| [documentation-standards/](documentation-standards/README.md) | Template library, controlled tags, script headers, and prose rules |
+
+---
+
+## 4. Related
 
 | Document | Relationship |
 |----------|--------------|
 | [Repository Root](../README.md) | Parent directory |
-| [Game Design Working Dir](../game-design/README.md) | GDD, storyboard, art bible, content specs |
-| [Spec](../spec/README.md) | Technical specifications and agent prompts |
+| [Game Design](../game-design/README.md) | Design working directory |
+| [Spec](../spec/README.md) | Specification directory |
 | [AGENTS.md](../AGENTS.md) | Agent context for this project |

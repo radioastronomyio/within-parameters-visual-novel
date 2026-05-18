@@ -50,7 +50,7 @@ Complete M3 content design package produced. Character generation system with 64
 |------|----------|---------|
 | M3 Content Design Draft | `game-design/m3-content-design-draft.md` | Events, NPCs, comms beats, found documents, endings |
 | Character Generation | `game-design/character-generation.md` | Name pools, backstories, dossier screen, portraits |
-| Trait System v2 | `spec/m3-trait-system-v2.md` | Post-GDR trait definitions, matrix, scoring |
+| Trait System v2 | `game-design/m3-trait-system-v2.md` | Post-GDR trait definitions, matrix, scoring |
 | Simulator Spec | `spec/wp-simulator-spec.md` | Monte Carlo balance simulator for agent build |
 | Mechanical Context | `spec/wp-mechanical-design-context.md` | Consolidated reference for simulator |
 | GDR Results | `work-logs/03-content-design/gdr-trait-balance-results.md` | Gemini Deep Research balance analysis |

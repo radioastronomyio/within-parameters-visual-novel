@@ -82,7 +82,7 @@ All five bugs were in areas where the spec was silent or ambiguous. This confirm
 
 | Artifact | Type | Location |
 |----------|------|----------|
-| Engine Spec | spec | `spec/engine-spec.md` (original), `spec/01-engine-build.md` (SpecSmith retrospective) |
+| Engine Spec | spec | `spec/archive/engine-spec.md` (original), `spec/2026-03-15-spec-01-engine-build.md` (SpecSmith retrospective) |
 | TypeScript source (22 files) | code | `src/` |
 | CSS styles | code | `src/styles.css` |
 | Data JSON files (5) | data | `data/` |

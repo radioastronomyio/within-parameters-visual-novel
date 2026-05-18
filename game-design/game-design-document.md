@@ -572,9 +572,9 @@ src/
 Designed after the initial GDD draft, documented in separate files:
 
 - **Character generation** — `game-design/character-generation.md`
-- **Trait system v2** — `spec/m3-trait-system-v2.md`
-- **Scoring and grades** — `spec/m3-trait-system-v2.md` §6
-- **Clock reduction cap** — `spec/m3-trait-system-v2.md` §7
+- **Trait system v2** — `game-design/m3-trait-system-v2.md`
+- **Scoring and grades** — `game-design/m3-trait-system-v2.md` §6
+- **Clock reduction cap** — `game-design/m3-trait-system-v2.md` §7
 - **Full event pool** — `game-design/m3-content-design-draft.md` §3
 - **Comms beats, found docs, endings** — `game-design/m3-content-design-draft.md` §4-6
 - **Balance simulator** — `spec/wp-simulator-spec.md`
@@ -589,5 +589,5 @@ Designed after the initial GDD draft, documented in separate files:
 | Art Direction Bible | [art-direction-bible.md](art-direction-bible.md) | Visual identity, generation prompts, asset pipeline |
 | Event Pool | [m3-content-design-draft.md](m3-content-design-draft.md) | Full event specs, NPC profiles, comms beats, found docs, endings |
 | Character Generation | [character-generation.md](character-generation.md) | Name pools, backstories, dossier screen, portrait strategy |
-| Trait System v2 | [../spec/m3-trait-system-v2.md](../spec/m3-trait-system-v2.md) | Trait definitions, interaction matrix, scoring (post-GDR) |
+| Trait System v2 | [../game-design/m3-trait-system-v2.md](../game-design/m3-trait-system-v2.md) | Trait definitions, interaction matrix, scoring (post-GDR) |
 | Simulator Spec | [../spec/wp-simulator-spec.md](../spec/wp-simulator-spec.md) | Monte Carlo balance simulator agent execution target |

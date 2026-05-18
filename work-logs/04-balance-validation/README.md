@@ -157,9 +157,9 @@ The scoring cascade and reroll system already handle this asymmetry: accepting a
 | Balance Simulator | code | `simulation/simulator.py`, `simulation/game_data.py` |
 | Sweep v1 | code | `simulation/sweep.py` (on agent branch) |
 | Sweep v2 | code | `simulation/sweep_v2.py` (on agent branch) |
-| Simulator Spec | spec | `spec/wp-simulator-spec.md` (original), `spec/02-balance-simulator.md` (retrospective) |
-| Sweep v1 Spec | spec | `spec/wp-sweep-spec.md` (original), `spec/03-balance-sweep-v1.md` (retrospective) |
-| Sweep v2 Spec | spec | `spec/wp-sweep-v2-spec.md` (original), `spec/04-balance-sweep-v2.md` (retrospective) |
+| Simulator Spec | spec | `spec/archive/wp-simulator-spec.md` (original), `spec/2026-04-05-spec-02-balance-simulator.md` (retrospective) |
+| Sweep v1 Spec | spec | `spec/archive/wp-sweep-spec.md` (original), `spec/2026-04-06-spec-03-balance-sweep-v1.md` (retrospective) |
+| Sweep v2 Spec | spec | `spec/archive/wp-sweep-v2-spec.md` (original), `spec/2026-04-06-spec-04-balance-sweep-v2.md` (retrospective) |
 | Results CSV | data | `simulation/output/sweep_v2_results.csv` (on agent branch) |
 | Heatmaps | data | `simulation/output/*.png` (on agent branch) |
 

@@ -10,7 +10,7 @@ tags:
   - type: game-design
   - domain: [character-generation, roguelike]
 related_documents:
-  - "[Trait System v2](../spec/m3-trait-system-v2.md)"
+  - "[Trait System v2](../game-design/m3-trait-system-v2.md)"
   - "[Game Design Document](game-design-document.md)"
 ---
 -->
@@ -222,4 +222,4 @@ The math on depth-from-simplicity:
 }
 ```
 
-Trait definitions and scoring components are in `spec/m3-trait-system-v2.md` and `data/config.json`.
+Trait definitions and scoring components are in `game-design/m3-trait-system-v2.md` and `data/config.json`.

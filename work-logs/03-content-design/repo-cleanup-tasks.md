@@ -59,7 +59,7 @@ These files exist in the user's downloads from the Claude.ai session. Copy to re
 
 **Problem:** File inventory table only lists 3 files (GDD, storyboard, art bible). Missing `m3-content-design-draft.md` and `character-generation.md`. "Planned Additions" section lists 9 items, most of which are now complete and exist as files.
 
-**Fix:** Update contents table to include all 5 files with current status. Replace "Planned Additions" with a "Related Specifications" section pointing to `spec/m3-trait-system-v2.md` and `spec/wp-simulator-spec.md`. Add frontmatter.
+**Fix:** Update contents table to include all 5 files with current status. Replace "Planned Additions" with a "Related Specifications" section pointing to `game-design/m3-trait-system-v2.md` and `spec/wp-simulator-spec.md`. Add frontmatter.
 
 ### 3. `spec/README.md`
 

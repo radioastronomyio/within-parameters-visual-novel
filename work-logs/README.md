@@ -2,19 +2,19 @@
 ---
 title: "Work Logs"
 description: "Phase worklogs documenting Within Parameters development history"
-author: "VintageDon"
-date: "2026-04-06"
-version: "2.0"
+author: "VintageDon (https://github.com/vintagedon/)"
+date: "2026-05-18"
+version: "3.0"
 status: "Active"
 tags:
   - type: directory-readme
-  - domain: project-management
+  - domain: methodology
 ---
 -->
 
 # Work Logs
 
-Phase worklogs documenting project development history. Each milestone gets a subfolder with a README synthesizing decisions, outcomes, and artifacts.
+This directory contains milestone worklogs for Within Parameters. Each phase folder summarizes decisions, outcomes, and artifacts from that stage of development.
 
 ---
 
@@ -22,30 +22,56 @@ Phase worklogs documenting project development history. Each milestone gets a su
 
 ```
 work-logs/
-├── 01-concept-and-art-direction/   # Concept lock, art style proven, GDD drafted
-├── 02-engine-build/                # Mechanics finalized, engine spec, CC build, bug fixes
-├── 03-content-design/              # NPCs, events, character gen, trait system, GDR validation
-├── 04-balance-validation/          # Simulator, sweep v1 (0/6), structural fixes, sweep v2 (6/6)
-├── milestones-one-and-two-procedures.md  # General M01/M02 procedure reference
-└── README.md                       # This file
+├── 01-concept-and-art-direction/       # Concept lock, art direction, GDD draft
+│   └── README.md
+├── 02-engine-build/                    # Engine spec, build session, bug fixes
+│   └── README.md
+├── 03-content-design/                  # NPCs, events, traits, content validation
+│   ├── gdr-trait-balance-results.md
+│   ├── repo-cleanup-tasks.md
+│   └── README.md
+├── 04-balance-validation/              # Simulator and balance sweeps
+│   └── README.md
+├── milestones-one-and-two-procedures.md # Procedure reference for early milestones
+└── README.md                           # This file
 ```
 
 ---
 
-## 2. Phase Summary
+## 2. Files
 
-| Phase | Date | Status | Key Output |
-|-------|------|--------|-----------|
-| [01: Concept & Art Direction](01-concept-and-art-direction/) | 2026-03-15 | Complete | Project named, GDD drafted, NightCafe art style locked |
-| [02: Engine Build](02-engine-build/) | 2026-03-15 | Complete | 22-file engine built from spec (13m38s), 5 bugs found and patched |
-| [03: Content Design](03-content-design/) | 2026-04-05 | Complete | NPCs, 12-event pool, trait system v2, GDR validation, simulator spec |
-| [04: Balance Validation](04-balance-validation/) | 2026-04-06 | Complete | 45M simulated runs, 6/6 winning config found |
+| File | Description | Status |
+|------|-------------|--------|
+| [milestones-one-and-two-procedures.md](milestones-one-and-two-procedures.md) | Procedure reference for early milestone execution | Active |
 
 ---
 
-## 3. Conventions
+## 3. Subdirectories
 
-- Folder naming: `NN-phase-name` (zero-padded, hyphenated)
-- Each folder contains a `README.md` documenting that phase
-- Worklogs are synthesis documents (outcomes, not session transcripts)
-- Use `docs/documentation-standards/worklog-readme-template.md` as base template
+| Directory | Description |
+|-----------|-------------|
+| [01-concept-and-art-direction/](01-concept-and-art-direction/README.md) | Naming, premise lock, GDD draft, storyboard, and visual direction |
+| [02-engine-build/](02-engine-build/README.md) | Engine build specification, implementation run, and follow-up bug fixes |
+| [03-content-design/](03-content-design/README.md) | Content pool, character generation, trait system, and GDR review |
+| [04-balance-validation/](04-balance-validation/README.md) | Simulator implementation, sweep results, and locked balance parameters |
+
+---
+
+## 4. Related
+
+| Document | Relationship |
+|----------|--------------|
+| [Repository Root](../README.md) | Parent directory |
+| [Documentation Standards](../docs/documentation-standards/README.md) | Templates and tagging guidance |
+| [Spec](../spec/README.md) | Specification set tied to the work history |
+
+---
+
+## 5. Phase Summary
+
+| Phase | Date | Status | Key Output |
+|-------|------|--------|------------|
+| [01: Concept and Art Direction](01-concept-and-art-direction/README.md) | 2026-03-15 | Complete | Project named, GDD drafted, NightCafe art style locked |
+| [02: Engine Build](02-engine-build/README.md) | 2026-03-15 | Complete | 22-file engine built from spec, then patched through five defects |
+| [03: Content Design](03-content-design/README.md) | 2026-04-05 | Complete | NPCs, 12-event pool, trait system v2, GDR validation, simulator spec |
+| [04: Balance Validation](04-balance-validation/README.md) | 2026-04-06 | Complete | Simulator, two sweep passes, and locked 6/6 balance config |

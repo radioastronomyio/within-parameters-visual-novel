@@ -12,7 +12,7 @@ tags:
 related_documents:
   - "[Game Design Document](game-design-document.md)"
   - "[Character Generation](character-generation.md)"
-  - "[Trait System v2](../spec/m3-trait-system-v2.md)"
+  - "[Trait System v2](../game-design/m3-trait-system-v2.md)"
   - "[Storyboard](storyboard.md)"
 ---
 -->

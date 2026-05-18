@@ -44,7 +44,7 @@ simulation/
 
 Full spec at [`spec/archive/wp-simulator-spec.md`](../spec/archive/wp-simulator-spec.md). Covers architecture, data structures, heuristic agent rules, output format, and validation criteria.
 
-Trait definitions at [`spec/m3-trait-system-v2.md`](../spec/m3-trait-system-v2.md).
+Trait definitions at [`game-design/m3-trait-system-v2.md`](../game-design/m3-trait-system-v2.md).
 
 ---
 
@@ -155,6 +155,6 @@ Output: `output/sweep_v2_results.csv`. Includes structured Phase 1 (33 variants)
 
 | Document | Relationship |
 |----------|--------------|
-| [Trait System v2](../spec/m3-trait-system-v2.md) | Authoritative trait definitions and scoring |
+| [Trait System v2](../game-design/m3-trait-system-v2.md) | Authoritative trait definitions and scoring |
 | [Simulator Spec](../spec/archive/wp-simulator-spec.md) | Agent execution target |
 | [Mechanical Context](../spec/archive/wp-mechanical-design-context.md) | Consolidated stat model reference |
