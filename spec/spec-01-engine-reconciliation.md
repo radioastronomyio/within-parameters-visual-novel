@@ -39,7 +39,7 @@ The TypeScript engine reproduces the Python balance simulator's run mechanics ex
 | Agent Runtime | OpenCode (GLM-5.2) |
 | Working Directory | `/opt/agents/repos/within-parameters-visual-novel/` |
 | Toolchain | Node + Vite + TypeScript (existing); Python 3 available for cross-check |
-| Branch | `agent/wp-spec-a1-engine-reconciliation` (agent creates; does not push) |
+| Branch | `agent/wp-spec-01-engine-reconciliation` (agent creates; does not push) |
 
 ---
 
@@ -159,11 +159,11 @@ Validation:
 
 #### Deliverable 6: Worklog and registry
 
-Write a worklog following the template at `/opt/agents/work-logs/WORKLOG-TEMPLATE-AGENT.md`. Filename: `2026-06-22-wp-worklog-a1-engine-reconciliation.md`. Append a summary row to `/opt/agents/work-logs/work-registry.csv`. This repository keeps specs in-repo under `spec/`; do not move this spec to the central archive, and do not initialize or push git. Leave the work on the `agent/wp-spec-a1-engine-reconciliation` branch with local commits for orchestrator review.
+Write a worklog following the template at `/opt/agents/work-logs/WORKLOG-TEMPLATE-AGENT.md`. Filename: `2026-06-22-wp-worklog-01-engine-reconciliation.md`. Append a summary row to `/opt/agents/work-logs/work-registry.csv`. This repository keeps specs in-repo under `spec/`; do not move this spec to the central archive, and do not initialize or push git. Leave the work on the `agent/wp-spec-01-engine-reconciliation` branch with local commits for orchestrator review.
 
 Validation:
 
-- [ ] Worklog exists at `/opt/agents/work-logs/2026-06-22-wp-worklog-a1-engine-reconciliation.md` with all frontmatter fields populated
+- [ ] Worklog exists at `/opt/agents/work-logs/2026-06-22-wp-worklog-01-engine-reconciliation.md` with all frontmatter fields populated
 - [ ] Work registry CSV has a new row matching this execution
 - [ ] All work is committed locally on the named branch; nothing pushed; `main` untouched
 
@@ -193,10 +193,10 @@ Validation:
 
 ### Notes
 
-The simulator is the single source of mechanical truth. Where the design docs and the simulator disagree on a number, the simulator wins, because the balance was validated against the simulator's behavior, not the docs. One known doc/sim discrepancy carried into spec A2, not this one: the character-generation doc shows a stepped reroll ceiling (100/92/85/78/72%) while `game_data.py` uses a single compounding `reroll_multiplier=0.92`; this spec implements the config value (compounding) as authoritative.
+The simulator is the single source of mechanical truth. Where the design docs and the simulator disagree on a number, the simulator wins, because the balance was validated against the simulator's behavior, not the docs. One known doc/sim discrepancy carried into spec 03, not this one: the character-generation doc shows a stepped reroll ceiling (100/92/85/78/72%) while `game_data.py` uses a single compounding `reroll_multiplier=0.92`; this spec implements the config value (compounding) as authoritative.
 
 The simulator mutates state in place for speed; the TS engine is immutable-by-convention (mutations return new objects). Preserve the immutable style in the engine; the harness may use a faster mutable internal representation if that eases the port, as long as the engine functions it exercises are the real ones.
 
-The `modules` vs `consumables` naming split is a long-standing wart: the simulator says modules, the engine says consumables, the fiction calls them bypass modules / omni-components. Pick one name and unify in this spec; this is the cheapest moment to do it, before content (spec B) and UI (spec A2) harden the vocabulary further.
+The `modules` vs `consumables` naming split is a long-standing wart: the simulator says modules, the engine says consumables, the fiction calls them bypass modules / omni-components. Pick one name and unify in this spec; this is the cheapest moment to do it, before content (spec 04) and UI (spec 03) harden the vocabulary further.
 
-Spec A2 (chargen, dossier screen, trait selection and reroll, score display) builds directly on the typed state fields and scoring function delivered here. Spec B (production content) depends on the reconciled config schema and the trait/flag seams. Getting the contract right here unblocks both.
+Spec 03 (chargen, dossier screen, trait selection and reroll, score display) builds directly on the typed state fields and scoring function delivered here, composed from the gameui framework adopted in spec 02. Spec 04 (production content) depends on the reconciled config schema and the trait/flag seams. Getting the contract right here unblocks both.

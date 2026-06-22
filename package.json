@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "replay": "node scripts/run-replay.mjs 5000",
+    "replay:fast": "node scripts/run-replay.mjs 2000",
+    "replay:full": "node scripts/run-replay.mjs 10000"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",

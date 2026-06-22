@@ -21,10 +21,11 @@ import {
   addToHistory,
   addCommunity,
   advanceStop,
-  determineEnding,
+  markClockFailure,
   tickClock,
   isClockFull,
 } from './game-state';
+import { scoreRun } from './scoring';
 import {
   initEventPool,
   drawEvent,
@@ -288,14 +289,15 @@ export class SceneRunner {
       this.callbacks.onStateUpdate(this.state);
 
       // Check loss condition
-      if (isClockFull(this.state)) {
+      if (isClockFull(this.state, this.config)) {
+        this.state = markClockFailure(this.state);
+        this.state = { ...this.state, outcome: scoreRun(this.state, this.config) };
         this.callbacks.onEnding('clock-failure', this.state);
         return;
       }
 
-      // Advance to next stop
+      // Advance to next stop (advanceStop increments currentStop)
       this.state = advanceStop(this.state, event.id);
-      this.state = { ...this.state, currentStop: stop + 1 };
       this._pendingEventForStop = null;
 
       this.runNextStop();
@@ -306,7 +308,8 @@ export class SceneRunner {
 
   /** Called from facility scene when the confrontation gate is reached */
   triggerEnding(): void {
-    const endingType = determineEnding(this.state, this.config);
+    this.state = { ...this.state, outcome: scoreRun(this.state, this.config) };
+    const endingType = this.state.outcome?.ending ?? 'destruction';
     const endingSceneId = `scene-ending-${endingType}`;
     this.loadScene(endingSceneId);
   }
