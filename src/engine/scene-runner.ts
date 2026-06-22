@@ -296,9 +296,8 @@ export class SceneRunner {
         return;
       }
 
-      // Advance to next stop
+      // Advance to next stop (advanceStop increments currentStop)
       this.state = advanceStop(this.state, event.id);
-      this.state = { ...this.state, currentStop: stop + 1 };
       this._pendingEventForStop = null;
 
       this.runNextStop();

@@ -4,19 +4,23 @@
  *
  * Usage: node scripts/run-replay.mjs [iterations_per_combo]
  *
- * @param {string|undefined} argv[2] — iterations per combo (default 2000)
+ * @param {string|undefined} argv[2] — iterations per combo (default 5000)
  */
 import { build } from 'esbuild';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const entry = resolve(root, 'src/engine/replay-harness.ts');
-const outfile = resolve(tmpdir(), `wp-replay-${process.pid}.mjs`);
+
+// Create a unique temp directory (random suffix) to avoid predictable-path
+// symlink/TOTCTOU attacks flagged by CodeQL's "Insecure temporary file" query.
+const tmpDir = mkdtempSync(join(tmpdir(), 'wp-replay-'));
+const outfile = resolve(tmpDir, 'harness.mjs');
 
 const result = await build({
   entryPoints: [entry],
@@ -38,7 +42,7 @@ try {
   process.exit(res.status ?? 0);
 } finally {
   try {
-    rmSync(outfile, { force: true });
+    rmSync(tmpDir, { recursive: true, force: true });
   } catch {
     // best-effort cleanup
   }

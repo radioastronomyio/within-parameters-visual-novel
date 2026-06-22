@@ -216,12 +216,13 @@ export interface PersistentData {
  * Field-by-field mirror of simulation/game_data.py's `Config` dataclass, in
  * engine naming style (camelCase, "consumables" for the simulator's "modules").
  * The locked winning config (v2 sweep, 6/6 validation criteria) ships in
- * data/config.json: knowledgeThreshold=11, knowledgeRewardBonus=0,
- * clockBaseTick=1, startingConsumables=6, clockJitterChance=0.35.
+ * data/config.json: knowledgeThreshold=11, knowledgeRewardBonus=-2 (reward
+ * total 0), clockBaseTick=1, startingConsumables=6, clockJitterChance=0.35.
  *
  * The behavior-flag booleans (roughTouch, stubborn, etc.) are the trait system's
- * runtime switches. They default to false in config and are flipped on by the
- * trait application pipeline in src/engine/traits.ts at run start.
+ * runtime switches. They are optional on the base config (absent ≡ false) and
+ * flipped on by the trait application pipeline in src/engine/traits.ts at run
+ * start; config.json does not carry them.
  */
 export interface GameConfig {
   // ── Resource baselines ──
@@ -270,21 +271,21 @@ export interface GameConfig {
   /** Bonus consumables added on consumable rewards (Field Expedient: +1). */
   consumableRewardBonus: number;
 
-  // ── Trait behavior flags (default false in config; traits flip on) ──
+  // ── Trait behavior flags (optional on base config; traits flip on at run start) ──
   /** Rough Touch (N2): community-event consumable costs +1. */
-  roughTouch: boolean;
+  roughTouch?: boolean;
   /** Stubborn (N8): forces highest-affordable-cost community choice. */
-  stubborn: boolean;
+  stubborn?: boolean;
   /** Practiced (P8): first consumable-spending choice each stop costs 1 less. */
-  practiced: boolean;
+  practiced?: boolean;
   /** Light Foot (P7): transit-event positive clock changes suppressed. */
-  lightFoot: boolean;
+  lightFoot?: boolean;
   /** Tunnel Nerves (N1): approach-event clock changes +1. */
-  tunnelNerves: boolean;
+  tunnelNerves?: boolean;
   /** Distracted (N4): found-document passive knowledge gain suppressed. */
-  distracted: boolean;
+  distracted?: boolean;
   /** Narrow Focus (N3): clock reduction -1, floor 0. */
-  narrowFocus: boolean;
+  narrowFocus?: boolean;
 
   // ── Scoring cascade constants ──
   /** Correction ending base score. */

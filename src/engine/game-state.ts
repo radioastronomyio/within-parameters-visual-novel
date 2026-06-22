@@ -86,7 +86,9 @@ export function applyStatChanges(
   }
   if (changes.rapport !== undefined) {
     stats.startingRapport = stats.startingRapport + changes.rapport;
-    stats.rapport = stats.startingRapport;
+    // Recompute live rapport from the updated baseline + community deltas,
+    // not the baseline alone (matches deriveRapport / simulator.py rapport).
+    stats.rapport = deriveRapport({ ...state, stats });
   }
 
   let clock = state.clock;
