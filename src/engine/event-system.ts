@@ -4,6 +4,10 @@
  * event for the current stop's zone. Rewards are resolved after each event with
  * clock-reduction scaled by the current rapport.
  *
+ * The shuffle and reward paths accept an injectable Rng so the replay harness
+ * can drive them deterministically. The live engine passes no Rng and gets the
+ * default Math.random-backed one.
+ *
  * @module engine/event-system
  */
 
@@ -17,6 +21,8 @@ import type {
   IntrusionClock,
 } from '../types/index';
 import { calculateClockReduction, applyStatChanges } from './game-state';
+import type { Rng } from './rng';
+import { defaultRng } from './rng';
 
 export interface EventPoolState {
   /** Events grouped by zone category */
@@ -31,10 +37,10 @@ export interface EventPoolState {
   usedEventIds: Set<string>;
 }
 
-function shuffle<T>(arr: T[]): T[] {
+function shuffle<T>(arr: T[], rng: Rng = defaultRng()): T[] {
   const out = [...arr];
   for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rng.next() * (i + 1));
     // biome-ignore lint — deliberate swap
     [out[i], out[j]] = [out[j]!, out[i]!];
   }
@@ -45,17 +51,18 @@ function shuffle<T>(arr: T[]): T[] {
 export function initEventPool(
   events: EventDef[],
   _config: GameConfig,
-  communities: Community[]
+  communities: Community[],
+  rng: Rng = defaultRng()
 ): EventPoolState {
   const byZone: EventPoolState['byZone'] = {
-    community: shuffle(events.filter((e) => e.category === 'community')),
-    transit: shuffle(events.filter((e) => e.category === 'transit')),
-    approach: shuffle(events.filter((e) => e.category === 'approach')),
+    community: shuffle(events.filter((e) => e.category === 'community'), rng),
+    transit: shuffle(events.filter((e) => e.category === 'transit'), rng),
+    approach: shuffle(events.filter((e) => e.category === 'approach'), rng),
   };
 
   return {
     byZone,
-    availableCommunities: shuffle(communities),
+    availableCommunities: shuffle(communities, rng),
     usedEventIds: new Set(),
   };
 }
@@ -141,6 +148,11 @@ export function getRewardsForStop(
   });
 }
 
+/**
+ * Applies a reward to state. Trait bonuses (Quick Study: +knowledge,
+ * Field Expedient: +consumables) are added on top of the reward's base effect,
+ * matching simulator.py apply_reward.
+ */
 export function applyReward(
   reward: RewardOption,
   state: GameState,
@@ -151,7 +163,14 @@ export function applyReward(
     return applyStatChanges(state, { clock: -reduction });
   }
 
-  return applyStatChanges(state, reward.baseEffect);
+  const baseEffect = { ...reward.baseEffect };
+  if (reward.type === 'consumable' && baseEffect.consumables !== undefined) {
+    baseEffect.consumables = baseEffect.consumables + config.consumableRewardBonus;
+  }
+  if (reward.type === 'knowledge' && baseEffect.knowledge !== undefined) {
+    baseEffect.knowledge = baseEffect.knowledge + config.knowledgeRewardBonus;
+  }
+  return applyStatChanges(state, baseEffect);
 }
 
 /** Triggers a Jay Chen comms interrupt after stop 3 if the clock exceeds 50% capacity. Hard-coded stop index (not configurable) — change with care. */
